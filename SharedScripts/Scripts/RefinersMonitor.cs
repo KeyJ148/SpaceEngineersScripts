@@ -50,12 +50,9 @@ namespace IngameScript
                     display.PrintMiddle(headerText);
                 }
 
-                Dictionary<Ore, long> displayedOresToCount = displayedOresToSpeedInHour.Keys.ToDictionary(ore => ore, ore => 0L);
-                foreach (IMyInventory inventory in Utils.GetAllInventory(containers))
-                {
-                    displayedOresToCount.Keys.ToList().ForEach(ore =>
-                        displayedOresToCount[ore] += inventory.GetItemAmount(ore.Id).ToIntSafe());
-                }
+                List<IMyInventory> inventories = Utils.GetAllInventory(containers);
+                List<Item> itemsToCalculate = displayedOresToSpeedInHour.Keys.Select(ore => (Item) ore).ToList();
+                Dictionary<Item, long> displayedOresToCount = Utils.CalculateItemsInAllInventory(inventories, itemsToCalculate);
 
                 displayedOresToSpeedInHour.Keys.ToList().ForEach(ore => display.Println(GetSpeedInfoLine(ore, displayedOresToCount[ore])));
             }
@@ -72,8 +69,8 @@ namespace IngameScript
                 long speedInHour = displayedOresToSpeedInHour[ore];
                 long hours = count / speedInHour;
 
-                return ore.Name + new string(' ', countSpaceAfterName) +
-                    $"({Utils.GetShortNumber(speedInHour, true)}/Час): {hours} {Utils.GetHourTranslate(hours)}";
+                return $"{ore.Name}{new string(' ', countSpaceAfterName)}" +
+                    $" ({Utils.GetShortNumber(speedInHour, true)}/Час): {hours} {Utils.GetHourTranslate(hours)}";
             }
         }
     }

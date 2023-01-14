@@ -57,18 +57,28 @@ namespace IngameScript
 
 			public static List<IMyInventory> GetAllInventory(IMyEntity entity)
             {
-				List<IMyInventory> result = new List<IMyInventory>(entity.InventoryCount);
+				List<IMyInventory> inventories = new List<IMyInventory>(entity.InventoryCount);
                 for (int i = 0; i < entity.InventoryCount; i++)
                 {
-					result.Add(entity.GetInventory(i));
+					inventories.Add(entity.GetInventory(i));
                 }
 
-				return result;
+				return inventories;
             }
 
 			public static List<IMyInventory> GetAllInventory(List<IMyEntity> entities)
 			{
 				return entities.SelectMany(GetAllInventory).ToList();
+			}
+
+			public static Dictionary<Item, long> CalculateItemsInAllInventory(List<IMyInventory> inventories, List<Item> itemsToCalculate)
+            {
+				Dictionary<Item, long> itemToCount = itemsToCalculate.ToDictionary(item => item, item => 0L);
+				foreach (IMyInventory inventory in inventories)
+				{
+					itemsToCalculate.ForEach(item => itemToCount[item] += inventory.GetItemAmount(item.Id).ToIntSafe());
+				}
+				return itemToCount;
 			}
 		}
     }

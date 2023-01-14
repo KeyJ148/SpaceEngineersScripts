@@ -30,14 +30,22 @@ namespace IngameScript
 
             List<IMyEntity> allContainers = new List<IMyEntity>();
             GridTerminalSystem.GetBlocksOfType<IMyEntity>(allContainers);
+            List<IMyAssembler> allAssemblers = new List<IMyAssembler>();
+            GridTerminalSystem.GetBlocksOfType<IMyAssembler>(allAssemblers);
 
             monitors.Add(new RefinersMonitor(
-                display: new Display(GridTerminalSystem.GetBlockWithName("Дисплей - основной") as IMyTextPanel, 70),
+                display: new Display(GridTerminalSystem.GetBlockWithName("Дисплей 1") as IMyTextPanel, 35),
                 displayedOres: Items.ORES,
                 countRefinersByOreType: new Dictionary<Ore, int>(),
                 countUniversalRefiners: 3,
                 containers: allContainers,
                 headerText: "ОЧИСТИТЕЛЬНЫЕ ЗАВОДЫ"
+            ));
+
+            monitors.Add(new AssemblersMonitor(
+                display: new Display(GridTerminalSystem.GetBlockWithName("Дисплей 2") as IMyTextPanel, 35),
+                assemblers: allAssemblers,
+                headerText: "СБОРЩИКИ"
             ));
         }
 

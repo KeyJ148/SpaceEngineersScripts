@@ -146,7 +146,7 @@ namespace IngameScript
 			public readonly MyDefinitionId Id;
 			public readonly string Name;
 
-			public Item(string id, string name) {
+			protected Item(string id, string name) {
 				Id = MyDefinitionId.Parse(id);
 				Name = name;
 			}
@@ -157,7 +157,7 @@ namespace IngameScript
 
 			public readonly int RefineSpeed; //kg/hour
 
-			public Ore(string id, string name, int refineSpeed) : base(id, name) {
+			protected Ore(string id, string name, int refineSpeed) : base(id, name) {
 				RefineSpeed = refineSpeed;
 			}
 
