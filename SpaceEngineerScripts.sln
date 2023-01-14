@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.33214.272
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestScript", "TestScript\TestScript.csproj", "{F78C4E11-FF77-4882-819C-A7C736535C43}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SharedScripts", "SharedScripts\SharedScripts.shproj", "{66683E32-184D-487E-906C-AE8C52C842F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainMonitor", "MainMonitor\MainMonitor.csproj", "{A78E89EE-3451-4AAA-9FA7-8EBE91ACC9DD}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		SharedScripts\SharedScripts.projitems*{66683e32-184d-487e-906c-ae8c52c842f0}*SharedItemsImports = 13
+		SharedScripts\SharedScripts.projitems*{a78e89ee-3451-4aaa-9fa7-8ebe91acc9dd}*SharedItemsImports = 4
+		SharedScripts\SharedScripts.projitems*{f78c4e11-ff77-4882-819c-a7c736535c43}*SharedItemsImports = 4
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F78C4E11-FF77-4882-819C-A7C736535C43}.Debug|x64.ActiveCfg = Debug|x64
+		{F78C4E11-FF77-4882-819C-A7C736535C43}.Debug|x64.Build.0 = Debug|x64
+		{A78E89EE-3451-4AAA-9FA7-8EBE91ACC9DD}.Debug|x64.ActiveCfg = Debug|x64
+		{A78E89EE-3451-4AAA-9FA7-8EBE91ACC9DD}.Debug|x64.Build.0 = Debug|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {73FA824C-A360-46E2-B16E-26CE6F3195D2}
+	EndGlobalSection
+EndGlobal
