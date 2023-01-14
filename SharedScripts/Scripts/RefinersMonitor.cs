@@ -31,7 +31,7 @@ namespace IngameScript
             private readonly int MaxNameLength;
             private readonly string HeaderText;
 
-            private RefinersMonitor(Display display, List<Ore> displayedOres, Dictionary<Ore, int> countRefinersByOreType,
+            public RefinersMonitor(Display display, List<Ore> displayedOres, Dictionary<Ore, int> countRefinersByOreType,
                 int countUniversalRefiners, List<IMyEntity> containers, string headerText)
             {
                 Display = display;
@@ -73,7 +73,7 @@ namespace IngameScript
                 long hours = count / speedInHour;
 
                 StringBuilder sb = new StringBuilder();
-                sb.Insert(0, ore.Name);
+                sb.Append(ore.Name);
                 sb.Append(' ', countSpaceAfterName);
                 sb.Append(" (");
                 sb.Append(Utils.GetShortNumber(speedInHour, true));
@@ -83,11 +83,6 @@ namespace IngameScript
                 sb.Append(Utils.GetHourTranslate(hours));
 
                 return sb.ToString();
-            }
-
-            public class Builder
-            {
-
             }
         }
     }

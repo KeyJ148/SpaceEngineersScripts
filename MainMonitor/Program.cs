@@ -22,7 +22,7 @@ namespace IngameScript
 {
     partial class Program : MyGridProgram
     {
-        private readonly List<Monitor> Monitors = new List<Monitor>();
+        private readonly List<IMonitor> Monitors = new List<IMonitor>();
 
         public Program()
         {
@@ -32,12 +32,12 @@ namespace IngameScript
             GridTerminalSystem.GetBlocksOfType<IMyEntity>(allContainers);
 
             Monitors.Add(new RefinersMonitor(
-                new Display(GridTerminalSystem.GetBlockWithName("Дисплей - основной") as IMyTextPanel, 70),
-                Items.ORES,
-                new Dictionary<Ore, int>(),
-                3,
-                allContainers,
-                "ОЧИСТИТЕЛЬНЫЕ ЗАВОДЫ"
+                display: new Display(GridTerminalSystem.GetBlockWithName("Дисплей - основной") as IMyTextPanel, 70),
+                displayedOres: Items.ORES,
+                countRefinersByOreType: new Dictionary<Ore, int>(),
+                countUniversalRefiners: 3,
+                containers: allContainers,
+                headerText: "ОЧИСТИТЕЛЬНЫЕ ЗАВОДЫ"
             ));
         }
 
