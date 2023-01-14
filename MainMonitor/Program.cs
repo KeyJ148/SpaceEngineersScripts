@@ -22,7 +22,7 @@ namespace IngameScript
 {
     partial class Program : MyGridProgram
     {
-        private readonly List<IMonitor> Monitors = new List<IMonitor>();
+        private readonly List<IMonitor> monitors = new List<IMonitor>();
 
         public Program()
         {
@@ -31,7 +31,7 @@ namespace IngameScript
             List<IMyEntity> allContainers = new List<IMyEntity>();
             GridTerminalSystem.GetBlocksOfType<IMyEntity>(allContainers);
 
-            Monitors.Add(new RefinersMonitor(
+            monitors.Add(new RefinersMonitor(
                 display: new Display(GridTerminalSystem.GetBlockWithName("Дисплей - основной") as IMyTextPanel, 70),
                 displayedOres: Items.ORES,
                 countRefinersByOreType: new Dictionary<Ore, int>(),
@@ -43,7 +43,7 @@ namespace IngameScript
 
         public void Main(string argument, UpdateType updateSource)
         {
-            Monitors.ForEach(monitor => monitor.Render());
+            monitors.ForEach(monitor => monitor.Render());
         }
     }
 }

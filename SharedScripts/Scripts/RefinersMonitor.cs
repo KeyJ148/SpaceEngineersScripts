@@ -25,39 +25,39 @@ namespace IngameScript
         public class RefinersMonitor : IMonitor
         {
 
-            private readonly Display Display;
-            private readonly Dictionary<Ore, long> DisplayedOresToSpeedInHour;
-            private readonly List<IMyEntity> Containers;
-            private readonly int MaxNameLength;
-            private readonly string HeaderText;
+            private readonly Display display;
+            private readonly Dictionary<Ore, long> displayedOresToSpeedInHour;
+            private readonly List<IMyEntity> containers;
+            private readonly int maxNameLength;
+            private readonly string headerText;
 
             public RefinersMonitor(Display display, List<Ore> displayedOres, Dictionary<Ore, int> countRefinersByOreType,
                 int countUniversalRefiners, List<IMyEntity> containers, string headerText)
             {
-                Display = display;
-                Containers = containers;
-                HeaderText = headerText;
-                DisplayedOresToSpeedInHour = displayedOres
+                this.display = display;
+                this.containers = containers;
+                this.headerText = headerText;
+                displayedOresToSpeedInHour = displayedOres
                     .ToDictionary(ore => ore, ore => GetRefineSpeedInHour(ore, countRefinersByOreType, countUniversalRefiners));
-                MaxNameLength = displayedOres.Select(ore => ore.Name.Length).Max();
+                maxNameLength = displayedOres.Select(ore => ore.Name.Length).Max();
             }
 
             public void Render()
             {
-                Display.Clear();
-                if (HeaderText != null)
+                display.Clear();
+                if (headerText != null)
                 {
-                    Display.PrintMiddle(HeaderText);
+                    display.PrintMiddle(headerText);
                 }
 
-                Dictionary<Ore, long> displayedOresToCount = DisplayedOresToSpeedInHour.Keys.ToDictionary(ore => ore, ore => 0L);
-                foreach (IMyInventory inventory in Utils.GetAllInventory(Containers))
+                Dictionary<Ore, long> displayedOresToCount = displayedOresToSpeedInHour.Keys.ToDictionary(ore => ore, ore => 0L);
+                foreach (IMyInventory inventory in Utils.GetAllInventory(containers))
                 {
                     displayedOresToCount.Keys.ToList().ForEach(ore =>
                         displayedOresToCount[ore] += inventory.GetItemAmount(ore.Id).ToIntSafe());
                 }
 
-                DisplayedOresToSpeedInHour.Keys.ToList().ForEach(ore => Display.Println(GetSpeedInfoLine(ore, displayedOresToCount[ore])));
+                displayedOresToSpeedInHour.Keys.ToList().ForEach(ore => display.Println(GetSpeedInfoLine(ore, displayedOresToCount[ore])));
             }
 
             private long GetRefineSpeedInHour(Ore ore, Dictionary<Ore, int> countRefinersByOreType, int countUniversalRefiners)
@@ -68,21 +68,12 @@ namespace IngameScript
 
             private String GetSpeedInfoLine(Ore ore, long count)
             {
-                int countSpaceAfterName = MaxNameLength - ore.Name.Length;
-                long speedInHour = DisplayedOresToSpeedInHour[ore];
+                int countSpaceAfterName = maxNameLength - ore.Name.Length;
+                long speedInHour = displayedOresToSpeedInHour[ore];
                 long hours = count / speedInHour;
 
-                StringBuilder sb = new StringBuilder();
-                sb.Append(ore.Name);
-                sb.Append(' ', countSpaceAfterName);
-                sb.Append(" (");
-                sb.Append(Utils.GetShortNumber(speedInHour, true));
-                sb.Append("/Час): ");
-                sb.Append(hours);
-                sb.Append(" ");
-                sb.Append(Utils.GetHourTranslate(hours));
-
-                return sb.ToString();
+                return ore.Name + new string(' ', countSpaceAfterName) +
+                    $"({Utils.GetShortNumber(speedInHour, true)}/Час): {hours} {Utils.GetHourTranslate(hours)}";
             }
         }
     }

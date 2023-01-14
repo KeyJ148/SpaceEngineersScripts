@@ -25,44 +25,38 @@ namespace IngameScript
 		public class Display
 		{
 
-			private readonly IMyTextPanel TextPanel;
-			private readonly int Length;
+			private readonly IMyTextPanel textPanel;
+			private readonly int length;
 
 			public Display(IMyTextPanel textPanel, int length)
 			{
-				this.TextPanel = textPanel;
-				this.Length = length;
+				this.textPanel = textPanel;
+				this.length = length;
 			}
 
 			public Display(IMyTextPanel textPanel) : this(textPanel, 35) { }
 
-			public void Print(string s) { TextPanel.WritePublicText(s, true); }
-			public void Print(int i) { Print(i.ToString()); }
-			public void Print(long l) { Print(l.ToString()); }
-			public void Print(float f) { Print(f.ToString()); }
-			public void Print(double d) { Print(d.ToString()); }
-			public void Print(VRage.MyFixedPoint fp) { Print(fp.ToString()); }
+			public void Print(Object o) 
+			{
+				textPanel.WritePublicText(o.ToString(), true);
+			}
 
-			public void Println(string s) { Print(s + "\n"); }
-			public void Println(int i) { Println(i.ToString()); }
-			public void Println(long l) { Println(l.ToString()); }
-			public void Println(float f) { Println(f.ToString()); }
-			public void Println(double d) { Println(d.ToString()); }
-			public void Println(VRage.MyFixedPoint fp) { Println(fp.ToString()); }
+			public void Println(Object o) 
+			{ 
+				Print(o.ToString() + "\n"); 
+			}
 
-			public void PrintMiddle(string s)
+			public void PrintMiddle(Object o)
 			{
 				StringBuilder sb = new StringBuilder();
-				sb.Append(' ', (Length - s.Length) / 2);
-				Println(sb.ToString() + s);
+				sb.Append(' ', (length - o.ToString().Length) / 2);
+				Println(sb.ToString() + o.ToString());
 			}
-			public void PrintMiddle(int i) { PrintMiddle(i.ToString()); }
-			public void PrintMiddle(long l) { PrintMiddle(l.ToString()); }
-			public void PrintMiddle(float f) { PrintMiddle(f.ToString()); }
-			public void PrintMiddle(double d) { PrintMiddle(d.ToString()); }
-			public void PrintMiddle(VRage.MyFixedPoint fp) { PrintMiddle(fp.ToString()); }
 
-			public void Clear() { TextPanel.WritePublicText(""); }
+			public void Clear()
+			{
+				textPanel.WritePublicText("");
+			}
 		}
 	}
 }
