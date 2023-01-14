@@ -22,7 +22,7 @@ namespace IngameScript
 {
     partial class Program
     {
-        public interface Monitor
+        public interface IMonitor
         {
             void Render();
         }

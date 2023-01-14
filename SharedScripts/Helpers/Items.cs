@@ -44,7 +44,7 @@ namespace IngameScript
 
 			public static class Ingots
 			{
-				public static readonly Item STONE = new Item("MyObjectBuilder_Ingot/Stone", "Камень");
+				public static readonly Item STONE = new Item("MyObjectBuilder_Ingot/Stone", "Гравий");
 				public static readonly Item IRON = new Item("MyObjectBuilder_Ingot/Iron", "Железо");
 				public static readonly Item SILICON = new Item("MyObjectBuilder_Ingot/Silicon", "Кремний");
 				public static readonly Item NICKEL = new Item("MyObjectBuilder_Ingot/Nickel", "Никель");
@@ -109,22 +109,28 @@ namespace IngameScript
 			}
 
 			public static readonly List<Ore> ORES = new List<Ore> {
-				Ores.STONE, Ores.IRON, Ores.SILICON, Ores.NICKEL, Ores.COBALT, Ores.MAGNESIUM, Ores.SILVER, Ores.GOLD, Ores.PLATINUM, Ores.URANIUM
+				Ores.STONE, Ores.IRON, Ores.SILICON, Ores.NICKEL, Ores.COBALT, Ores.MAGNESIUM, Ores.SILVER, Ores.GOLD, Ores.PLATINUM,
+				Ores.URANIUM
 			};
 
 			public static readonly List<Item> INGOTS = new List<Item> {
-				Ingots.STONE, Ingots.IRON, Ingots.SILICON, Ingots.NICKEL, Ingots.COBALT, Ingots.MAGNESIUM, Ingots.SILVER, Ingots.GOLD, Ingots.PLATINUM, Ingots.URANIUM
+				Ingots.STONE, Ingots.IRON, Ingots.SILICON, Ingots.NICKEL, Ingots.COBALT, Ingots.MAGNESIUM, Ingots.SILVER, Ingots.GOLD,
+				Ingots.PLATINUM, Ingots.URANIUM
 			};
 
 			public static readonly List<Item> COMPONENTS = new List<Item> {
-				Components.STEEL_PLATE, Components.INTEROR_PLATE, Components.CONSTRUCTION, Components.COMPUTER, Components.MOTOR, Components.GIRDER, Components.SMALL_TUBE,
-				Components.LARGE_TUBE, Components.METAL_GRID, Components.DISPLAY, Components.BULLETPROOF_GLASS, Components.POWER_CELL, Components.RADIO_COMMUNICATION,
-				Components.MEDICAL, Components.REACTOR, Components.THRUST, Components.DETECTOR, Components.GRAVITY_GENERATOR, Components.EXPLOSIVES, Components.SOLAR_CELL
+				Components.STEEL_PLATE, Components.INTEROR_PLATE, Components.CONSTRUCTION, Components.COMPUTER, Components.MOTOR,
+				Components.GIRDER, Components.SMALL_TUBE, Components.LARGE_TUBE, Components.METAL_GRID, Components.DISPLAY,
+				Components.BULLETPROOF_GLASS, Components.POWER_CELL, Components.RADIO_COMMUNICATION, Components.MEDICAL,
+				Components.REACTOR, Components.THRUST, Components.DETECTOR, Components.GRAVITY_GENERATOR, Components.EXPLOSIVES,
+				Components.SOLAR_CELL
 			};
 
 			public static readonly List<Item> INSTRUMENTS = new List<Item> {
-				Instruments.WELDER_T0, Instruments.GRINDER_T0, Instruments.DRILL_T0, Instruments.WELDER_T1, Instruments.GRINDER_T1, Instruments.DRILL_T1,
-				Instruments.WELDER_T2, Instruments.GRINDER_T2, Instruments.DRILL_T2, Instruments.WELDER_T3, Instruments.GRINDER_T3, Instruments.DRILL_T3
+				Instruments.WELDER_T0, Instruments.GRINDER_T0, Instruments.DRILL_T0,
+				Instruments.WELDER_T1, Instruments.GRINDER_T1, Instruments.DRILL_T1,
+				Instruments.WELDER_T2, Instruments.GRINDER_T2, Instruments.DRILL_T2,
+				Instruments.WELDER_T3, Instruments.GRINDER_T3, Instruments.DRILL_T3
 			};
 
 			public static readonly List<Item> OTHER = new List<Item> {

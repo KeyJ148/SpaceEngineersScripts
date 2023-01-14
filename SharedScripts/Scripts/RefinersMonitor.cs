@@ -22,7 +22,7 @@ namespace IngameScript
 {
     partial class Program
     {
-        public class RefinersMonitor : Monitor
+        public class RefinersMonitor : IMonitor
         {
 
             private readonly Display Display;
@@ -31,18 +31,15 @@ namespace IngameScript
             private readonly int MaxNameLength;
             private readonly string HeaderText;
 
-            public RefinersMonitor(Display display, List<Ore> displayedOres, Dictionary<Ore, int> countRefinersByOreType, int countUniversalRefiners, List<IMyEntity> containers)
+            private RefinersMonitor(Display display, List<Ore> displayedOres, Dictionary<Ore, int> countRefinersByOreType,
+                int countUniversalRefiners, List<IMyEntity> containers, string headerText)
             {
                 Display = display;
-                DisplayedOresToSpeedInHour = displayedOres.ToDictionary(ore => ore, ore => GetRefineSpeedInHour(ore, countRefinersByOreType, countUniversalRefiners));
                 Containers = containers;
-                MaxNameLength = displayedOres.Select(ore => ore.Name.Length).Max();
-            }
-
-            public RefinersMonitor(Display display, List<Ore> displayedOres, Dictionary<Ore, int> countRefinersByOreType, int countUniversalRefiners, List<IMyEntity> containers,
-                string headerText) : this(display, displayedOres, countRefinersByOreType, countUniversalRefiners, containers)
-            {
                 HeaderText = headerText;
+                DisplayedOresToSpeedInHour = displayedOres
+                    .ToDictionary(ore => ore, ore => GetRefineSpeedInHour(ore, countRefinersByOreType, countUniversalRefiners));
+                MaxNameLength = displayedOres.Select(ore => ore.Name.Length).Max();
             }
 
             public void Render()
@@ -56,7 +53,8 @@ namespace IngameScript
                 Dictionary<Ore, long> displayedOresToCount = DisplayedOresToSpeedInHour.Keys.ToDictionary(ore => ore, ore => 0L);
                 foreach (IMyInventory inventory in Utils.GetAllInventory(Containers))
                 {
-                    displayedOresToCount.Keys.ToList().ForEach(ore => displayedOresToCount[ore] += inventory.GetItemAmount(ore.Id).ToIntSafe());
+                    displayedOresToCount.Keys.ToList().ForEach(ore =>
+                        displayedOresToCount[ore] += inventory.GetItemAmount(ore.Id).ToIntSafe());
                 }
 
                 DisplayedOresToSpeedInHour.Keys.ToList().ForEach(ore => Display.Println(GetSpeedInfoLine(ore, displayedOresToCount[ore])));
@@ -85,6 +83,11 @@ namespace IngameScript
                 sb.Append(Utils.GetHourTranslate(hours));
 
                 return sb.ToString();
+            }
+
+            public class Builder
+            {
+
             }
         }
     }

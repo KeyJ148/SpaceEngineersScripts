@@ -9,7 +9,7 @@
     <Import_RootNamespace>SharedScripts</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\Monitor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\IMonitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scripts\RefinersMonitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\Utils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\Items.cs" />
