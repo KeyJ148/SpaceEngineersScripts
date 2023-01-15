@@ -28,16 +28,16 @@ namespace IngameScript
 
 			public static class Ores
 			{
-				public static readonly Ore STONE = new Ore("MyObjectBuilder_Ore/Stone", "Камень", 46800);
-				public static readonly Ore IRON = new Ore("MyObjectBuilder_Ore/Iron", "Железо", 93600);
-				public static readonly Ore SILICON = new Ore("MyObjectBuilder_Ore/Silicon", "Кремний", 7800);
-				public static readonly Ore NICKEL = new Ore("MyObjectBuilder_Ore/Nickel", "Никель", 2340);
-				public static readonly Ore COBALT = new Ore("MyObjectBuilder_Ore/Cobalt", "Кобальт", 1170);
-				public static readonly Ore MAGNESIUM = new Ore("MyObjectBuilder_Ore/Magnesium", "Магний", 4680);
-				public static readonly Ore SILVER = new Ore("MyObjectBuilder_Ore/Silver", "Серебро", 4680);
-				public static readonly Ore GOLD = new Ore("MyObjectBuilder_Ore/Gold", "Золото", 11700);
-				public static readonly Ore PLATINUM = new Ore("MyObjectBuilder_Ore/Platinum", "Платина", 1170);
-				public static readonly Ore URANIUM = new Ore("MyObjectBuilder_Ore/Uranium", "Уран", 1170);
+				public static readonly Ore STONE = new Ore("MyObjectBuilder_Ore/Stone", "Камень", 130, 0.0504);
+				public static readonly Ore IRON = new Ore("MyObjectBuilder_Ore/Iron", "Железо", 26, 0.7);
+				public static readonly Ore SILICON = new Ore("MyObjectBuilder_Ore/Silicon", "Кремний", 2.167, 0.7);
+				public static readonly Ore NICKEL = new Ore("MyObjectBuilder_Ore/Nickel", "Никель", 1.97, 0.4);
+				public static readonly Ore COBALT = new Ore("MyObjectBuilder_Ore/Cobalt", "Кобальт", 0.433, 0.3);
+				public static readonly Ore MAGNESIUM = new Ore("MyObjectBuilder_Ore/Magnesium", "Магний", 2.6, 0.007);
+				public static readonly Ore SILVER = new Ore("MyObjectBuilder_Ore/Silver", "Серебро", 1.3, 0.1);
+				public static readonly Ore GOLD = new Ore("MyObjectBuilder_Ore/Gold", "Золото", 3.25, 0.01);
+				public static readonly Ore PLATINUM = new Ore("MyObjectBuilder_Ore/Platinum", "Платина", 0.433, 0.005);
+				public static readonly Ore URANIUM = new Ore("MyObjectBuilder_Ore/Uranium", "Уран", 0.325, 0.01);
 				public static readonly Item ICE = new Item("MyObjectBuilder_Ore/Ice", "Лёд");
 
 			}
@@ -146,7 +146,7 @@ namespace IngameScript
 			public readonly MyDefinitionId Id;
 			public readonly string Name;
 
-			protected Item(string id, string name) {
+			public Item(string id, string name) {
 				Id = MyDefinitionId.Parse(id);
 				Name = name;
 			}
@@ -155,10 +155,12 @@ namespace IngameScript
 		public class Ore : Item
 		{
 
-			public readonly int RefineSpeed; //kg/hour
+			public readonly double RefineSpeed; //kg/sec
+			public readonly double RefineEfficiency; //result from ore
 
-			protected Ore(string id, string name, int refineSpeed) : base(id, name) {
+			public Ore(string id, string name, double refineSpeed, double refineEfficiency) : base(id, name) {
 				RefineSpeed = refineSpeed;
+				RefineEfficiency = refineEfficiency;
 			}
 
 		}

@@ -9,13 +9,15 @@
     <Import_RootNamespace>SharedScripts</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ProgressbarSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\IMonitor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scripts\AssemblersMonitor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scripts\CargoItemsMonitor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scripts\CargoVolumeMonitor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scripts\GasMonitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scripts\RefinersMonitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\Utils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\Items.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\Display.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Scripts\" />
   </ItemGroup>
 </Project>

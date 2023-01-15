@@ -25,13 +25,13 @@ namespace IngameScript
 		public class Display
 		{
 
+			public readonly int Length;
 			private readonly IMyTextPanel textPanel;
-			private readonly int length;
 
 			public Display(IMyTextPanel textPanel, int length)
 			{
+				Length = length;
 				this.textPanel = textPanel;
-				this.length = length;
 			}
 
 			public Display(IMyTextPanel textPanel) : this(textPanel, 35) { }
@@ -49,7 +49,8 @@ namespace IngameScript
 			public void PrintMiddle(Object o)
 			{
 				StringBuilder sb = new StringBuilder();
-				sb.Append(' ', (length - o.ToString().Length) / 2);
+				int prefixSpaces = Math.Max((Length - o.ToString().Length) / 2, 0);
+				sb.Append(' ', prefixSpaces);
 				Println(sb.ToString() + o.ToString());
 			}
 

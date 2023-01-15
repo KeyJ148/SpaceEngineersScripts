@@ -51,7 +51,7 @@ namespace IngameScript
                 }
 
                 List<IMyInventory> inventories = Utils.GetAllInventory(containers);
-                List<Item> itemsToCalculate = displayedOresToSpeedInHour.Keys.Select(ore => (Item) ore).ToList();
+                List<Item> itemsToCalculate = new List<Item>(displayedOresToSpeedInHour.Keys);
                 Dictionary<Item, long> displayedOresToCount = Utils.CalculateItemsInAllInventory(inventories, itemsToCalculate);
 
                 displayedOresToSpeedInHour.Keys.ToList().ForEach(ore => display.Println(GetSpeedInfoLine(ore, displayedOresToCount[ore])));
@@ -60,7 +60,7 @@ namespace IngameScript
             private long GetRefineSpeedInHour(Ore ore, Dictionary<Ore, int> countRefinersByOreType, int countUniversalRefiners)
             {
                 long countRefiners = countUniversalRefiners + countRefinersByOreType.GetValueOrDefault(ore, 0);
-                return countRefiners * ore.RefineSpeed;
+                return (long) (countRefiners * ore.RefineSpeed * 3600);
             }
 
             private String GetSpeedInfoLine(Ore ore, long count)

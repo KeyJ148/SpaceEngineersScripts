@@ -27,14 +27,48 @@ namespace IngameScript
         public Program()
         {
             Runtime.UpdateFrequency = UpdateFrequency.Update100;
+            ProgressbarSettings progressbarSettings = new ProgressbarSettings(' ', 'x', 'X', 0);
 
             List<IMyEntity> allContainers = new List<IMyEntity>();
             GridTerminalSystem.GetBlocksOfType<IMyEntity>(allContainers);
             List<IMyAssembler> allAssemblers = new List<IMyAssembler>();
             GridTerminalSystem.GetBlocksOfType<IMyAssembler>(allAssemblers);
 
+            monitors.Add(new CargoItemsMonitor(
+                display: new Display(GridTerminalSystem.GetBlockWithName("Дисплей - руды") as IMyTextPanel, 34),
+                containers: allContainers,
+                itemToMaxCount: Items.ORES.ToDictionary(item => (Item) item, item => 100000L),
+                headerText: "РУДЫ",
+                progressbarSettings: progressbarSettings
+            ));
+
+            monitors.Add(new CargoItemsMonitor(
+                 display: new Display(GridTerminalSystem.GetBlockWithName("Дисплей - слитки") as IMyTextPanel, 34),
+                 containers: allContainers,
+                 itemToMaxCount: Items.INGOTS.ToDictionary(item => item, item => 100000L),
+                 headerText: "СЛИТКИ",
+                progressbarSettings: progressbarSettings
+             ));
+
+            monitors.Add(new CargoItemsMonitor(
+                display: new Display(GridTerminalSystem.GetBlockWithName("Дисплей - компоненты 1") as IMyTextPanel, 34),
+                containers: allContainers,
+                itemToMaxCount: Items.COMPONENTS.GetRange(0, Items.COMPONENTS.Count/2).ToDictionary(item => item, item => 10000L),
+                headerText: "КОМПОНЕНТЫ",
+                progressbarSettings: progressbarSettings
+            ));
+
+            monitors.Add(new CargoItemsMonitor(
+                display: new Display(GridTerminalSystem.GetBlockWithName("Дисплей - компоненты 2") as IMyTextPanel, 34),
+                containers: allContainers,
+                itemToMaxCount: Items.COMPONENTS.GetRange(Items.COMPONENTS.Count / 2, Items.COMPONENTS.Count - Items.COMPONENTS.Count / 2)
+                    .ToDictionary(item => item, item => 10000L),
+                headerText: "КОМПОНЕНТЫ",
+                progressbarSettings: progressbarSettings
+            ));
+
             monitors.Add(new RefinersMonitor(
-                display: new Display(GridTerminalSystem.GetBlockWithName("Дисплей 1") as IMyTextPanel, 35),
+                display: new Display(GridTerminalSystem.GetBlockWithName("Дисплей - заводы") as IMyTextPanel, 34),
                 displayedOres: Items.ORES,
                 countRefinersByOreType: new Dictionary<Ore, int>(),
                 countUniversalRefiners: 3,
@@ -43,9 +77,33 @@ namespace IngameScript
             ));
 
             monitors.Add(new AssemblersMonitor(
-                display: new Display(GridTerminalSystem.GetBlockWithName("Дисплей 2") as IMyTextPanel, 35),
+                display: new Display(GridTerminalSystem.GetBlockWithName("Дисплей - сборщики") as IMyTextPanel, 34),
                 assemblers: allAssemblers,
                 headerText: "СБОРЩИКИ"
+            ));
+
+            IMyEntity container1 = GridTerminalSystem.GetBlockWithName("Контейнер 1");
+            IMyEntity container2 = GridTerminalSystem.GetBlockWithName("Контейнер 2");
+            Dictionary<List<IMyEntity>, string> groupContainersWithName = new Dictionary<List<IMyEntity>, string>();
+            groupContainersWithName.Add(allContainers, "Все");
+            groupContainersWithName.Add(new List<IMyEntity> { container1, container2 }, "Б. контейнеры");
+            groupContainersWithName.Add(new List<IMyEntity> { container1 }, "Контейнер 1");
+            groupContainersWithName.Add(new List<IMyEntity> { container2 }, "Контейнер 2");
+            monitors.Add(new CargoVolumeMonitor(
+                display: new Display(GridTerminalSystem.GetBlockWithName("Дисплей - хранилища") as IMyTextPanel, 34),
+                groupContainersWithName: groupContainersWithName,
+                headerText: "ХРАНИЛИЩА",
+                progressbarSettings: progressbarSettings
+            ));
+
+            IMyGasTank gasTankO2 = GridTerminalSystem.GetBlockWithName("Водородный бак") as IMyGasTank;
+            Dictionary<List<IMyGasTank>, string> groupTanksWithName = new Dictionary<List<IMyGasTank>, string>();
+            groupTanksWithName.Add(new List<IMyGasTank> { gasTankO2 }, "Водород");
+            monitors.Add(new GasMonitor(
+                display: new Display(GridTerminalSystem.GetBlockWithName("Дисплей - газы") as IMyTextPanel, 34),
+                groupTanksWithName: groupTanksWithName,
+                headerText: "ГАЗЫ",
+                progressbarSettings: progressbarSettings
             ));
         }
 
