@@ -65,6 +65,7 @@ namespace IngameScript
 
                 return assembler.CustomName +
                     new string(' ', countSpaceAfterName) +
+                    " " +
                     ((work) ? "W" : " ") +
                     ((coop) ? "C" : " ") +
                     ((repeat) ? "R" : " ") +

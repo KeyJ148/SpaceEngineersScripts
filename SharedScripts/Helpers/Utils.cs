@@ -25,6 +25,11 @@ namespace IngameScript
         public static class Utils
         {
 
+			public static long FromRaw(long rawValue)
+            {
+				return rawValue / 1000000;
+            }
+
 			public static string GetShortNumber(long number, bool alignment)
 			{
 				char[] suffixes = {' ', 'K', 'M', 'G', 'T', 'P', 'E', '?'};
@@ -55,6 +60,22 @@ namespace IngameScript
 				return "часов";
 			}
 
+			public static string GetProgressBar(long count, long maxCount, ProgressbarSettings progressbarSettings)
+            {
+				const int COUNT_SPEC_CHARS = 13; // " [_____] 100K/999K" Number of chars without progress bar (symbols _____)
+
+				int lenght = progressbarSettings.Lenght - COUNT_SPEC_CHARS;
+				double percent = maxCount != 0 ? (double) count / maxCount : 0;
+				int countCharFull = (int) Math.Floor(lenght * percent);
+				int countCharEmpty = lenght - countCharFull;
+
+				string progressbarChars = countCharEmpty > 0 ?
+					new string(progressbarSettings.ProgressbarFull, countCharFull) +
+						new string(progressbarSettings.ProgressBarEmpty, countCharEmpty) :
+					new string(progressbarSettings.ProgressBar100percent, lenght);
+				return $" [{progressbarChars}] {GetShortNumber(count, true)}/{GetShortNumber(maxCount, true)}";
+			}
+
 			public static List<IMyInventory> GetAllInventory(IMyEntity entity)
             {
 				List<IMyInventory> inventories = new List<IMyInventory>(entity.InventoryCount);
@@ -76,7 +97,7 @@ namespace IngameScript
 				Dictionary<Item, long> itemToCount = itemsToCalculate.ToDictionary(item => item, item => 0L);
 				foreach (IMyInventory inventory in inventories)
 				{
-					itemsToCalculate.ForEach(item => itemToCount[item] += inventory.GetItemAmount(item.Id).ToIntSafe());
+					itemsToCalculate.ForEach(item => itemToCount[item] += FromRaw(inventory.GetItemAmount(item.Id).RawValue));
 				}
 				return itemToCount;
 			}
