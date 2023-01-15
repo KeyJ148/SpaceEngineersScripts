@@ -15,6 +15,7 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		SharedScripts\SharedScripts.projitems*{66683e32-184d-487e-906c-ae8c52c842f0}*SharedItemsImports = 13
 		SharedScripts\SharedScripts.projitems*{a78e89ee-3451-4aaa-9fa7-8ebe91acc9dd}*SharedItemsImports = 4
+		SharedScripts\SharedScripts.projitems*{c400b7e3-7fe8-407d-8d01-22db793f62d8}*SharedItemsImports = 4
 		SharedScripts\SharedScripts.projitems*{f78c4e11-ff77-4882-819c-a7c736535c43}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -52,8 +52,8 @@ namespace IngameScript
 			batteries = new List<IMyBatteryBlock>();
 
 			// Scan energy system
-			GridTerminalSystem.GetBlocksOfType(reactors);
-			GridTerminalSystem.GetBlocksOfType(batteries);
+			GridTerminalSystem.GetBlocksOfType(reactors, reactor => reactor.IsSameConstructAs(Me));
+			GridTerminalSystem.GetBlocksOfType(batteries, battery => battery.IsSameConstructAs(Me));
 		}
 
 
@@ -63,7 +63,7 @@ namespace IngameScript
 			if (cyclesCounter >= maxCycles)
 				Reset();
 
-
+			
 			var chargeLevel = GetStoredEnergyPercentage();
 			
 

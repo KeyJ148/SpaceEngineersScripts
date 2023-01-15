@@ -22,10 +22,14 @@ namespace IngameScript
 {
     partial class Program
     {
-
+		/// <summary>
+		/// Содержит перечисления игровых предметов
+		/// </summary>
 		public static class Items
 		{
-
+			/// <summary>
+			/// Содержит перечисление руд
+			/// </summary>
 			public static class Ores
 			{
 				public static readonly Ore STONE = new Ore("MyObjectBuilder_Ore/Stone", "Камень", 130, 0.0504);
@@ -42,6 +46,9 @@ namespace IngameScript
 
 			}
 
+			/// <summary>
+			/// Содержит перечисление ресурсов
+			/// </summary>
 			public static class Ingots
 			{
 				public static readonly Item STONE = new Item("MyObjectBuilder_Ingot/Stone", "Гравий");
@@ -56,6 +63,9 @@ namespace IngameScript
 				public static readonly Item URANIUM = new Item("MyObjectBuilder_Ingot/Uranium", "Уран");
 			}
 
+			/// <summary>
+			/// Содержит перечисление строительных компонентов
+			/// </summary>
 			public static class Components
 			{
 				public static readonly Item STEEL_PLATE = new Item("MyObjectBuilder_Component/SteelPlate", "Сталь");
@@ -80,6 +90,10 @@ namespace IngameScript
 				public static readonly Item SOLAR_CELL = new Item("MyObjectBuilder_Component/SolarCell", "Солн. пан.");
 			}
 
+
+			/// <summary>
+			/// Содержит перечисление инструментов (T0-T3 +баллоны)
+			/// </summary>
 			public static class Instruments
 			{
 				public static readonly Item WELDER_T0 = new Item("MyObjectBuilder_PhysicalGunObject/WelderItem", "Сварщик Т0");
@@ -98,12 +112,14 @@ namespace IngameScript
 				public static readonly Item OXYGEN_BOTTLE = new Item("MyObjectBuilder_OxygenContainerObject/OxygenBottle", "Баллон O2");
 			}
 
-			public static class Weapons
+			// TODO: Перечисление боеприпасов
+			public static class Ammo
 			{
 
 			}
 
-			public static class Ammo
+			// TODO: Перечисление оружий
+			public static class Weapons
 			{
 
 			}
@@ -162,7 +178,34 @@ namespace IngameScript
 				RefineSpeed = refineSpeed;
 				RefineEfficiency = refineEfficiency;
 			}
+		}
 
+		// TODO: режим боли
+		public class Weapon : Item
+		{
+			public readonly Ammo Ammo;
+			public readonly double DamagePerShot;
+			public readonly double ReloadTime; // sec
+			public readonly double FireRate; // shots/sec
+
+			public Weapon(string id, string name, Ammo ammo, double damage, double reloadTime, double fireRate) : base(id, name)
+			{
+				Ammo = ammo;
+				DamagePerShot = damage;
+				ReloadTime = reloadTime;
+				FireRate = fireRate;
+			}
+
+		}
+
+		public class Ammo : Item
+		{
+			public readonly int MaxAmmo;
+
+			public Ammo(string id, string name, int maxAmmo) : base(id, name)
+			{
+				MaxAmmo = maxAmmo;
+			}
 		}
 	}
 }
