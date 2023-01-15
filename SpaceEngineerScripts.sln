@@ -9,6 +9,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SharedScripts", "SharedScri
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainMonitor", "MainMonitor\MainMonitor.csproj", "{A78E89EE-3451-4AAA-9FA7-8EBE91ACC9DD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuke", "Nuke\Nuke.csproj", "{C400B7E3-7FE8-407D-8D01-22DB793F62D8}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		SharedScripts\SharedScripts.projitems*{66683e32-184d-487e-906c-ae8c52c842f0}*SharedItemsImports = 13
@@ -23,6 +25,8 @@ Global
 		{F78C4E11-FF77-4882-819C-A7C736535C43}.Debug|x64.Build.0 = Debug|x64
 		{A78E89EE-3451-4AAA-9FA7-8EBE91ACC9DD}.Debug|x64.ActiveCfg = Debug|x64
 		{A78E89EE-3451-4AAA-9FA7-8EBE91ACC9DD}.Debug|x64.Build.0 = Debug|x64
+		{C400B7E3-7FE8-407D-8D01-22DB793F62D8}.Debug|x64.ActiveCfg = Debug|x64
+		{C400B7E3-7FE8-407D-8D01-22DB793F62D8}.Debug|x64.Build.0 = Debug|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
