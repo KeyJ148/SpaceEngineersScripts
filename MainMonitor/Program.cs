@@ -27,7 +27,7 @@ namespace IngameScript
         public Program()
         {
             Runtime.UpdateFrequency = UpdateFrequency.Update100;
-            ProgressbarSettings progressbarSettings = new ProgressbarSettings(' ', 'x', 'X', 0);
+            ProgressbarSettings progressbarSettings = new ProgressbarSettings(' ', '■', '■', 0);
 
             List<IMyEntity> allContainers = new List<IMyEntity>();
             GridTerminalSystem.GetBlocksOfType<IMyEntity>(allContainers);

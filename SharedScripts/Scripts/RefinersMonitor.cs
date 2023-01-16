@@ -69,8 +69,8 @@ namespace IngameScript
                 long speedInHour = displayedOresToSpeedInHour[ore];
                 long hours = count / speedInHour;
 
-                return $"{ore.Name}{new string(' ', countSpaceAfterName)}" +
-                    $" ({Utils.GetShortNumber(speedInHour, true)}/Час): {hours} {Utils.GetHourTranslate(hours)}";
+                return $"{ore.Name}{new string(' ', countSpaceAfterName)} " +
+                    $"({Utils.GetShortNumber(speedInHour, true)}/Час): {hours} {Utils.GetHourTranslate(hours)}";
             }
         }
     }
