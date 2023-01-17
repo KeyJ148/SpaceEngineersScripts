@@ -364,3 +364,9 @@ FodyWeavers.xsd
 
 # Test files
 TestScript/
+
+#Backup files
+*.zip
+
+#MDK Paths
+**/MDK.paths.props
