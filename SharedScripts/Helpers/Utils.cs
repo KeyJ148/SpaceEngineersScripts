@@ -101,6 +101,18 @@ namespace IngameScript
 				}
 				return itemToCount;
 			}
+
+			public static string GetGridName(IMyCubeBlock block)
+            {
+				return block.CubeGrid.CustomName;
+            }
+
+			public static Dictionary<List<T>, string> GetBlocksToGridName<T>(List<T> blocks) where T : IMyCubeBlock
+            {
+				return blocks
+					.GroupBy(block => GetGridName(block))
+					.ToDictionary(group => group.ToList(), group => group.Key);
+            }
 		}
     }
 }
