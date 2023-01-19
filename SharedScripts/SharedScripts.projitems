@@ -14,6 +14,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Scripts\AssemblersMonitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scripts\CargoItemsMonitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scripts\CargoVolumeMonitor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scripts\BatteryMonitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scripts\GasMonitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scripts\RefinersMonitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\Utils.cs" />

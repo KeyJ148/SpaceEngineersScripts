@@ -71,7 +71,7 @@ namespace IngameScript
                 display: new Display(GridTerminalSystem.GetBlockWithName("Дисплей - заводы") as IMyTextPanel, 34),
                 displayedOres: Items.ORES,
                 countRefinersByOreType: new Dictionary<Ore, int>(),
-                countUniversalRefiners: 3,
+                countUniversalRefiners: 9,
                 containers: allContainers,
                 headerText: "ОЧИСТИТЕЛЬНЫЕ ЗАВОДЫ"
             ));
@@ -82,8 +82,8 @@ namespace IngameScript
                 headerText: "СБОРЩИКИ"
             ));
 
-            IMyEntity container1 = GridTerminalSystem.GetBlockWithName("Контейнер 1");
-            IMyEntity container2 = GridTerminalSystem.GetBlockWithName("Контейнер 2");
+            IMyEntity container1 = GridTerminalSystem.GetBlockWithName("[BFM] Контейнер 1");
+            IMyEntity container2 = GridTerminalSystem.GetBlockWithName("[BFM] Контейнер 2");
             Dictionary<List<IMyEntity>, string> groupContainersWithName = new Dictionary<List<IMyEntity>, string>();
             groupContainersWithName.Add(allContainers, "Все");
             groupContainersWithName.Add(new List<IMyEntity> { container1, container2 }, "Б. контейнеры");
@@ -96,13 +96,23 @@ namespace IngameScript
                 progressbarSettings: progressbarSettings
             ));
 
-            IMyGasTank gasTankO2 = GridTerminalSystem.GetBlockWithName("Водородный бак") as IMyGasTank;
+            IMyGasTank gasTankO2 = GridTerminalSystem.GetBlockWithName("[BFM] Водородный бак") as IMyGasTank;
             Dictionary<List<IMyGasTank>, string> groupTanksWithName = new Dictionary<List<IMyGasTank>, string>();
             groupTanksWithName.Add(new List<IMyGasTank> { gasTankO2 }, "Водород");
             monitors.Add(new GasMonitor(
                 display: new Display(GridTerminalSystem.GetBlockWithName("Дисплей - газы") as IMyTextPanel, 34),
                 groupTanksWithName: groupTanksWithName,
                 headerText: "ГАЗЫ",
+                progressbarSettings: progressbarSettings
+            ));
+
+            List<IMyBatteryBlock> batteries = new List<IMyBatteryBlock>();
+            GridTerminalSystem.GetBlocksOfType(batteries);
+            Dictionary<List<IMyBatteryBlock>, string> groupBatteriesWithName = Utils.GetBlocksToGridName(batteries);
+            monitors.Add(new BatteryMonitor(
+                display: new Display(GridTerminalSystem.GetBlockWithName("Дисплей - батареи") as IMyTextPanel, 68),
+                groupBatteriesWithName: groupBatteriesWithName,
+                headerText: "БАТАРЕИ",
                 progressbarSettings: progressbarSettings
             ));
         }
