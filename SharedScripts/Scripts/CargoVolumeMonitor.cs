@@ -22,51 +22,23 @@ namespace IngameScript
 {
     partial class Program
     {
-        public class CargoVolumeMonitor : IMonitor
+        public class CargoVolumeMonitor : ProgressbarMonitor<IMyEntity>
         {
+            public CargoVolumeMonitor(Display display, string headerText, ProgressbarSettings progressbarSettings,
+                   Dictionary<string, List<IMyEntity>> groupEntityByName) :
+                   base(display, headerText, progressbarSettings, groupEntityByName)
+            { }
 
-            private readonly Display display;
-            private readonly Dictionary<List<IMyEntity>, string> groupContainersWithName;
-            private readonly int maxNameLength;
-            private readonly string headerText;
-            private readonly ProgressbarSettings progressbarSettings;
-
-            public CargoVolumeMonitor(Display display, Dictionary<List<IMyEntity>, string> groupContainersWithName, string headerText,
-                ProgressbarSettings progressbarSettings)
+            protected override long GetCurrentValue(IMyEntity entity)
             {
-                this.display = display;
-                this.groupContainersWithName = groupContainersWithName;
-                this.headerText = headerText;
-                maxNameLength = groupContainersWithName.Values.Select(name => name.Length).Max();
-                this.progressbarSettings = new ProgressbarSettings(
-                    progressBarEmpty: progressbarSettings.ProgressBarEmpty,
-                    progressbarFull: progressbarSettings.ProgressbarFull,
-                    progressBar100percent: progressbarSettings.ProgressBar100percent,
-                    lenght: display.Length - maxNameLength);
+                List<IMyInventory> inventories = Utils.GetAllInventory(entity);
+                return inventories.Select(inventory => Utils.FromRaw(inventory.CurrentVolume.RawValue) * 1000).Sum();
             }
 
-            public void Render()
+            protected override long GetMaxValue(IMyEntity entity)
             {
-                display.Clear();
-                if (headerText != null)
-                {
-                    display.PrintMiddle(headerText);
-                }
-
-                groupContainersWithName.Keys.ToList()
-                    .ForEach(containers => display.Println(GetVolumeInfoLine(containers, groupContainersWithName[containers])));
-            }
-
-            public string GetVolumeInfoLine(List<IMyEntity> containers, string name)
-            {
-                int countSpaceAfterName = maxNameLength - name.Length;
-
-                List<IMyInventory> inventories = Utils.GetAllInventory(containers);
-                long currentVolumeSum = inventories.Select(inventory => Utils.FromRaw(inventory.CurrentVolume.RawValue) * 1000).Sum();
-                long maxVolumeSum = inventories.Select(inventory => Utils.FromRaw(inventory.MaxVolume.RawValue) * 1000).Sum();
-
-                return name + new string(' ', countSpaceAfterName) +
-                    Utils.GetProgressBar(currentVolumeSum, maxVolumeSum, progressbarSettings);
+                List<IMyInventory> inventories = Utils.GetAllInventory(entity);
+                return inventories.Select(inventory => Utils.FromRaw(inventory.MaxVolume.RawValue) * 1000).Sum();
             }
         }
     }
