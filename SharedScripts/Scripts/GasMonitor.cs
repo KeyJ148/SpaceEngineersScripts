@@ -22,48 +22,22 @@ namespace IngameScript
 {
     partial class Program
     {
-        public class GasMonitor : IMonitor
+        public class GasMonitor : ProgressbarMonitor<IMyGasTank>
         {
-            private readonly Display display;
-            private readonly Dictionary<List<IMyGasTank>, string> groupTanksWithName;
-            private readonly int maxNameLength;
-            private readonly string headerText;
-            private readonly ProgressbarSettings progressbarSettings;
 
-            public GasMonitor(Display display, Dictionary<List<IMyGasTank>, string> groupTanksWithName, string headerText,
-                ProgressbarSettings progressbarSettings)
+            public GasMonitor(Display display, string headerText, ProgressbarSettings progressbarSettings,
+                Dictionary<string, List<IMyGasTank>> groupEntityByName) :
+                base(display, headerText, progressbarSettings, groupEntityByName) 
+            { }
+
+            protected override long GetCurrentValue(IMyGasTank gasTank)
             {
-                this.display = display;
-                this.groupTanksWithName = groupTanksWithName;
-                this.headerText = headerText;
-                maxNameLength = groupTanksWithName.Values.Select(name => name.Length).Max();
-                this.progressbarSettings = new ProgressbarSettings(
-                    progressBarEmpty: progressbarSettings.ProgressBarEmpty,
-                    progressbarFull: progressbarSettings.ProgressbarFull,
-                    progressBar100percent: progressbarSettings.ProgressBar100percent,
-                    lenght: display.Length - maxNameLength);
+                return (long) (gasTank.Capacity * gasTank.FilledRatio);
             }
 
-            public void Render()
+            protected override long GetMaxValue(IMyGasTank gasTank)
             {
-                display.Clear();
-                if (headerText != null)
-                {
-                    display.PrintMiddle(headerText);
-                }
-
-                groupTanksWithName.Keys.ToList()
-                    .ForEach(containers => display.Println(GetGasInfoLine(containers, groupTanksWithName[containers])));
-            }
-
-            public string GetGasInfoLine(List<IMyGasTank> tanks, string name)
-            {
-                int countSpaceAfterName = maxNameLength - name.Length;
-                long currentVolumeSum = tanks.Select(tank => (long) (tank.Capacity * tank.FilledRatio)).Sum();
-                long maxVolumeSum = tanks.Select(tank => (long) tank.Capacity).Sum();
-
-                return name + new string(' ', countSpaceAfterName) +
-                    Utils.GetProgressBar(currentVolumeSum, maxVolumeSum, progressbarSettings);
+                return (long) gasTank.Capacity;
             }
         }
     }
