@@ -22,48 +22,21 @@ namespace IngameScript
 {
     partial class Program
     {
-        public class BatteryMonitor : IMonitor
+        public class BatteryMonitor : ProgressbarMonitor<IMyBatteryBlock>
         {
-            private readonly Display display;
-            private readonly Dictionary<List<IMyBatteryBlock>, string> groupBatteriesWithName;
-            private readonly int maxNameLength;
-            private readonly string headerText;
-            private readonly ProgressbarSettings progressbarSettings;
+            public BatteryMonitor(Display display, string headerText, ProgressbarSettings progressbarSettings,
+                Dictionary<string, List<IMyBatteryBlock>> groupEntityByName) :
+                base(display, headerText, progressbarSettings, groupEntityByName) 
+            { }
 
-            public BatteryMonitor(Display display, Dictionary<List<IMyBatteryBlock>, string> groupBatteriesWithName, string headerText,
-                ProgressbarSettings progressbarSettings)
+            protected override long GetCurrentValue(IMyBatteryBlock battery)
             {
-                this.display = display;
-                this.groupBatteriesWithName = groupBatteriesWithName;
-                this.headerText = headerText;
-                maxNameLength = groupBatteriesWithName.Values.Select(name => name.Length).Max();
-                this.progressbarSettings = new ProgressbarSettings(
-                    progressBarEmpty: progressbarSettings.ProgressBarEmpty,
-                    progressbarFull: progressbarSettings.ProgressbarFull,
-                    progressBar100percent: progressbarSettings.ProgressBar100percent,
-                    lenght: display.Length - maxNameLength);
+                return (long) ((double) battery.CurrentStoredPower * 1000000);
             }
 
-            public void Render()
+            protected override long GetMaxValue(IMyBatteryBlock battery)
             {
-                display.Clear();
-                if (headerText != null)
-                {
-                    display.PrintMiddle(headerText);
-                }
-
-                groupBatteriesWithName.Keys.ToList()
-                    .ForEach(gridName => display.Println(GetBatteryInfoLine(gridName, groupBatteriesWithName[gridName])));
-            }
-
-            public string GetBatteryInfoLine(List<IMyBatteryBlock> batteries, string name)
-            {
-                int countSpaceAfterName = maxNameLength - name.Length;
-                long currentPowerSum = batteries.Select(battery => (long) ((double) battery.CurrentStoredPower * 1000000)).Sum();
-                long maxPowerSum = batteries.Select(battery => (long)((double) battery.MaxStoredPower * 1000000)).Sum();
-
-                return name + new string(' ', countSpaceAfterName) +
-                    Utils.GetProgressBar(currentPowerSum, maxPowerSum, progressbarSettings);
+                return (long)((double)battery.MaxStoredPower * 1000000);
             }
         }
     }
