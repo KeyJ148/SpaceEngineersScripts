@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ProgressbarSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\IMonitor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ProgressbarMonitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scripts\AssemblersMonitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scripts\CargoItemsMonitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scripts\CargoVolumeMonitor.cs" />
