@@ -32,17 +32,18 @@ namespace IngameScript
 			/// </summary>
 			public static class Ores
 			{
-				public static readonly Ore STONE = new Ore("MyObjectBuilder_Ore/Stone", "Камень", 130, 0.0504);
-				public static readonly Ore IRON = new Ore("MyObjectBuilder_Ore/Iron", "Железо", 26, 0.7);
-				public static readonly Ore SILICON = new Ore("MyObjectBuilder_Ore/Silicon", "Кремний", 2.167, 0.7);
-				public static readonly Ore NICKEL = new Ore("MyObjectBuilder_Ore/Nickel", "Никель", 1.97, 0.4);
-				public static readonly Ore COBALT = new Ore("MyObjectBuilder_Ore/Cobalt", "Кобальт", 0.433, 0.3);
-				public static readonly Ore MAGNESIUM = new Ore("MyObjectBuilder_Ore/Magnesium", "Магний", 2.6, 0.007);
-				public static readonly Ore SILVER = new Ore("MyObjectBuilder_Ore/Silver", "Серебро", 1.3, 0.1);
-				public static readonly Ore GOLD = new Ore("MyObjectBuilder_Ore/Gold", "Золото", 3.25, 0.01);
-				public static readonly Ore PLATINUM = new Ore("MyObjectBuilder_Ore/Platinum", "Платина", 0.433, 0.005);
-				public static readonly Ore URANIUM = new Ore("MyObjectBuilder_Ore/Uranium", "Уран", 0.325, 0.01);
-				public static readonly Item ICE = new Item("MyObjectBuilder_Ore/Ice", "Лёд");
+				private static readonly String PREFIX = "MyObjectBuilder_Ore/";
+				public static readonly Ore STONE = new Ore(PREFIX + "Stone", "Камень", 130, 0.0504);
+				public static readonly Ore IRON = new Ore(PREFIX + "Iron", "Железо", 26, 0.7);
+				public static readonly Ore SILICON = new Ore(PREFIX + "Silicon", "Кремний", 2.167, 0.7);
+				public static readonly Ore NICKEL = new Ore(PREFIX + "Nickel", "Никель", 1.97, 0.4);
+				public static readonly Ore COBALT = new Ore(PREFIX + "Cobalt", "Кобальт", 0.433, 0.3);
+				public static readonly Ore MAGNESIUM = new Ore(PREFIX + "Magnesium", "Магний", 2.6, 0.007);
+				public static readonly Ore SILVER = new Ore(PREFIX + "Silver", "Серебро", 1.3, 0.1);
+				public static readonly Ore GOLD = new Ore(PREFIX + "Gold", "Золото", 3.25, 0.01);
+				public static readonly Ore PLATINUM = new Ore(PREFIX + "Platinum", "Платина", 0.433, 0.005);
+				public static readonly Ore URANIUM = new Ore(PREFIX + "Uranium", "Уран", 0.325, 0.01);
+				public static readonly Item ICE = new Item(PREFIX + "Ice", "Лёд");
 
 			}
 
@@ -51,16 +52,17 @@ namespace IngameScript
 			/// </summary>
 			public static class Ingots
 			{
-				public static readonly Item STONE = new Item("MyObjectBuilder_Ingot/Stone", "Гравий");
-				public static readonly Item IRON = new Item("MyObjectBuilder_Ingot/Iron", "Железо");
-				public static readonly Item SILICON = new Item("MyObjectBuilder_Ingot/Silicon", "Кремний");
-				public static readonly Item NICKEL = new Item("MyObjectBuilder_Ingot/Nickel", "Никель");
-				public static readonly Item COBALT = new Item("MyObjectBuilder_Ingot/Cobalt", "Кобальт");
-				public static readonly Item MAGNESIUM = new Item("MyObjectBuilder_Ingot/Magnesium", "Магний");
-				public static readonly Item SILVER = new Item("MyObjectBuilder_Ingot/Silver", "Серебро");
-				public static readonly Item GOLD = new Item("MyObjectBuilder_Ingot/Gold", "Золото");
-				public static readonly Item PLATINUM = new Item("MyObjectBuilder_Ingot/Platinum", "Платина");
-				public static readonly Item URANIUM = new Item("MyObjectBuilder_Ingot/Uranium", "Уран");
+				private static readonly String PREFIX = "MyObjectBuilder_Ingot/";
+				public static readonly Item STONE = new Item(PREFIX + "Stone", "Гравий");
+				public static readonly Item IRON = new Item(PREFIX + "Iron", "Железо");
+				public static readonly Item SILICON = new Item(PREFIX + "Silicon", "Кремний");
+				public static readonly Item NICKEL = new Item(PREFIX + "Nickel", "Никель");
+				public static readonly Item COBALT = new Item(PREFIX + "Cobalt", "Кобальт");
+				public static readonly Item MAGNESIUM = new Item(PREFIX + "Magnesium", "Магний");
+				public static readonly Item SILVER = new Item(PREFIX + "Silver", "Серебро");
+				public static readonly Item GOLD = new Item(PREFIX + "Gold", "Золото");
+				public static readonly Item PLATINUM = new Item(PREFIX + "Platinum", "Платина");
+				public static readonly Item URANIUM = new Item(PREFIX + "Uranium", "Уран");
 			}
 
 			/// <summary>
@@ -68,26 +70,27 @@ namespace IngameScript
 			/// </summary>
 			public static class Components
 			{
-				public static readonly Item STEEL_PLATE = new Item("MyObjectBuilder_Component/SteelPlate", "Сталь");
-				public static readonly Item INTEROR_PLATE = new Item("MyObjectBuilder_Component/InteriorPlate", "Внутр. пл.");
-				public static readonly Item CONSTRUCTION = new Item("MyObjectBuilder_Component/Construction", "Стройка");
-				public static readonly Item COMPUTER = new Item("MyObjectBuilder_Component/Computer", "Компьютер");
-				public static readonly Item MOTOR = new Item("MyObjectBuilder_Component/Motor", "Мотор");
-				public static readonly Item GIRDER = new Item("MyObjectBuilder_Component/Girder", "Балка");
-				public static readonly Item SMALL_TUBE = new Item("MyObjectBuilder_Component/SmallTube", "Малая т.");
-				public static readonly Item LARGE_TUBE = new Item("MyObjectBuilder_Component/LargeTube", "Большая т.");
-				public static readonly Item METAL_GRID = new Item("MyObjectBuilder_Component/MetalGrid", "Решётка");
-				public static readonly Item DISPLAY = new Item("MyObjectBuilder_Component/Display", "Экран");
-				public static readonly Item BULLETPROOF_GLASS = new Item("MyObjectBuilder_Component/BulletproofGlass", "Стекло");
-				public static readonly Item POWER_CELL = new Item("MyObjectBuilder_Component/PowerCell", "Батарея");
-				public static readonly Item RADIO_COMMUNICATION = new Item("MyObjectBuilder_Component/RadioCommunication", "Радио");
-				public static readonly Item MEDICAL = new Item("MyObjectBuilder_Component/Medical", "Медицина");
-				public static readonly Item REACTOR = new Item("MyObjectBuilder_Component/Reactor", "Реактор");
-				public static readonly Item THRUST = new Item("MyObjectBuilder_Component/Thrust", "Ускоритель");
-				public static readonly Item DETECTOR = new Item("MyObjectBuilder_Component/Detector", "Детектор");
-				public static readonly Item GRAVITY_GENERATOR = new Item("MyObjectBuilder_Component/GravityGenerator", "Грав. ген.");
-				public static readonly Item EXPLOSIVES = new Item("MyObjectBuilder_Component/Explosives", "Взрывчатка");
-				public static readonly Item SOLAR_CELL = new Item("MyObjectBuilder_Component/SolarCell", "Солн. пан.");
+				private static readonly String PREFIX = "MyObjectBuilder_Component/";
+				public static readonly Item STEEL_PLATE = new Item(PREFIX + "SteelPlate", "Сталь");
+				public static readonly Item INTEROR_PLATE = new Item(PREFIX + "InteriorPlate", "Внутр. пл.");
+				public static readonly Item CONSTRUCTION = new Item(PREFIX + "Construction", "Стройка");
+				public static readonly Item COMPUTER = new Item(PREFIX + "Computer", "Компьютер");
+				public static readonly Item MOTOR = new Item(PREFIX + "Motor", "Мотор");
+				public static readonly Item GIRDER = new Item(PREFIX + "Girder", "Балка");
+				public static readonly Item SMALL_TUBE = new Item(PREFIX + "SmallTube", "Малая т.");
+				public static readonly Item LARGE_TUBE = new Item(PREFIX + "LargeTube", "Большая т.");
+				public static readonly Item METAL_GRID = new Item(PREFIX + "MetalGrid", "Решётка");
+				public static readonly Item DISPLAY = new Item(PREFIX + "Display", "Экран");
+				public static readonly Item BULLETPROOF_GLASS = new Item(PREFIX + "BulletproofGlass", "Стекло");
+				public static readonly Item POWER_CELL = new Item(PREFIX + "PowerCell", "Батарея");
+				public static readonly Item RADIO_COMMUNICATION = new Item(PREFIX + "RadioCommunication", "Радио");
+				public static readonly Item MEDICAL = new Item(PREFIX + "Medical", "Медицина");
+				public static readonly Item REACTOR = new Item(PREFIX + "Reactor", "Реактор");
+				public static readonly Item THRUST = new Item(PREFIX + "Thrust", "Ускоритель");
+				public static readonly Item DETECTOR = new Item(PREFIX + "Detector", "Детектор");
+				public static readonly Item GRAVITY_GENERATOR = new Item(PREFIX + "GravityGenerator", "Грав. ген.");
+				public static readonly Item EXPLOSIVES = new Item(PREFIX + "Explosives", "Взрывчатка");
+				public static readonly Item SOLAR_CELL = new Item(PREFIX + "SolarCell", "Солн. пан.");
 			}
 
 
