@@ -9,6 +9,7 @@
     <Import_RootNamespace>SharedScripts</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\BasicMonitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ProgressbarSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\IMonitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ProgressbarMonitor.cs" />
