@@ -29,7 +29,7 @@ namespace IngameScript
             { }
             protected override string GetName(KeyValuePair<IMyAssembler, IMyAssembler> entity)
             {
-                return entity.Key.Name;
+                return entity.Key.CustomName;
             }
 
             protected override string GetInfo(KeyValuePair<IMyAssembler, IMyAssembler> entity)
