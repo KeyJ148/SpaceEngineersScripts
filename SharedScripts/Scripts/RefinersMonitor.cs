@@ -22,58 +22,46 @@ namespace IngameScript
 {
     partial class Program
     {
-        public class RefinersMonitor : IMonitor
+        public class RefinersMonitor : BasicMonitor<Ore, long>
         {
-
-            private readonly Display display;
-            private readonly Dictionary<Ore, long> displayedOresToSpeedInHour;
             private readonly List<IMyEntity> containers;
-            private readonly int maxNameLength;
-            private readonly string headerText;
+
+            private Dictionary<Item, long> displayedOresToCount;
 
             public RefinersMonitor(Display display, List<Ore> displayedOres, Dictionary<Ore, int> countRefinersByOreType,
-                int countUniversalRefiners, List<IMyEntity> containers, string headerText)
+                int countUniversalRefiners, List<IMyEntity> containers, string headerText) :
+                base(display, headerText, displayedOres //Dictionary<Ore, long> ore -> speedInHour
+                    .ToDictionary(ore => ore, ore => GetRefineSpeedInHour(ore, countRefinersByOreType, countUniversalRefiners)))
             {
-                this.display = display;
                 this.containers = containers;
-                this.headerText = headerText;
-                displayedOresToSpeedInHour = displayedOres
-                    .ToDictionary(ore => ore, ore => GetRefineSpeedInHour(ore, countRefinersByOreType, countUniversalRefiners));
-                maxNameLength = displayedOres.Select(ore => ore.Name.Length).Max();
             }
 
-            public void Update()
-            { }
-
-            public void Render()
+            public override void Update()
             {
-                display.Clear();
-                if (headerText != null)
-                {
-                    display.PrintMiddle(headerText);
-                }
-
                 List<IMyInventory> inventories = Utils.GetAllInventory(containers);
-                List<Item> itemsToCalculate = new List<Item>(displayedOresToSpeedInHour.Keys);
-                Dictionary<Item, long> displayedOresToCount = Utils.CalculateItemsInAllInventory(inventories, itemsToCalculate);
-
-                displayedOresToSpeedInHour.Keys.ToList().ForEach(ore => display.Println(GetSpeedInfoLine(ore, displayedOresToCount[ore])));
+                List<Item> itemsToCalculate = new List<Item>(monitoringEntities.Keys);
+                displayedOresToCount = Utils.CalculateItemsInAllInventory(inventories, itemsToCalculate);
             }
 
-            private long GetRefineSpeedInHour(Ore ore, Dictionary<Ore, int> countRefinersByOreType, int countUniversalRefiners)
+            protected override string GetName(KeyValuePair<Ore, long> entity)
+            {
+                return entity.Key.Name;
+            }
+
+            protected override string GetInfo(KeyValuePair<Ore, long> entity)
+            {
+                Ore ore = entity.Key;
+                long count = displayedOresToCount[ore];
+                long speedInHour = entity.Value;
+                long hours = count / speedInHour;
+
+                return $" ({Utils.GetShortNumber(speedInHour, true)}/Час): {hours} {Utils.GetHourTranslate(hours)}";
+            }
+
+            private static long GetRefineSpeedInHour(Ore ore, Dictionary<Ore, int> countRefinersByOreType, int countUniversalRefiners)
             {
                 long countRefiners = countUniversalRefiners + countRefinersByOreType.GetValueOrDefault(ore, 0);
                 return (long) (countRefiners * ore.RefineSpeed * 3600);
-            }
-
-            private String GetSpeedInfoLine(Ore ore, long count)
-            {
-                int countSpaceAfterName = maxNameLength - ore.Name.Length;
-                long speedInHour = displayedOresToSpeedInHour[ore];
-                long hours = count / speedInHour;
-
-                return $"{ore.Name}{new string(' ', countSpaceAfterName)} " +
-                    $"({Utils.GetShortNumber(speedInHour, true)}/Час): {hours} {Utils.GetHourTranslate(hours)}";
             }
         }
     }

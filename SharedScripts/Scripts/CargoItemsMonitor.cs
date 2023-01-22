@@ -24,7 +24,6 @@ namespace IngameScript
     {
         public class CargoItemsMonitor : BasicMonitor<Item, long>
         {
-
             private readonly List<IMyEntity> containers;
             private readonly ProgressbarSettings progressbarSettings;
 
