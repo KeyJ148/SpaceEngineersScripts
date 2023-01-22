@@ -22,27 +22,23 @@ namespace IngameScript
 {
     partial class Program
     {
-        public abstract class BasicMonitor<T> : IMonitor where T : IMyEntity
+        public abstract class BasicMonitor<K, V> : IMonitor
         {
             protected readonly Display display;
             protected readonly string headerText;
-            protected readonly ProgressbarSettings progressbarSettings;
-            protected readonly Dictionary<string, List<T>> groupEntityByName;
+            protected readonly Dictionary<K, V> monitoringEntities;
             protected readonly int maxNameLength;
 
-            public BasicMonitor(Display display, string headerText, ProgressbarSettings progressbarSettings,
-                Dictionary<string, List<T>> groupEntityByName)
+            public BasicMonitor(Display display, string headerText, Dictionary<K, V> monitoringEntities)
             {
                 this.display = display;
                 this.headerText = headerText;
-                this.groupEntityByName = groupEntityByName;
-                maxNameLength = groupEntityByName.Keys.Select(name => name.Length).Max();
-                this.progressbarSettings = new ProgressbarSettings(
-                    progressBarEmpty: progressbarSettings.ProgressBarEmpty,
-                    progressbarFull: progressbarSettings.ProgressbarFull,
-                    progressBar100percent: progressbarSettings.ProgressBar100percent,
-                    lenght: display.Length - maxNameLength);
+                this.monitoringEntities = monitoringEntities;
+                maxNameLength = monitoringEntities.ToList().Select(GetName).Select(name => name.Length).Max();
             }
+
+            public virtual void Update()
+            { }
 
             public void Render()
             {
@@ -52,19 +48,22 @@ namespace IngameScript
                     display.PrintMiddle(headerText);
                 }
 
-                foreach (var entry in groupEntityByName)
+                foreach (var entity in monitoringEntities)
                 {
-                    display.Println(GetOneInfoLine(entry.Key, entry.Value));
+                    display.Println(GetOneInfoLine(entity));
                 }
             }
 
-            protected string GetOneInfoLine(string name, List<T> entities)
+            protected abstract string GetName(KeyValuePair<K, V> entity);
+
+            protected string GetOneInfoLine(KeyValuePair<K, V> entity)
             {
+                string name = GetName(entity);
                 int countSpaceAfterName = maxNameLength - name.Length;
-                return name + new string(' ', countSpaceAfterName) + GetInfo(entities);
+                return name + new string(' ', countSpaceAfterName) + GetInfo(entity);
             }
 
-            protected abstract string GetInfo(List<T> entities);
+            protected abstract string GetInfo(KeyValuePair<K, V> entity);
         }
     }
 }

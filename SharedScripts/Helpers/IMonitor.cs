@@ -24,6 +24,7 @@ namespace IngameScript
     {
         public interface IMonitor
         {
+            void Update();
             void Render();
         }
     }

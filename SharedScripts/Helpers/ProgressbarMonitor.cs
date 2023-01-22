@@ -22,15 +22,22 @@ namespace IngameScript
 {
     partial class Program
     {
-        public abstract class ProgressbarMonitor<T> : BasicMonitor<T> where T : IMyEntity
+        public abstract class ProgressbarMonitor<T> : GroupsEntitiesMonitor<T> where T : IMyEntity
         {
+            protected readonly ProgressbarSettings progressbarSettings;
+
             public ProgressbarMonitor(Display display, string headerText, ProgressbarSettings progressbarSettings,
                 Dictionary<string, List<T>> groupEntityByName) :
-                base(display, headerText, progressbarSettings, groupEntityByName)
-            { }
+                base(display, headerText, groupEntityByName)
+            {
+                this.progressbarSettings = new ProgressbarSettings(
+                    progressBarEmpty: progressbarSettings.ProgressBarEmpty,
+                    progressbarFull: progressbarSettings.ProgressbarFull,
+                    progressBar100percent: progressbarSettings.ProgressBar100percent,
+                    lenght: display.Length - maxNameLength);
+            }
 
-            
-            protected override string GetInfo(List<T> entities)
+            protected override string GetInfoAboutEntitiesList(List<T> entities)
             {
                 long currentSum = entities.Select(entity => GetCurrentValue(entity)).Sum();
                 long maxSum = entities.Select(entity => GetMaxValue(entity)).Sum();
