@@ -22,41 +22,19 @@ namespace IngameScript
 {
     partial class Program
     {
-        public class AssemblersMonitor : IMonitor
-        {
-            private readonly Display display;
-            private readonly List<IMyAssembler> assemblers;
-            private readonly int maxNameLength;
-            private readonly string headerText;
+        public class AssemblersMonitor : BasicMonitor<IMyAssembler, IMyAssembler> {
 
-            public AssemblersMonitor(Display display, List<IMyAssembler> assemblers, string headerText)
-            {
-                this.display = display;
-                this.assemblers = assemblers;
-                this.headerText = headerText;
-                maxNameLength = assemblers.Select(assembler => assembler.CustomName.Length).Max();
-            }
-
-            public void Update()
+            public AssemblersMonitor(Display display, List<IMyAssembler> assemblers, string headerText) :
+                base(display, headerText, assemblers.ToDictionary(assembler => assembler))
             { }
-
-            public void Render()
+            protected override string GetName(KeyValuePair<IMyAssembler, IMyAssembler> entity)
             {
-                display.Clear();
-                if (headerText != null)
-                {
-                    display.PrintMiddle(headerText);
-                }
-
-                foreach (IMyAssembler assembler in assemblers)
-                {
-                    display.Println(GetAssemblerInfoLine(assembler));
-                }
+                return entity.Key.Name;
             }
 
-            private String GetAssemblerInfoLine(IMyAssembler assembler)
+            protected override string GetInfo(KeyValuePair<IMyAssembler, IMyAssembler> entity)
             {
-                int countSpaceAfterName = maxNameLength - assembler.CustomName.Length;
+                IMyAssembler assembler = entity.Key;
                 bool work = assembler.IsProducing;
                 bool coop = assembler.CooperativeMode;
                 bool repeat = assembler.Repeating;
@@ -66,9 +44,7 @@ namespace IngameScript
                 bool queueEmpty = productionQueue.Count == 0;
                 string queue = !queueEmpty ? productionQueue[0].BlueprintId.SubtypeName : "";
 
-                return assembler.CustomName +
-                    new string(' ', countSpaceAfterName) +
-                    " " +
+                return " " +
                     ((work) ? "W" : " ") +
                     ((coop) ? "C" : " ") +
                     ((repeat) ? "R" : " ") +
