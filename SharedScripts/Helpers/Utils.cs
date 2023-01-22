@@ -64,7 +64,7 @@ namespace IngameScript
             {
 				const int COUNT_SPEC_CHARS = 13; // " [_____] 100K/999K" Number of chars without progress bar (symbols _____)
 
-				int lenght = progressbarSettings.Lenght - COUNT_SPEC_CHARS;
+				int lenght = Math.Max(progressbarSettings.Lenght - COUNT_SPEC_CHARS, 1);
 				double percent = maxCount != 0 ? (double) count / maxCount : 0;
 				int countCharFull = (int) Math.Floor(lenght * percent);
 				int countCharEmpty = lenght - countCharFull;
