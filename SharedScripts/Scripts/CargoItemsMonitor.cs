@@ -22,50 +22,43 @@ namespace IngameScript
 {
     partial class Program
     {
-        public class CargoItemsMonitor : IMonitor
+        public class CargoItemsMonitor : BasicMonitor<Item, long>
         {
-            private readonly Display display;
+
             private readonly List<IMyEntity> containers;
-            private readonly Dictionary<Item, long> itemToMaxCount;
-            private readonly int maxNameLength;
-            private readonly string headerText;
             private readonly ProgressbarSettings progressbarSettings;
 
-            public CargoItemsMonitor(Display display, List<IMyEntity> containers, Dictionary<Item, long> itemToMaxCount, string headerText,
-                ProgressbarSettings progressbarSettings)
+            private Dictionary<Item, long> itemsToCount;
+
+            public CargoItemsMonitor(Display display, string headerText, ProgressbarSettings progressbarSettings,
+                List<IMyEntity> containers, Dictionary<Item, long> itemToMaxCount) :
+                base(display, headerText, itemToMaxCount)
             {
-                this.display = display;
-                this.containers = containers;
-                this.headerText = headerText;
-                this.itemToMaxCount = itemToMaxCount;
-                maxNameLength = itemToMaxCount.Keys.Select(item => item.Name.Length).Max();
+                this.containers = containers; 
                 this.progressbarSettings = new ProgressbarSettings(
-                    progressBarEmpty: progressbarSettings.ProgressBarEmpty,
-                    progressbarFull: progressbarSettings.ProgressbarFull,
-                    progressBar100percent: progressbarSettings.ProgressBar100percent,
-                    lenght: display.Length - maxNameLength);
+                     progressBarEmpty: progressbarSettings.ProgressBarEmpty,
+                     progressbarFull: progressbarSettings.ProgressbarFull,
+                     progressBar100percent: progressbarSettings.ProgressBar100percent,
+                     lenght: display.Length - maxNameLength);
             }
 
-            public void Render()
+            public override void Update()
             {
-                display.Clear();
-                if (headerText != null)
-                {
-                    display.PrintMiddle(headerText);
-                }
-
                 List<IMyInventory> inventories = Utils.GetAllInventory(containers);
-                List<Item> itemsToCalculate = itemToMaxCount.Keys.ToList();
-                Dictionary<Item, long> itemsToCount = Utils.CalculateItemsInAllInventory(inventories, itemsToCalculate);
-
-                itemsToCount.Keys.ToList().ForEach(item => display.Println(GetCargoInfoLine(item, itemsToCount[item])));
+                List<Item> itemsToCalculate = monitoringEntities.Keys.ToList();
+                itemsToCount = Utils.CalculateItemsInAllInventory(inventories, itemsToCalculate);
             }
 
-            private String GetCargoInfoLine(Item item, long count)
+            protected override string GetName(KeyValuePair<Item, long> entity)
             {
-                int countSpaceAfterName = maxNameLength - item.Name.Length;
-                return item.Name + new string(' ', countSpaceAfterName) +
-                    Utils.GetProgressBar(count, itemToMaxCount[item], progressbarSettings);
+                return entity.Key.Name;
+            }
+
+            protected override string GetInfo(KeyValuePair<Item, long> entity)
+            {
+                Item item = entity.Key;
+                long maxCount = entity.Value;
+                return Utils.GetProgressBar(itemsToCount[item], maxCount, progressbarSettings);
             }
         }
     }

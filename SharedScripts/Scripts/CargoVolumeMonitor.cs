@@ -25,8 +25,8 @@ namespace IngameScript
         public class CargoVolumeMonitor : ProgressbarMonitor<IMyEntity>
         {
             public CargoVolumeMonitor(Display display, string headerText, ProgressbarSettings progressbarSettings,
-                   Dictionary<string, List<IMyEntity>> groupEntityByName) :
-                   base(display, headerText, progressbarSettings, groupEntityByName)
+                Dictionary<string, List<IMyEntity>> groupEntityByName) :
+                base(display, headerText, progressbarSettings, groupEntityByName)
             { }
 
             protected override long GetCurrentValue(IMyEntity entity)

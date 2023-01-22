@@ -42,6 +42,9 @@ namespace IngameScript
                 maxNameLength = displayedOres.Select(ore => ore.Name.Length).Max();
             }
 
+            public void Update()
+            { }
+
             public void Render()
             {
                 display.Clear();

@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\BasicMonitor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\GroupsEntitiesMonitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ProgressbarSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\IMonitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ProgressbarMonitor.cs" />

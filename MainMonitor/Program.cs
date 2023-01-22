@@ -119,7 +119,11 @@ namespace IngameScript
 
         public void Main(string argument, UpdateType updateSource)
         {
-            monitors.ForEach(monitor => monitor.Render());
+            foreach(var monitor in monitors)
+            {
+                monitor.Update();
+                monitor.Render();
+            }
         }
     }
 }

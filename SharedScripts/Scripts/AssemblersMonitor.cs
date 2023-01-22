@@ -37,6 +37,9 @@ namespace IngameScript
                 maxNameLength = assemblers.Select(assembler => assembler.CustomName.Length).Max();
             }
 
+            public void Update()
+            { }
+
             public void Render()
             {
                 display.Clear();
