@@ -34,19 +34,17 @@ namespace IngameScript
 				this.textPanel = textPanel;
 			}
 
-			public Display(IMyTextPanel textPanel) : this(textPanel, 35) { }
-
-			public void Print(Object o) 
+			public void Print(object o) 
 			{
 				textPanel.WritePublicText(o.ToString(), true);
 			}
 
-			public void Println(Object o) 
+			public void Println(object o) 
 			{ 
 				Print(o.ToString() + "\n"); 
 			}
 
-			public void PrintMiddle(Object o)
+			public void PrintMiddle(object o)
 			{
 				StringBuilder sb = new StringBuilder();
 				int prefixSpaces = Math.Max((Length - o.ToString().Length) / 2, 0);
