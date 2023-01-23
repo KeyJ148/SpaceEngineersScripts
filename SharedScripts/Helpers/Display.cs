@@ -28,11 +28,20 @@ namespace IngameScript
 			public readonly int Length;
 			private readonly IMyTextPanel textPanel;
 
-			public Display(IMyTextPanel textPanel, int length)
+			public Display(IMyTextPanel textPanel, int length, Color fontColor, Color backgroundColor)
 			{
 				Length = length;
 				this.textPanel = textPanel;
+
+				textPanel.ContentType = ContentType.TEXT_AND_IMAGE;
+				textPanel.Font = "Monospace";
+				textPanel.FontColor = fontColor;
+				textPanel.FontSize = 51.0f / length;
+				textPanel.BackgroundColor = backgroundColor;
 			}
+
+			public Display(IMyTextPanel textPanel) : this(textPanel, 34, new Color(0, 200, 0), new Color(5, 5, 5))
+			{ }
 
 			public void Print(object o) 
 			{
