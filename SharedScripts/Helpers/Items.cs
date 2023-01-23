@@ -33,16 +33,16 @@ namespace IngameScript
 			public static class Ores
 			{
 				private static readonly String PREFIX = "MyObjectBuilder_Ore/";
-				public static readonly Ore STONE = new Ore(PREFIX + "Stone", "Камень", 130, 0.0504);
-				public static readonly Ore IRON = new Ore(PREFIX + "Iron", "Железо", 26, 0.7);
-				public static readonly Ore SILICON = new Ore(PREFIX + "Silicon", "Кремний", 2.167, 0.7);
-				public static readonly Ore NICKEL = new Ore(PREFIX + "Nickel", "Никель", 1.97, 0.4);
-				public static readonly Ore COBALT = new Ore(PREFIX + "Cobalt", "Кобальт", 0.433, 0.3);
-				public static readonly Ore MAGNESIUM = new Ore(PREFIX + "Magnesium", "Магний", 2.6, 0.007);
-				public static readonly Ore SILVER = new Ore(PREFIX + "Silver", "Серебро", 1.3, 0.1);
-				public static readonly Ore GOLD = new Ore(PREFIX + "Gold", "Золото", 3.25, 0.01);
-				public static readonly Ore PLATINUM = new Ore(PREFIX + "Platinum", "Платина", 0.433, 0.005);
-				public static readonly Ore URANIUM = new Ore(PREFIX + "Uranium", "Уран", 0.325, 0.01);
+				public static readonly Ore STONE = new Ore(PREFIX + "Stone", "Камень", 130, 0.0504, Ingots.STONE);
+				public static readonly Ore IRON = new Ore(PREFIX + "Iron", "Железо", 26, 0.7, Ingots.IRON);
+				public static readonly Ore SILICON = new Ore(PREFIX + "Silicon", "Кремний", 2.167, 0.7, Ingots.SILICON);
+				public static readonly Ore NICKEL = new Ore(PREFIX + "Nickel", "Никель", 1.97, 0.4, Ingots.NICKEL);
+				public static readonly Ore COBALT = new Ore(PREFIX + "Cobalt", "Кобальт", 0.433, 0.3, Ingots.COBALT);
+				public static readonly Ore MAGNESIUM = new Ore(PREFIX + "Magnesium", "Магний", 2.6, 0.007, Ingots.MAGNESIUM);
+				public static readonly Ore SILVER = new Ore(PREFIX + "Silver", "Серебро", 1.3, 0.1, Ingots.SILVER);
+				public static readonly Ore GOLD = new Ore(PREFIX + "Gold", "Золото", 3.25, 0.01, Ingots.GOLD);
+				public static readonly Ore PLATINUM = new Ore(PREFIX + "Platinum", "Платина", 0.433, 0.005, Ingots.PLATINUM);
+				public static readonly Ore URANIUM = new Ore(PREFIX + "Uranium", "Уран", 0.325, 0.01, Ingots.URANIUM);
 				public static readonly Item ICE = new Item(PREFIX + "Ice", "Лёд");
 
 			}
@@ -176,10 +176,12 @@ namespace IngameScript
 
 			public readonly double RefineSpeed; //kg/sec
 			public readonly double RefineEfficiency; //result from ore
+			public readonly Item Ingot; //result after refine
 
-			public Ore(string id, string name, double refineSpeed, double refineEfficiency) : base(id, name) {
+			public Ore(string id, string name, double refineSpeed, double refineEfficiency, Item ingot) : base(id, name) {
 				RefineSpeed = refineSpeed;
 				RefineEfficiency = refineEfficiency;
+				Ingot = ingot;
 			}
 		}
 
