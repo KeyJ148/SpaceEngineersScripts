@@ -25,6 +25,8 @@ namespace IngameScript
         private const string GRID_PREFIX = "";
         private const string DISPLAY_PREFIX = "Дисплей - ";
         private const int DISPLAY_SIZE = 34;
+        private readonly Color FONT_COLOR = new Color(2, 2, 2);
+        private readonly Color BACKGROUND_COLOR = new Color(85, 85, 85);
         private readonly ProgressbarSettings PROGRESSBAR_SETTINGS = new ProgressbarSettings(' ', '■', '■', 0);
 
         private const long ORES_MAX_COUNT = 100000L;
@@ -117,8 +119,7 @@ namespace IngameScript
             GridTerminalSystem.GetBlocksOfType(batteries);
             var groupBatteriesByName = Utils.GetBlocksByGridName(batteries);
             monitors.Add(new BatteryMonitor(
-                display: new Display(GridTerminalSystem.GetBlockWithName(GRID_PREFIX + DISPLAY_PREFIX + "батареи") as IMyTextPanel,
-                    DISPLAY_SIZE * 2),
+                display: GetDefaultDisplay("батареи", (int) (DISPLAY_SIZE * 1.5)),
                 groupEntityByName: groupBatteriesByName,
                 headerText: "БАТАРЕИ",
                 progressbarSettings: PROGRESSBAR_SETTINGS
@@ -134,9 +135,19 @@ namespace IngameScript
             }
         }
 
+        private Display GetDefaultDisplay(string name, int length)
+        {
+            return new Display(
+                textPanel: GridTerminalSystem.GetBlockWithName(GRID_PREFIX + DISPLAY_PREFIX + name) as IMyTextPanel,
+                length: length,
+                fontColor: FONT_COLOR,
+                backgroundColor: BACKGROUND_COLOR
+            );
+        }
+
         private Display GetDefaultDisplay(string name)
         {
-            return new Display(GridTerminalSystem.GetBlockWithName(GRID_PREFIX + DISPLAY_PREFIX + name) as IMyTextPanel, DISPLAY_SIZE);
+            return GetDefaultDisplay(name, DISPLAY_SIZE);
         }
     }
 }

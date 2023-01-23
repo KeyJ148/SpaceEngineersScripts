@@ -34,7 +34,7 @@ namespace IngameScript
                     progressBarEmpty: progressbarSettings.ProgressBarEmpty,
                     progressbarFull: progressbarSettings.ProgressbarFull,
                     progressBar100percent: progressbarSettings.ProgressBar100percent,
-                    lenght: display.Length - maxNameLength);
+                    length: display.Length - maxNameLength);
             }
 
             protected override string GetInfoAboutEntitiesList(List<T> entities)

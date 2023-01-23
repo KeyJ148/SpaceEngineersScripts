@@ -38,7 +38,7 @@ namespace IngameScript
                      progressBarEmpty: progressbarSettings.ProgressBarEmpty,
                      progressbarFull: progressbarSettings.ProgressbarFull,
                      progressBar100percent: progressbarSettings.ProgressBar100percent,
-                     lenght: display.Length - maxNameLength);
+                     length: display.Length - maxNameLength);
             }
 
             public override void Update()

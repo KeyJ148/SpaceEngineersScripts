@@ -27,14 +27,14 @@ namespace IngameScript
             public readonly char ProgressBarEmpty;
             public readonly char ProgressbarFull;
             public readonly char ProgressBar100percent;
-            public readonly int Lenght;
+            public readonly int Length;
 
-            public ProgressbarSettings(char progressBarEmpty, char progressbarFull, char progressBar100percent, int lenght)
+            public ProgressbarSettings(char progressBarEmpty, char progressbarFull, char progressBar100percent, int length)
             {
                 ProgressBarEmpty = progressBarEmpty;
                 ProgressbarFull = progressbarFull;
                 ProgressBar100percent = progressBar100percent;
-                Lenght = lenght;
+                Length = length;
             }
         }
     }
