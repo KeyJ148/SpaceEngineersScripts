@@ -32,42 +32,77 @@ namespace IngameScript
         private const long ORES_MAX_COUNT = 100000L;
         private const long INGOT_MAX_COUNT = ORES_MAX_COUNT * 3;
 
-        private readonly List<IMonitor> monitors = new List<IMonitor>();
+        private const int UPDATE_EVERY_TICKS = 60 * 10; //10 seconds
+
+        private List<IMonitor> monitors = new List<IMonitor>();
+        private int tickCounter = 0;
 
         public Program()
         {
             Runtime.UpdateFrequency = UpdateFrequency.Update100;
+        }
+
+        public void Main(string argument, UpdateType updateSource)
+        {
+            if (tickCounter <= 0)
+            {
+                monitors = CreateAllMonitors();
+                tickCounter = UPDATE_EVERY_TICKS;
+            } 
+            else
+            {
+                switch (updateSource)
+                {
+                    case UpdateType.Update1:
+                        tickCounter -= 1; break;
+                    case UpdateType.Update10:
+                        tickCounter -= 10; break;
+                    case UpdateType.Update100:
+                        tickCounter -= 100; break;
+                }
+            }
+
+            foreach (var monitor in monitors)
+            {
+                monitor.Update();
+                monitor.Render();
+            }
+        }
+
+        private List<IMonitor> CreateAllMonitors()
+        {
+            var result = new List<IMonitor>();
 
             var allContainers = new List<IMyEntity>();
             GridTerminalSystem.GetBlocksOfType(allContainers);
             var allAssemblers = new List<IMyAssembler>();
             GridTerminalSystem.GetBlocksOfType(allAssemblers);
 
-            monitors.Add(new CargoItemsMonitor(
+            result.Add(new CargoItemsMonitor(
                 display: GetDefaultDisplay("руды"),
                 containers: allContainers,
-                itemToMaxCount: Items.ORES.ToDictionary(item => (Item) item, item => ORES_MAX_COUNT),
+                itemToMaxCount: Items.ORES.ToDictionary(item => (Item)item, item => ORES_MAX_COUNT),
                 headerText: "РУДЫ",
                 progressbarSettings: PROGRESSBAR_SETTINGS
             ));
 
-            monitors.Add(new CargoItemsMonitor(
+            result.Add(new CargoItemsMonitor(
                 display: GetDefaultDisplay("слитки"),
                 containers: allContainers,
-                itemToMaxCount: Items.ORES.ToDictionary(ore => ore.Ingot, ore => (long) (ore.RefineEfficiency * INGOT_MAX_COUNT)),
+                itemToMaxCount: Items.ORES.ToDictionary(ore => ore.Ingot, ore => (long)(ore.RefineEfficiency * INGOT_MAX_COUNT)),
                 headerText: "СЛИТКИ",
                 progressbarSettings: PROGRESSBAR_SETTINGS
              ));
 
-            monitors.Add(new CargoItemsMonitor(
+            result.Add(new CargoItemsMonitor(
                 display: GetDefaultDisplay("компоненты 1"),
                 containers: allContainers,
-                itemToMaxCount: Items.COMPONENTS.GetRange(0, Items.COMPONENTS.Count/2).ToDictionary(item => item, item => 10000L),
+                itemToMaxCount: Items.COMPONENTS.GetRange(0, Items.COMPONENTS.Count / 2).ToDictionary(item => item, item => 10000L),
                 headerText: "КОМПОНЕНТЫ",
                 progressbarSettings: PROGRESSBAR_SETTINGS
             ));
 
-            monitors.Add(new CargoItemsMonitor(
+            result.Add(new CargoItemsMonitor(
                 display: GetDefaultDisplay("компоненты 2"),
                 containers: allContainers,
                 itemToMaxCount: Items.COMPONENTS.GetRange(Items.COMPONENTS.Count / 2, Items.COMPONENTS.Count - Items.COMPONENTS.Count / 2)
@@ -76,7 +111,7 @@ namespace IngameScript
                 progressbarSettings: PROGRESSBAR_SETTINGS
             ));
 
-            monitors.Add(new RefinersMonitor(
+            result.Add(new RefinersMonitor(
                 display: GetDefaultDisplay("заводы"),
                 displayedOres: Items.ORES,
                 countRefinersByOreType: new Dictionary<Ore, int>(),
@@ -85,7 +120,7 @@ namespace IngameScript
                 headerText: "ОЧИСТИТЕЛЬНЫЕ ЗАВОДЫ"
             ));
 
-            monitors.Add(new AssemblersMonitor(
+            result.Add(new AssemblersMonitor(
                 display: GetDefaultDisplay("сборщики"),
                 assemblers: allAssemblers,
                 headerText: "СБОРЩИКИ"
@@ -98,7 +133,7 @@ namespace IngameScript
             groupContainersByName.Add("Б. контейнеры", new List<IMyEntity> { container1, container2 });
             groupContainersByName.Add("Контейнер 1", new List<IMyEntity> { container1 });
             groupContainersByName.Add("Контейнер 2", new List<IMyEntity> { container2 });
-            monitors.Add(new CargoVolumeMonitor(
+            result.Add(new CargoVolumeMonitor(
                 display: GetDefaultDisplay("хранилища"),
                 groupEntityByName: groupContainersByName,
                 headerText: "ХРАНИЛИЩА",
@@ -108,7 +143,7 @@ namespace IngameScript
             var gasTankO2 = GridTerminalSystem.GetBlockWithName("[BFM] Водородный бак") as IMyGasTank;
             var groupGasTanksByName = new Dictionary<string, List<IMyGasTank>>();
             groupGasTanksByName.Add("Водород", new List<IMyGasTank> { gasTankO2 });
-            monitors.Add(new GasMonitor(
+            result.Add(new GasMonitor(
                 display: GetDefaultDisplay("газы"),
                 groupEntityByName: groupGasTanksByName,
                 headerText: "ГАЗЫ",
@@ -118,21 +153,14 @@ namespace IngameScript
             var batteries = new List<IMyBatteryBlock>();
             GridTerminalSystem.GetBlocksOfType(batteries);
             var groupBatteriesByName = Utils.GetBlocksByGridName(batteries);
-            monitors.Add(new BatteryMonitor(
-                display: GetDefaultDisplay("батареи", (int) (DISPLAY_SIZE * 1.5)),
+            result.Add(new BatteryMonitor(
+                display: GetDefaultDisplay("батареи", (int)(DISPLAY_SIZE * 1.5)),
                 groupEntityByName: groupBatteriesByName,
                 headerText: "БАТАРЕИ",
                 progressbarSettings: PROGRESSBAR_SETTINGS
             ));
-        }
 
-        public void Main(string argument, UpdateType updateSource)
-        {
-            foreach(var monitor in monitors)
-            {
-                monitor.Update();
-                monitor.Render();
-            }
+            return result;
         }
 
         private Display GetDefaultDisplay(string name, int length)
