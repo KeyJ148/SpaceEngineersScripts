@@ -22,7 +22,7 @@ namespace IngameScript
 {
     partial class Program : MyGridProgram
     {
-        private const int UPDATE_EVERY_TICKS = 60 * 10; //10 seconds
+        private const int RECREATE_EVERY_TICKS = 60 * 10; //10 seconds
         private readonly MonitorCreator monitorCreator;
         
         private List<IMonitor> monitors = new List<IMonitor>();
@@ -40,7 +40,7 @@ namespace IngameScript
             if (tickCounter <= 0)
             {
                 monitors = monitorCreator.CreateAllMonitors();
-                tickCounter = UPDATE_EVERY_TICKS;
+                tickCounter = RECREATE_EVERY_TICKS;
             } 
             else
             {
