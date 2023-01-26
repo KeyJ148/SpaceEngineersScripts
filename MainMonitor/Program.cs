@@ -22,31 +22,24 @@ namespace IngameScript
 {
     partial class Program : MyGridProgram
     {
-        private const string GRID_PREFIX = "";
-        private const string DISPLAY_PREFIX = "Дисплей - ";
-        private const int DISPLAY_SIZE = 34;
-        private readonly Color FONT_COLOR = new Color(2, 2, 2);
-        private readonly Color BACKGROUND_COLOR = new Color(85, 85, 85);
-        private readonly ProgressbarSettings PROGRESSBAR_SETTINGS = new ProgressbarSettings(' ', '■', '■', 0);
-
-        private const long ORES_MAX_COUNT = 100000L;
-        private const long INGOT_MAX_COUNT = ORES_MAX_COUNT * 3;
-
         private const int UPDATE_EVERY_TICKS = 60 * 10; //10 seconds
-
+        private readonly MonitorCreator monitorCreator;
+        
         private List<IMonitor> monitors = new List<IMonitor>();
         private int tickCounter = 0;
 
         public Program()
         {
             Runtime.UpdateFrequency = UpdateFrequency.Update100;
+            monitorCreator = new MonitorCreator(GridTerminalSystem);
         }
 
         public void Main(string argument, UpdateType updateSource)
         {
+
             if (tickCounter <= 0)
             {
-                monitors = CreateAllMonitors();
+                monitors = monitorCreator.CreateAllMonitors();
                 tickCounter = UPDATE_EVERY_TICKS;
             } 
             else
@@ -67,115 +60,6 @@ namespace IngameScript
                 monitor.Update();
                 monitor.Render();
             }
-        }
-
-        private List<IMonitor> CreateAllMonitors()
-        {
-            var result = new List<IMonitor>();
-
-            var allContainers = new List<IMyEntity>();
-            GridTerminalSystem.GetBlocksOfType(allContainers);
-            var allAssemblers = new List<IMyAssembler>();
-            GridTerminalSystem.GetBlocksOfType(allAssemblers);
-
-            result.Add(new CargoItemsMonitor(
-                display: GetDefaultDisplay("руды"),
-                containers: allContainers,
-                itemToMaxCount: Items.ORES.ToDictionary(item => (Item)item, item => ORES_MAX_COUNT),
-                headerText: "РУДЫ",
-                progressbarSettings: PROGRESSBAR_SETTINGS
-            ));
-
-            result.Add(new CargoItemsMonitor(
-                display: GetDefaultDisplay("слитки"),
-                containers: allContainers,
-                itemToMaxCount: Items.ORES.ToDictionary(ore => ore.Ingot, ore => (long)(ore.RefineEfficiency * INGOT_MAX_COUNT)),
-                headerText: "СЛИТКИ",
-                progressbarSettings: PROGRESSBAR_SETTINGS
-             ));
-
-            result.Add(new CargoItemsMonitor(
-                display: GetDefaultDisplay("компоненты 1"),
-                containers: allContainers,
-                itemToMaxCount: Items.COMPONENTS.GetRange(0, Items.COMPONENTS.Count / 2).ToDictionary(item => item, item => 10000L),
-                headerText: "КОМПОНЕНТЫ",
-                progressbarSettings: PROGRESSBAR_SETTINGS
-            ));
-
-            result.Add(new CargoItemsMonitor(
-                display: GetDefaultDisplay("компоненты 2"),
-                containers: allContainers,
-                itemToMaxCount: Items.COMPONENTS.GetRange(Items.COMPONENTS.Count / 2, Items.COMPONENTS.Count - Items.COMPONENTS.Count / 2)
-                    .ToDictionary(item => item, item => 10000L),
-                headerText: "КОМПОНЕНТЫ",
-                progressbarSettings: PROGRESSBAR_SETTINGS
-            ));
-
-            result.Add(new RefinersMonitor(
-                display: GetDefaultDisplay("заводы"),
-                displayedOres: Items.ORES,
-                countRefinersByOreType: new Dictionary<Ore, int>(),
-                countUniversalRefiners: 9,
-                containers: allContainers,
-                headerText: "ОЧИСТИТЕЛЬНЫЕ ЗАВОДЫ"
-            ));
-
-            result.Add(new AssemblersMonitor(
-                display: GetDefaultDisplay("сборщики"),
-                assemblers: allAssemblers,
-                headerText: "СБОРЩИКИ"
-            ));
-
-            var container1 = GridTerminalSystem.GetBlockWithName("[BFM] Контейнер 1");
-            var container2 = GridTerminalSystem.GetBlockWithName("[BFM] Контейнер 2");
-            var groupContainersByName = new Dictionary<string, List<IMyEntity>>();
-            groupContainersByName.Add("Все", allContainers);
-            groupContainersByName.Add("Б. контейнеры", new List<IMyEntity> { container1, container2 });
-            groupContainersByName.Add("Контейнер 1", new List<IMyEntity> { container1 });
-            groupContainersByName.Add("Контейнер 2", new List<IMyEntity> { container2 });
-            result.Add(new CargoVolumeMonitor(
-                display: GetDefaultDisplay("хранилища"),
-                groupEntityByName: groupContainersByName,
-                headerText: "ХРАНИЛИЩА",
-                progressbarSettings: PROGRESSBAR_SETTINGS
-            ));
-
-            var gasTankO2 = GridTerminalSystem.GetBlockWithName("[BFM] Водородный бак") as IMyGasTank;
-            var groupGasTanksByName = new Dictionary<string, List<IMyGasTank>>();
-            groupGasTanksByName.Add("Водород", new List<IMyGasTank> { gasTankO2 });
-            result.Add(new GasMonitor(
-                display: GetDefaultDisplay("газы"),
-                groupEntityByName: groupGasTanksByName,
-                headerText: "ГАЗЫ",
-                progressbarSettings: PROGRESSBAR_SETTINGS
-            ));
-
-            var batteries = new List<IMyBatteryBlock>();
-            GridTerminalSystem.GetBlocksOfType(batteries);
-            var groupBatteriesByName = Utils.GetBlocksByGridName(batteries);
-            result.Add(new BatteryMonitor(
-                display: GetDefaultDisplay("батареи", (int)(DISPLAY_SIZE * 1.5)),
-                groupEntityByName: groupBatteriesByName,
-                headerText: "БАТАРЕИ",
-                progressbarSettings: PROGRESSBAR_SETTINGS
-            ));
-
-            return result;
-        }
-
-        private Display GetDefaultDisplay(string name, int length)
-        {
-            return new Display(
-                textPanel: GridTerminalSystem.GetBlockWithName(GRID_PREFIX + DISPLAY_PREFIX + name) as IMyTextPanel,
-                length: length,
-                fontColor: FONT_COLOR,
-                backgroundColor: BACKGROUND_COLOR
-            );
-        }
-
-        private Display GetDefaultDisplay(string name)
-        {
-            return GetDefaultDisplay(name, DISPLAY_SIZE);
         }
     }
 }
