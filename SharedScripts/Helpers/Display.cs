@@ -36,7 +36,7 @@ namespace IngameScript
 				textPanel.ContentType = ContentType.TEXT_AND_IMAGE;
 				textPanel.Font = "Monospace";
 				textPanel.FontColor = fontColor;
-				textPanel.FontSize = 51.0f / length;
+				textPanel.FontSize = 25.2f / length;
 				textPanel.BackgroundColor = backgroundColor;
 			}
 

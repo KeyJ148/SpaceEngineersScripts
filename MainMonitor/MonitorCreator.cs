@@ -24,9 +24,9 @@ namespace IngameScript
     {
         public class MonitorCreator
         {
-            private const string GRID_PREFIX = "";
+            private const string GRID_PREFIX = "[GTW] ";
             private const string DISPLAY_PREFIX = "Дисплей - ";
-            private const int DISPLAY_SIZE = 34;
+            private const int DISPLAY_SIZE = 28;
             private readonly Color FONT_COLOR = new Color(2, 2, 2);
             private readonly Color BACKGROUND_COLOR = new Color(85, 85, 85);
             private readonly ProgressbarSettings PROGRESSBAR_SETTINGS = new ProgressbarSettings(' ', '■', '■', 0);
@@ -77,7 +77,8 @@ namespace IngameScript
                 result.Add(new CargoItemsMonitor(
                     display: GetDefaultDisplay("компоненты 2"),
                     containers: allContainers,
-                    itemToMaxCount: Items.COMPONENTS.GetRange(Items.COMPONENTS.Count / 2, Items.COMPONENTS.Count - Items.COMPONENTS.Count / 2)
+                    itemToMaxCount: Items.COMPONENTS
+                        .GetRange(Items.COMPONENTS.Count / 2, Items.COMPONENTS.Count - Items.COMPONENTS.Count / 2)
                         .ToDictionary(item => item, item => 10000L),
                     headerText: "КОМПОНЕНТЫ",
                     progressbarSettings: PROGRESSBAR_SETTINGS
@@ -86,8 +87,20 @@ namespace IngameScript
                 result.Add(new RefinersMonitor(
                     display: GetDefaultDisplay("заводы"),
                     displayedOres: Items.ORES,
-                    countRefinersByOreType: new Dictionary<Ore, int>(),
-                    countUniversalRefiners: 9,
+                    countRefinersByOreType: new Dictionary<Ore, int>
+                    {
+                        { Items.Ores.STONE, 1},
+                        { Items.Ores.IRON, 1},
+                        { Items.Ores.SILICON, 1},
+                        { Items.Ores.NICKEL, 1},
+                        { Items.Ores.COBALT, 1},
+                        { Items.Ores.MAGNESIUM, 1},
+                        { Items.Ores.SILVER, 1},
+                        { Items.Ores.GOLD, 1},
+                        { Items.Ores.PLATINUM, 1},
+                        { Items.Ores.URANIUM, 1}
+                    },
+                    countUniversalRefiners: 0,
                     containers: allContainers,
                     headerText: "ОЧИСТИТЕЛЬНЫЕ ЗАВОДЫ"
                 ));
@@ -98,13 +111,8 @@ namespace IngameScript
                     headerText: "СБОРЩИКИ"
                 ));
 
-                var container1 = grid.GetBlockWithName("[BFM] Контейнер 1");
-                var container2 = grid.GetBlockWithName("[BFM] Контейнер 2");
                 var groupContainersByName = new Dictionary<string, List<IMyEntity>>();
                 groupContainersByName.Add("Все", allContainers);
-                groupContainersByName.Add("Б. контейнеры", new List<IMyEntity> { container1, container2 });
-                groupContainersByName.Add("Контейнер 1", new List<IMyEntity> { container1 });
-                groupContainersByName.Add("Контейнер 2", new List<IMyEntity> { container2 });
                 result.Add(new CargoVolumeMonitor(
                     display: GetDefaultDisplay("хранилища"),
                     groupEntityByName: groupContainersByName,
@@ -112,7 +120,7 @@ namespace IngameScript
                     progressbarSettings: PROGRESSBAR_SETTINGS
                 ));
 
-                var gasTankO2 = grid.GetBlockWithName("[BFM] Водородный бак") as IMyGasTank;
+                var gasTankO2 = grid.GetBlockWithName("[GTW] Водородный бак") as IMyGasTank;
                 var groupGasTanksByName = new Dictionary<string, List<IMyGasTank>>();
                 groupGasTanksByName.Add("Водород", new List<IMyGasTank> { gasTankO2 });
                 result.Add(new GasMonitor(
