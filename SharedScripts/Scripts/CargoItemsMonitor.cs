@@ -29,7 +29,7 @@ namespace IngameScript
 
             private Dictionary<Item, long> itemsToCount;
 
-            public CargoItemsMonitor(Display display, string headerText, ProgressbarSettings progressbarSettings,
+            public CargoItemsMonitor(IDisplay display, string headerText, ProgressbarSettings progressbarSettings,
                 List<IMyEntity> containers, Dictionary<Item, long> itemToMaxCount) :
                 base(display, headerText, itemToMaxCount)
             {
@@ -38,7 +38,7 @@ namespace IngameScript
                      progressBarEmpty: progressbarSettings.ProgressBarEmpty,
                      progressbarFull: progressbarSettings.ProgressbarFull,
                      progressBar100percent: progressbarSettings.ProgressBar100percent,
-                     length: display.Length - maxNameLength);
+                     length: display.GetLength() - maxNameLength);
             }
 
             public override void Update()

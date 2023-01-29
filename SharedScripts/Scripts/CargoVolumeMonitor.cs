@@ -24,7 +24,7 @@ namespace IngameScript
     {
         public class CargoVolumeMonitor : ProgressbarMonitor<IMyEntity>
         {
-            public CargoVolumeMonitor(Display display, string headerText, ProgressbarSettings progressbarSettings,
+            public CargoVolumeMonitor(IDisplay display, string headerText, ProgressbarSettings progressbarSettings,
                 Dictionary<string, List<IMyEntity>> groupEntityByName) :
                 base(display, headerText, progressbarSettings, groupEntityByName)
             { }

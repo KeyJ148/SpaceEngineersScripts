@@ -26,7 +26,7 @@ namespace IngameScript
         {
             protected readonly ProgressbarSettings progressbarSettings;
 
-            public ProgressbarMonitor(Display display, string headerText, ProgressbarSettings progressbarSettings,
+            public ProgressbarMonitor(IDisplay display, string headerText, ProgressbarSettings progressbarSettings,
                 Dictionary<string, List<T>> groupEntityByName) :
                 base(display, headerText, groupEntityByName)
             {
@@ -34,7 +34,7 @@ namespace IngameScript
                     progressBarEmpty: progressbarSettings.ProgressBarEmpty,
                     progressbarFull: progressbarSettings.ProgressbarFull,
                     progressBar100percent: progressbarSettings.ProgressBar100percent,
-                    length: display.Length - maxNameLength);
+                    length: display.GetLength() - maxNameLength);
             }
 
             protected override string GetInfoAboutEntitiesList(List<T> entities)

@@ -25,7 +25,7 @@ namespace IngameScript
         public class GasMonitor : ProgressbarMonitor<IMyGasTank>
         {
 
-            public GasMonitor(Display display, string headerText, ProgressbarSettings progressbarSettings,
+            public GasMonitor(IDisplay display, string headerText, ProgressbarSettings progressbarSettings,
                 Dictionary<string, List<IMyGasTank>> groupEntityByName) :
                 base(display, headerText, progressbarSettings, groupEntityByName) 
             { }

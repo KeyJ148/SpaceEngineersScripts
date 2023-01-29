@@ -25,7 +25,7 @@ namespace IngameScript
         public abstract class GroupsEntitiesMonitor<T> : BasicMonitor<string, List<T>> where T : IMyEntity
         {
 
-            public GroupsEntitiesMonitor(Display display, string headerText, Dictionary<string, List<T>> groupEntityByName) :
+            public GroupsEntitiesMonitor(IDisplay display, string headerText, Dictionary<string, List<T>> groupEntityByName) :
                 base(display, headerText, groupEntityByName)
             { }
 

@@ -24,7 +24,7 @@ namespace IngameScript
     {
         public class BatteryMonitor : ProgressbarMonitor<IMyBatteryBlock>
         {
-            public BatteryMonitor(Display display, string headerText, ProgressbarSettings progressbarSettings,
+            public BatteryMonitor(IDisplay display, string headerText, ProgressbarSettings progressbarSettings,
                 Dictionary<string, List<IMyBatteryBlock>> groupEntityByName) :
                 base(display, headerText, progressbarSettings, groupEntityByName) 
             { }

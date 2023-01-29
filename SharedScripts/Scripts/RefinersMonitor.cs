@@ -28,7 +28,7 @@ namespace IngameScript
 
             private Dictionary<Item, long> displayedOresToCount;
 
-            public RefinersMonitor(Display display, List<Ore> displayedOres, Dictionary<Ore, int> countRefinersByOreType,
+            public RefinersMonitor(IDisplay display, List<Ore> displayedOres, Dictionary<Ore, int> countRefinersByOreType,
                 int countUniversalRefiners, List<IMyEntity> containers, string headerText) :
                 base(display, headerText, displayedOres //Dictionary<Ore, long> ore -> speedInHour
                     .ToDictionary(ore => ore, ore => GetRefineSpeedInHour(ore, countRefinersByOreType, countUniversalRefiners)))

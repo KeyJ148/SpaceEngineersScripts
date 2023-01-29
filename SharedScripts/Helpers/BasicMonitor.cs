@@ -24,12 +24,12 @@ namespace IngameScript
     {
         public abstract class BasicMonitor<K, V> : IMonitor
         {
-            protected readonly Display display;
+            protected readonly IDisplay display;
             protected readonly string headerText;
             protected readonly Dictionary<K, V> monitoringEntities;
             protected readonly int maxNameLength;
 
-            public BasicMonitor(Display display, string headerText, Dictionary<K, V> monitoringEntities)
+            public BasicMonitor(IDisplay display, string headerText, Dictionary<K, V> monitoringEntities)
             {
                 this.display = display;
                 this.headerText = headerText;

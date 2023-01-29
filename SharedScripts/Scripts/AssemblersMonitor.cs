@@ -24,7 +24,7 @@ namespace IngameScript
     {
         public class AssemblersMonitor : BasicMonitor<IMyAssembler, IMyAssembler> {
 
-            public AssemblersMonitor(Display display, List<IMyAssembler> assemblers, string headerText) :
+            public AssemblersMonitor(IDisplay display, List<IMyAssembler> assemblers, string headerText) :
                 base(display, headerText, assemblers.ToDictionary(assembler => assembler))
             { }
             protected override string GetName(KeyValuePair<IMyAssembler, IMyAssembler> entity)
