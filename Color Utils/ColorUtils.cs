@@ -208,7 +208,7 @@ namespace IngameScript
         /// Затеняет текущий цвет
         /// </summary>
         /// <param name="color"></param>
-        /// <param name="amount"></param>
+        /// <param name="amount">Степень затенения (0.0 - 1.0)</param>
         /// <returns></returns>
         public static Color Darken(this Color color, double amount)
         {
@@ -222,7 +222,7 @@ namespace IngameScript
         /// Осветляет текущий цвет
         /// </summary>
         /// <param name="color"></param>
-        /// <param name="amount"></param>
+        /// <param name="amount">Стпень осветления (0.0 - 1.0)</param>
         /// <returns></returns>
         public static Color Lighten(this Color color, double amount)
         {
