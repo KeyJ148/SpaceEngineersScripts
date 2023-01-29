@@ -22,26 +22,22 @@ namespace IngameScript
 {
     partial class Program
     {
-		public class Display
+		public class Display : IDisplay
 		{
-
-			public readonly int Length;
+			private readonly int length;
 			private readonly IMyTextPanel textPanel;
 
-			public Display(IMyTextPanel textPanel, int length, Color fontColor, Color backgroundColor)
+			public Display(IMyTextPanel textPanel, int length, float fontSize, Color fontColor, Color backgroundColor)
 			{
-				Length = length;
+				this.length = length;
 				this.textPanel = textPanel;
 
 				textPanel.ContentType = ContentType.TEXT_AND_IMAGE;
 				textPanel.Font = "Monospace";
 				textPanel.FontColor = fontColor;
-				textPanel.FontSize = 25.2f / length;
+				textPanel.FontSize = fontSize;
 				textPanel.BackgroundColor = backgroundColor;
 			}
-
-			public Display(IMyTextPanel textPanel) : this(textPanel, 34, new Color(0, 200, 0), new Color(5, 5, 5))
-			{ }
 
 			public void Print(object o) 
 			{
@@ -56,7 +52,7 @@ namespace IngameScript
 			public void PrintMiddle(object o)
 			{
 				StringBuilder sb = new StringBuilder();
-				int prefixSpaces = Math.Max((Length - o.ToString().Length) / 2, 0);
+				int prefixSpaces = Math.Max((length - o.ToString().Length) / 2, 0);
 				sb.Append(' ', prefixSpaces);
 				Println(sb.ToString() + o.ToString());
 			}
@@ -65,6 +61,11 @@ namespace IngameScript
 			{
 				textPanel.WritePublicText("");
 			}
+
+			public int GetLength()
+            {
+				return length;
+            }
 		}
 	}
 }
