@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C400B7E3-7FE8-407D-8D01-22DB793F62D8}</ProjectGuid>
+    <ProjectGuid>{BB230746-36E6-4E7E-AAC7-5C1FCA4D3DE3}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>IngameScript</RootNamespace>
-    <AssemblyName>Nuke</AssemblyName>
+    <AssemblyName>RGB Controller</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -42,11 +42,16 @@
     <AdditionalFiles Include="MDK\MDK.options.props">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </AdditionalFiles>
+    <AdditionalFiles Include="MDK\MDK.paths.props">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
     <Compile Include="Program.cs" />
+    <AdditionalFiles Include="Instructions.readme" />
     <AdditionalFiles Include="thumb.png" />
     <AdditionalFiles Include="MDK\whitelist.cache" />
   </ItemGroup>
-  <Import Project="..\SharedScripts\SharedScripts.projitems" Label="Shared" />
+  <Import Project="..\Color Utils\Color_Utils.projitems" Label="Shared" />
+  <Import Project="..\Scheduler\Scheduler.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">
     <Copy SourceFiles="MDK\MDK.options.props" DestinationFolder="$(TargetDir)\MDK" />
