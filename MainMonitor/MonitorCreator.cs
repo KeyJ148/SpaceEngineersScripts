@@ -26,9 +26,9 @@ namespace IngameScript
         {
             private const string GRID_PREFIX = "[GTW] ";
             private const string DISPLAY_PREFIX = "Дисплей - ";
-            private const int DISPLAY_SIZE = 28;
-            private readonly Color FONT_COLOR = new Color(2, 2, 2);
-            private readonly Color BACKGROUND_COLOR = new Color(85, 85, 85);
+            private const int DISPLAY_SIZE = 50;
+            private readonly Color FONT_COLOR = new Color(2, 63, 2);
+            private readonly Color BACKGROUND_COLOR = new Color(2, 2, 2);
             private readonly ProgressbarSettings PROGRESSBAR_SETTINGS = new ProgressbarSettings(' ', '■', '■', 0);
 
             private const long ORES_MAX_COUNT = 100000L;
@@ -51,7 +51,7 @@ namespace IngameScript
                 grid.GetBlocksOfType(allAssemblers);
 
                 result.Add(new CargoItemsMonitor(
-                    display: GetDefaultDisplay("руды"),
+                    display: GetPairedBigDisplay("руды"),
                     containers: allContainers,
                     itemToMaxCount: Items.ORES.ToDictionary(item => (Item)item, item => ORES_MAX_COUNT),
                     headerText: "РУДЫ",
@@ -59,7 +59,7 @@ namespace IngameScript
                 ));
 
                 result.Add(new CargoItemsMonitor(
-                    display: GetDefaultDisplay("слитки"),
+                    display: GetPairedBigDisplay("слитки"),
                     containers: allContainers,
                     itemToMaxCount: Items.ORES.ToDictionary(ore => ore.Ingot, ore => (long)(ore.RefineEfficiency * INGOT_MAX_COUNT)),
                     headerText: "СЛИТКИ",
@@ -67,7 +67,7 @@ namespace IngameScript
                  ));
 
                 result.Add(new CargoItemsMonitor(
-                    display: GetDefaultDisplay("компоненты 1"),
+                    display: GetPairedBigDisplay("компоненты 1"),
                     containers: allContainers,
                     itemToMaxCount: Items.COMPONENTS.GetRange(0, Items.COMPONENTS.Count / 2).ToDictionary(item => item, item => 10000L),
                     headerText: "КОМПОНЕНТЫ",
@@ -75,7 +75,7 @@ namespace IngameScript
                 ));
 
                 result.Add(new CargoItemsMonitor(
-                    display: GetDefaultDisplay("компоненты 2"),
+                    display: GetPairedBigDisplay("компоненты 2"),
                     containers: allContainers,
                     itemToMaxCount: Items.COMPONENTS
                         .GetRange(Items.COMPONENTS.Count / 2, Items.COMPONENTS.Count - Items.COMPONENTS.Count / 2)
@@ -85,7 +85,7 @@ namespace IngameScript
                 ));
 
                 result.Add(new RefinersMonitor(
-                    display: GetDefaultDisplay("заводы"),
+                    display: GetPairedBigDisplay("заводы"),
                     displayedOres: Items.ORES,
                     countRefinersByOreType: new Dictionary<Ore, int>
                     {
@@ -106,7 +106,7 @@ namespace IngameScript
                 ));
 
                 result.Add(new AssemblersMonitor(
-                    display: GetDefaultDisplay("сборщики"),
+                    display: GetPairedBigDisplay("сборщики"),
                     assemblers: allAssemblers,
                     headerText: "СБОРЩИКИ"
                 ));
@@ -114,7 +114,7 @@ namespace IngameScript
                 var groupContainersByName = new Dictionary<string, List<IMyEntity>>();
                 groupContainersByName.Add("Все", allContainers);
                 result.Add(new CargoVolumeMonitor(
-                    display: GetDefaultDisplay("хранилища"),
+                    display: GetPairedBigDisplay("хранилища"),
                     groupEntityByName: groupContainersByName,
                     headerText: "ХРАНИЛИЩА",
                     progressbarSettings: PROGRESSBAR_SETTINGS
@@ -124,7 +124,7 @@ namespace IngameScript
                 var groupGasTanksByName = new Dictionary<string, List<IMyGasTank>>();
                 groupGasTanksByName.Add("Водород", new List<IMyGasTank> { gasTankO2 });
                 result.Add(new GasMonitor(
-                    display: GetDefaultDisplay("газы"),
+                    display: GetPairedBigDisplay("газы"),
                     groupEntityByName: groupGasTanksByName,
                     headerText: "ГАЗЫ",
                     progressbarSettings: PROGRESSBAR_SETTINGS
@@ -134,7 +134,7 @@ namespace IngameScript
                 grid.GetBlocksOfType(batteries);
                 var groupBatteriesByName = Utils.GetBlocksByGridName(batteries);
                 result.Add(new BatteryMonitor(
-                    display: GetDefaultDisplay("батареи", (int)(DISPLAY_SIZE * 1.5)),
+                    display: GetPairedBigDisplay("батареи"),
                     groupEntityByName: groupBatteriesByName,
                     headerText: "БАТАРЕИ",
                     progressbarSettings: PROGRESSBAR_SETTINGS
@@ -143,19 +143,57 @@ namespace IngameScript
                 return result;
             }
 
-            private Display GetDefaultDisplay(string name, int length)
+            private IDisplay GetDefaultDisplay(string name, int length)
             {
                 return new Display(
                     textPanel: grid.GetBlockWithName(GRID_PREFIX + DISPLAY_PREFIX + name) as IMyTextPanel,
                     length: length,
+                    fontSize: 51.0f / length,
                     fontColor: FONT_COLOR,
                     backgroundColor: BACKGROUND_COLOR
                 );
             }
 
-            private Display GetDefaultDisplay(string name)
+            private IDisplay GetBigDisplay(string name, int length)
+            {
+                return new Display(
+                    textPanel: grid.GetBlockWithName(GRID_PREFIX + DISPLAY_PREFIX + name) as IMyTextPanel,
+                    length: length,
+                    fontSize: 25.5f / length,
+                    fontColor: FONT_COLOR,
+                    backgroundColor: BACKGROUND_COLOR
+                );
+            }
+
+            private IDisplay GetPairedBigDisplay(string name, int length)
+            {
+                int padding = 2;
+                return new DisplayGroup(
+                    textPanels: new List<IMyTextPanel>() {
+                        grid.GetBlockWithName(GRID_PREFIX + DISPLAY_PREFIX + name + " (1)") as IMyTextPanel,
+                        grid.GetBlockWithName(GRID_PREFIX + DISPLAY_PREFIX + name + " (2)") as IMyTextPanel
+                    },
+                    length: length,
+                    fontSize: 52.5f / (length + padding*2),
+                    fontColor: FONT_COLOR,
+                    backgroundColor: BACKGROUND_COLOR,
+                    padding: padding
+                );
+            }
+
+            private IDisplay GetDefaultDisplay(string name)
             {
                 return GetDefaultDisplay(name, DISPLAY_SIZE);
+            }
+
+            private IDisplay GetBigDisplay(string name)
+            {
+                return GetBigDisplay(name, DISPLAY_SIZE);
+            }
+
+            private IDisplay GetPairedBigDisplay(string name)
+            {
+                return GetPairedBigDisplay(name, DISPLAY_SIZE);
             }
         }
     }
