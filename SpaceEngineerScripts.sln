@@ -21,6 +21,11 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Color Utils", "Color Utils\
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Scheduler", "Scheduler\Scheduler.shproj", "{65E5E04A-5F46-466D-8254-051C3A983884}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{18878DC1-533A-48F8-9D9A-CE7ABAA50A5D}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Scheduler\Scheduler.projitems*{5c466d08-3189-4ce5-8c7f-2db1ddb9c0b5}*SharedItemsImports = 4

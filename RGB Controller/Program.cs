@@ -73,7 +73,9 @@ namespace IngameScript
             }
             else
             {
+                #pragma warning disable CS0162 // Достижимость кода определяется настройками в начале скрипта
                 grid.GetBlocksOfType(lightGroup);
+                #pragma warning restore CS0162 // Обнаружен недостижимый код
             }
         }
 
