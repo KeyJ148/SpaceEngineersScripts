@@ -68,6 +68,15 @@ namespace IngameScript
                 return _tick;
             }
 
+            /// <summary>
+            /// Создает задачу, выполняемую каждые несколько тактов
+            /// </summary>
+            /// <param name="action">Выполняемый метод</param>
+            /// <param name="interval">Интервал в тиках</param>
+            /// <param name="delay">(не обязательно) Задержка первого выполнения. 0 по умолчанию</param>
+            /// <param name="executionTimes">(не обязательно) Количество повторений задачи. 1 по умолчанию</param>
+            /// <param name="doInfinitely">(не обязательно) Если true, то будет повторять задачу до ручной отмены. True по умолчанию</param>
+            /// <returns>Ссылка на созданную задачу, для ручного управления</returns>
             public static SchedulerTask ExecuteEveryNTicks(Action action, int interval, int delay = 0,
                 int executionTimes = 1, bool doInfinitely = true)
             {
