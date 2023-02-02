@@ -47,6 +47,9 @@
     <AdditionalFiles Include="thumb.png" />
     <AdditionalFiles Include="MDK\whitelist.cache" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="MDK\mdk.paths.props" />
+  </ItemGroup>
   <Import Project="..\SharedScripts\SharedScripts.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">

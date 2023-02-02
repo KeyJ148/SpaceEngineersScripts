@@ -116,7 +116,11 @@ namespace IngameScript
         {
             foreach (var reactor in reactors)
             {
-                reactor.Enabled = state;
+                try
+                {
+                    reactor.Enabled = state;
+                }
+                catch { }
             }
         }
     }
