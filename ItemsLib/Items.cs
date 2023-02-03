@@ -20,13 +20,14 @@ using VRageMath;
 
 namespace IngameScript
 {
+	/// <summary>
+    /// Эта библиотека может быть полезна сама по ебе и в других скриптах
+    /// </summary>
     partial class Program
     {
 		/// <summary>
 		/// Содержит перечисления игровых предметов
-		/// TODO: Женя, переезжай на отдельную либу плз (ItemsLib.Items)
 		/// </summary>
-		[Obsolete]
 		public static class Items
 		{
 			/// <summary>
@@ -167,7 +168,8 @@ namespace IngameScript
 			public readonly MyDefinitionId Id;
 			public readonly string Name;
 
-			public Item(string id, string name) {
+			public Item(string id, string name)
+			{
 				Id = MyDefinitionId.Parse(id);
 				Name = name;
 			}
@@ -180,7 +182,8 @@ namespace IngameScript
 			public readonly double RefineEfficiency; //result from ore
 			public readonly Item Ingot; //result after refine
 
-			public Ore(string id, string name, double refineSpeed, double refineEfficiency, Item ingot) : base(id, name) {
+			public Ore(string id, string name, double refineSpeed, double refineEfficiency, Item ingot) : base(id, name)
+			{
 				RefineSpeed = refineSpeed;
 				RefineEfficiency = refineEfficiency;
 				Ingot = ingot;

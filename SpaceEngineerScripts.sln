@@ -26,12 +26,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ItemsLib", "ItemsLib\ItemsLib.shproj", "{9E9708E2-A9FB-4316-B5F6-8229B15E8D94}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Scheduler\Scheduler.projitems*{5c466d08-3189-4ce5-8c7f-2db1ddb9c0b5}*SharedItemsImports = 4
 		Color Utils\Color_Utils.projitems*{61eba249-19f3-48b6-a25b-a4cee90168ba}*SharedItemsImports = 13
 		Scheduler\Scheduler.projitems*{65e5e04a-5f46-466d-8254-051c3a983884}*SharedItemsImports = 13
 		SharedScripts\SharedScripts.projitems*{66683e32-184d-487e-906c-ae8c52c842f0}*SharedItemsImports = 13
+		ItemsLib\ItemsLib.projitems*{9e9708e2-a9fb-4316-b5f6-8229b15e8d94}*SharedItemsImports = 13
 		SharedScripts\SharedScripts.projitems*{a78e89ee-3451-4aaa-9fa7-8ebe91acc9dd}*SharedItemsImports = 4
 		Color Utils\Color_Utils.projitems*{bb230746-36e6-4e7e-aac7-5c1fca4d3de3}*SharedItemsImports = 4
 		Scheduler\Scheduler.projitems*{bb230746-36e6-4e7e-aac7-5c1fca4d3de3}*SharedItemsImports = 4
@@ -60,6 +63,7 @@ Global
 		{5C466D08-3189-4CE5-8C7F-2DB1DDB9C0B5} = {F3B0FC11-5DF4-4838-84B0-21BF27706191}
 		{61EBA249-19F3-48B6-A25B-A4CEE90168BA} = {A9E52608-EAD9-4836-A355-495B629FDB2E}
 		{65E5E04A-5F46-466D-8254-051C3A983884} = {A9E52608-EAD9-4836-A355-495B629FDB2E}
+		{9E9708E2-A9FB-4316-B5F6-8229B15E8D94} = {A9E52608-EAD9-4836-A355-495B629FDB2E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {73FA824C-A360-46E2-B16E-26CE6F3195D2}
