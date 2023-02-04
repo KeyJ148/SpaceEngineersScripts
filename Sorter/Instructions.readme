@@ -1,5 +1,8 @@
 ﻿R e a d m e
 -----------
 
-In this file you can include any instructions or other comments you want to have injected onto the 
-top of your final script. You can safely delete this file if you do not want any such comments.
+Вытаскивает предметы из всех контейнеров/выводов и кладёт их в целевые контейнеры.
+Правила сортировки описываются в методе Rescan() путём добавления нового сортировщика в список _sorters
+В конструктор передаётся:
+- ссылка на инвентарь целевого контейнера (бронух, блятб, мог бы и просто контейнер передать)
+- список предметов из ItemsLib
