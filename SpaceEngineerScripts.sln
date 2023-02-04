@@ -36,6 +36,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydrogen Generators Control
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sorter", "Sorter\Sorter.csproj", "{0721F55B-C303-4A13-A750-B886D08065CE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Components Balancer", "Components Balancer\Components Balancer.csproj", "{AD8F63C3-5C2B-4F08-806F-55D5738D8226}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		MonitorTools\MonitorTools.projitems*{03937cf1-88c0-4a3b-884e-06127719d0e2}*SharedItemsImports = 4
@@ -75,6 +77,8 @@ Global
 		{03937CF1-88C0-4A3B-884E-06127719D0E2}.Debug|x64.Build.0 = Debug|x64
 		{0721F55B-C303-4A13-A750-B886D08065CE}.Debug|x64.ActiveCfg = Debug|x64
 		{0721F55B-C303-4A13-A750-B886D08065CE}.Debug|x64.Build.0 = Debug|x64
+		{AD8F63C3-5C2B-4F08-806F-55D5738D8226}.Debug|x64.ActiveCfg = Debug|x64
+		{AD8F63C3-5C2B-4F08-806F-55D5738D8226}.Debug|x64.Build.0 = Debug|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -91,6 +95,7 @@ Global
 		{A58F5BC4-71CB-4CA9-ADBA-EC3C3B2E2D90} = {F3B0FC11-5DF4-4838-84B0-21BF27706191}
 		{03937CF1-88C0-4A3B-884E-06127719D0E2} = {F3B0FC11-5DF4-4838-84B0-21BF27706191}
 		{0721F55B-C303-4A13-A750-B886D08065CE} = {F3B0FC11-5DF4-4838-84B0-21BF27706191}
+		{AD8F63C3-5C2B-4F08-806F-55D5738D8226} = {F3B0FC11-5DF4-4838-84B0-21BF27706191}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {73FA824C-A360-46E2-B16E-26CE6F3195D2}
