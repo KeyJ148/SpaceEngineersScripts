@@ -22,6 +22,9 @@ namespace IngameScript
 {
     partial class Program
     {
+		/// <summary>
+		/// Женя, заебал, напиши комментарии для тупых
+		/// </summary>
         public static class Utils
         {
 
