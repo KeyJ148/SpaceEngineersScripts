@@ -38,6 +38,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sorter", "Sorter\Sorter.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Components Balancer", "Components Balancer\Components Balancer.csproj", "{AD8F63C3-5C2B-4F08-806F-55D5738D8226}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Utils", "Utils\Utils.shproj", "{3C135A14-3705-4512-AF4A-679763378516}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		MonitorTools\MonitorTools.projitems*{03937cf1-88c0-4a3b-884e-06127719d0e2}*SharedItemsImports = 4
@@ -45,6 +47,7 @@ Global
 		ItemsLib\ItemsLib.projitems*{0721f55b-c303-4a13-a750-b886d08065ce}*SharedItemsImports = 4
 		Scheduler\Scheduler.projitems*{0721f55b-c303-4a13-a750-b886d08065ce}*SharedItemsImports = 4
 		MonitorTools\MonitorTools.projitems*{1d8d5881-262e-4eb4-af37-d929e282442c}*SharedItemsImports = 13
+		Utils\Utils.projitems*{3c135a14-3705-4512-af4a-679763378516}*SharedItemsImports = 13
 		Scheduler\Scheduler.projitems*{5c466d08-3189-4ce5-8c7f-2db1ddb9c0b5}*SharedItemsImports = 4
 		Color Utils\Color_Utils.projitems*{61eba249-19f3-48b6-a25b-a4cee90168ba}*SharedItemsImports = 13
 		Scheduler\Scheduler.projitems*{65e5e04a-5f46-466d-8254-051c3a983884}*SharedItemsImports = 13
@@ -55,6 +58,9 @@ Global
 		MonitorTools\MonitorTools.projitems*{a58f5bc4-71cb-4ca9-adba-ec3c3b2e2d90}*SharedItemsImports = 4
 		Scheduler\Scheduler.projitems*{a58f5bc4-71cb-4ca9-adba-ec3c3b2e2d90}*SharedItemsImports = 4
 		SharedScripts\SharedScripts.projitems*{a78e89ee-3451-4aaa-9fa7-8ebe91acc9dd}*SharedItemsImports = 4
+		ItemsLib\ItemsLib.projitems*{ad8f63c3-5c2b-4f08-806f-55d5738d8226}*SharedItemsImports = 4
+		Scheduler\Scheduler.projitems*{ad8f63c3-5c2b-4f08-806f-55d5738d8226}*SharedItemsImports = 4
+		Utils\Utils.projitems*{ad8f63c3-5c2b-4f08-806f-55d5738d8226}*SharedItemsImports = 4
 		Color Utils\Color_Utils.projitems*{bb230746-36e6-4e7e-aac7-5c1fca4d3de3}*SharedItemsImports = 4
 		Scheduler\Scheduler.projitems*{bb230746-36e6-4e7e-aac7-5c1fca4d3de3}*SharedItemsImports = 4
 		SharedScripts\SharedScripts.projitems*{f78c4e11-ff77-4882-819c-a7c736535c43}*SharedItemsImports = 4
@@ -96,6 +102,7 @@ Global
 		{03937CF1-88C0-4A3B-884E-06127719D0E2} = {F3B0FC11-5DF4-4838-84B0-21BF27706191}
 		{0721F55B-C303-4A13-A750-B886D08065CE} = {F3B0FC11-5DF4-4838-84B0-21BF27706191}
 		{AD8F63C3-5C2B-4F08-806F-55D5738D8226} = {F3B0FC11-5DF4-4838-84B0-21BF27706191}
+		{3C135A14-3705-4512-AF4A-679763378516} = {A9E52608-EAD9-4836-A355-495B629FDB2E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {73FA824C-A360-46E2-B16E-26CE6F3195D2}
