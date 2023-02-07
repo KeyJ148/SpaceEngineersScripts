@@ -25,13 +25,23 @@ using IMyInventoryItem = VRage.Game.ModAPI.Ingame.IMyInventoryItem;
 namespace IngameScript
 {
     /// <summary>
-    /// Переносит предметики туда, где им место, для удобного доступа
+    /// Переносит предметики туда, где им место, для удобного доступа. Настройки в разделе Config позволяют настроить
+    /// названия контейнеров, в которые будут складываться предметы.
+    /// TODO: Протестировать возможность использовать группы контейнеров в качестве целевых хранилищ
+    /// TODO: Создать поддержку правил выбора целевых контейнеров
     /// </summary>
-
     partial class Program : MyGridProgram
     {
+        // Config
+        private string
+            _componentsName = "0. Components",
+            _ingotsName = "0. Ingots",
+            _oresName = "0. Ingots",
+            _toolsName = "0. Tools";
+
+
+        // Script
         private IMyGridTerminalSystem _grid; // ссылка на систему
-        private IMyCargoContainer _ingotsStore, _componentsStore; // целевые хранилища (куда складывать)
         private List<IMyProductionBlock> _productors; // Список блоков-крафтеров
         private List<IMyCargoContainer> _containers; // Список всех контейнеров
         private List<Sorter> _sorters; // Виртуальные сортировщики
@@ -71,16 +81,20 @@ namespace IngameScript
             _sorters = new List<Sorter>();
 
             // Целевые хранилища
-            _ingotsStore = (IMyCargoContainer) _grid.GetBlockWithName("0. Ingots");
-            _componentsStore = (IMyCargoContainer)_grid.GetBlockWithName("0. Components");
+            var _ingotsStore = (IMyCargoContainer) _grid.GetBlockWithName(_ingotsName);
+            var _componentsStore = (IMyCargoContainer)_grid.GetBlockWithName(_componentsName);
+            var _oresStore = (IMyCargoContainer)_grid.GetBlockWithName(_oresName);
+            var _toolsStore = (IMyCargoContainer)_grid.GetBlockWithName(_toolsName);
 
             // Поиск сканируемых сортировщиками блоков
             _productors = blocks.OfType<IMyProductionBlock>().ToList();
             _containers = blocks.OfType<IMyCargoContainer>().ToList();
 
             // Подготовка виртуальных сортировщиков
-            _sorters.Add(new Sorter(_ingotsStore.GetInventory(), Items.INGOTS));
-            _sorters.Add(new Sorter(_componentsStore.GetInventory(), Items.COMPONENTS));
+            _sorters.Add(new Sorter(_ingotsStore, Items.INGOTS));
+            _sorters.Add(new Sorter(_componentsStore, Items.COMPONENTS));
+            _sorters.Add(new Sorter(_oresStore, new List<Item>(Items.ORES)));
+            _sorters.Add(new Sorter(_oresStore, Items.INSTRUMENTS.Concat(Items.OTHER).ToList()));
         }
 
         /// <summary>
@@ -123,16 +137,43 @@ namespace IngameScript
         {
             IMyInventory to;
             List<Item> _items;
+            List<IMyInventory> toList;
 
             /// <summary>
             /// Создаёт виртуальный сортировщик
-            /// TODO: Создать поддержку правил выбора целевых контейнеров
             /// </summary>
             /// <param name="target">Целевой инвентарь, в который будут складываться предметы</param>
             /// <param name="items">Список предметов, которые переносятся сортировщиком</param>
             public Sorter(IMyInventory target, List<Item> items)
             {
                 to = target;
+                _items = items;
+            }
+
+            /// <summary>
+            /// Создаёт виртуальный сортировщик
+            /// </summary>
+            /// <param name="target">Целевой контейнер, в который будут складываться предметы</param>
+            /// <param name="items">Список предметов, которые переносятся сортировщиком</param>
+            public Sorter(IMyCargoContainer target, List<Item> items)
+            {
+                to = target.GetInventory();
+                _items = items;
+            }
+
+            public Sorter(List<IMyCargoContainer> targets, List<Item> items)
+            {
+                foreach (var target in targets)
+                {
+                    toList.Add(target.GetInventory());
+                }
+
+                _items = items;
+            }
+
+            public Sorter(List<IMyInventory> targets, List<Item> items)
+            {
+                toList = targets;
                 _items = items;
             }
 
@@ -144,35 +185,76 @@ namespace IngameScript
             {
                 try
                 {
-                    // Не пытаться сортировать самого себя
-                    if (from == to)
-                        return;
-
-                    // проверка конвейерного соединения
-                    if (!from.IsConnectedTo(to))
-                        return;
-
-                    List<MyInventoryItem> items = new List<MyInventoryItem>();
-                    from.GetItems(items);
-
-                    foreach (var item in items)
+                    if (toList == null) // Для одиночного указанного контейнера
                     {
-                        // Попытка найти предмет прямым перебором. Просто не люблю излишнюю вложенность.
-                        var found = _items.Where(i => i.Id.ToString() == item.Type.ToString());
+                        // Не пытаться сортировать самого себя
+                        if (from == to)
+                            return;
 
-                        // Если нашелся хотя бы один - всё норм.
-                        if (found.Count() <= 0)
-                            continue;
+                        // проверка конвейерного соединения
+                        if (!from.IsConnectedTo(to))
+                            return;
 
-                        // Не знаю что точно оно проверяет, но вроде полезно
-                        if (!from.CanTransferItemTo(to, item.Type))
-                            continue;
+                        List<MyInventoryItem> items = new List<MyInventoryItem>();
+                        from.GetItems(items);
 
-                        try // паранойя
+                        foreach (var item in items)
                         {
-                            from.TransferItemTo(to, item); // Двигаем штучки
+                            // Попытка найти предмет прямым перебором. Просто не люблю излишнюю вложенность.
+                            var found = _items.Where(i => i.Id.ToString() == item.Type.ToString());
+
+                            // Если нашелся хотя бы один - всё норм.
+                            if (found.Count() <= 0)
+                                continue;
+
+                            // Не знаю что точно оно проверяет, но вроде полезно
+                            if (!from.CanTransferItemTo(to, item.Type))
+                                continue;
+
+                            try // паранойя
+                            {
+                                from.TransferItemTo(to, item); // Двигаем штучки
+                            }
+                            catch { } // "ловить" поменбше
                         }
-                        catch { } // "ловить" поменбше
+                    }
+                    else // для списка контейнеров.
+                    {
+
+                        foreach (var target in toList)
+                        {
+                            // Не пытаться сортировать самого себя
+                            if (from == to)
+                                continue;
+
+                            // проверка конвейерного соединения
+                            if (!from.IsConnectedTo(target))
+                                continue;
+
+                            List<MyInventoryItem> items = new List<MyInventoryItem>();
+                            from.GetItems(items);
+
+                            foreach (var item in items)
+                            {
+                                // Попытка найти предмет прямым перебором. Просто не люблю излишнюю вложенность.
+                                var found = _items.Where(i => i.Id.ToString() == item.Type.ToString());
+
+                                // Если нашелся хотя бы один - всё норм.
+                                if (found.Count() <= 0)
+                                    continue;
+
+                                // Не знаю что точно оно проверяет, но вроде полезно
+                                if (!from.CanTransferItemTo(to, item.Type))
+                                    continue;
+
+                                try // паранойя
+                                {
+                                    from.TransferItemTo(to, item); // Двигаем штучки
+                                }
+                                catch { } // "ловить" поменбше
+                            }
+                            break; // У меня есть какое-то странное неприятное предчувствие насчет этого
+                        }
                     }
                 }
                 catch {     } // "ловить" поболбше
