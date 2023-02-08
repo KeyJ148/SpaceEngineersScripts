@@ -27,7 +27,7 @@ namespace IngameScript
     partial class Program : MyGridProgram
     {
         // CONFIG
-        private int _tier = 1; // степень 10, на которую будет умножено требуемое количество предметов
+        private int _factor = 1; // коэффициент, на который будет умножено требуемое количество предметов
         private bool _limitByGroup = true; // Если true, то будет использовать главные сборщики в группе _groupName
         private string _groupName = "1. Assemblers"; // см. _limitByGroup. Группа не должна содержать сборщиков в совместном режиме
 
@@ -120,7 +120,7 @@ namespace IngameScript
             foreach (var item in _targetAmount.Keys)
             {
                 // разница между требуемым и имеющимся количеством
-                long diff = (_targetAmount[item] * (long)Math.Pow(10, _tier - 1)) - itemsAmount[item]; 
+                long diff = (_targetAmount[item] * _factor) - itemsAmount[item]; 
                 if (diff > 0)
                 {
                     if (first)
