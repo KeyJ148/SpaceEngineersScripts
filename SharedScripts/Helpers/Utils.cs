@@ -24,6 +24,7 @@ namespace IngameScript
     {
 		/// <summary>
 		/// Женя, заебал, напиши комментарии для тупых
+		/// Этот класс вынесен в отдельную либу
 		/// </summary>
 		[Obsolete]
         public static class Utils
