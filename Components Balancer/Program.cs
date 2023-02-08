@@ -28,7 +28,7 @@ namespace IngameScript
     {
         // CONFIG
         private int _tier = 1; // степень 10, на которую будет умножено требуемое количество предметов
-        private bool _limitByGroup = false; // Если true, то будет использовать главные сборщики в группе _groupName
+        private bool _limitByGroup = true; // Если true, то будет использовать главные сборщики в группе _groupName
         private string _groupName = "1. Assemblers"; // см. _limitByGroup. Группа не должна содержать сборщиков в совместном режиме
 
         // Список предметов для дозаказа
