@@ -161,7 +161,7 @@ namespace IngameScript
             /// <param name="task"></param>
             private static void TryExecute(SchedulerTask task)
             {
-                Debug($"Попытка выполнить задачу #{task.Id}");
+                Debug($"Попытка выполнить задачу #{task.Id}{(task.Name != null ? $" ({task.Name})" : "")}");
                 
 
                 if (task.MarkedForCancellation)
@@ -173,7 +173,9 @@ namespace IngameScript
                     {
                         _taskList.Remove(task);
                     }
-                    catch { }
+                    catch (Exception e){
+                        Log(e.Message);
+                    }
                     task.Execute();
                     if (task.DoInfinitely ||task.ExecutionsRemaining > 0)
                     {
@@ -203,6 +205,8 @@ namespace IngameScript
                 public bool Active { get; private set; } = true; // Выполнять ли задачу при вызове. Управляется методами Activate() и Deactivate()
                 public bool MarkedForCancellation { get; private set; } = false; // Если true, то задача будет удалена во время следующего такта
 
+                public string Name { get; private set; }
+
                 private Action _action;
 
 
@@ -215,6 +219,12 @@ namespace IngameScript
                     NextExecutionAt = nextExecution;
                     Interval = interval;
                     DoInfinitely = doInfinitely;
+                }
+
+                public SchedulerTask SetName(string name)
+                {
+                    Name = name;
+                    return this;
                 }
 
                 /// <summary>
@@ -244,12 +254,14 @@ namespace IngameScript
                     if (!Active)
                         return;
 
-                    Debug($"Выполняется задача #{Id}");
+                    Debug($"Выполняется задача #{Id}{(Name!=null ? $" ({Name})":"")}");
                     try
                     {
                         _action();
                     }
-                    catch { }
+                    catch(Exception e) {
+                        Log(e.Message);
+                    }
                     if(!DoInfinitely)
                         ExecutionsRemaining--;
                 }

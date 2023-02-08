@@ -42,6 +42,13 @@ namespace IngameScript
                 return fixedPoint;
             }
 
+            /// <summary>
+            /// Возвращает сокращенное число с суффиксом
+            /// TODO: Женя, напиши че тут происходит и зачем
+            /// </summary>
+            /// <param name="number"></param>
+            /// <param name="alignment"></param>
+            /// <returns></returns>
             public static string GetShortNumber(long number, bool alignment)
             {
                 char[] suffixes = { ' ', 'K', 'M', 'G', 'T', 'P', 'E', '?' };
@@ -57,6 +64,11 @@ namespace IngameScript
                 return prefix + numberBase.ToString() + suffix;
             }
 
+            /// <summary>
+            /// Возвращает правильное написание "часа" в зависимости от числа
+            /// </summary>
+            /// <param name="hours"></param>
+            /// <returns></returns>
             public static string GetHourTranslate(long hours)
             {
                 long val1 = hours % 10;
@@ -100,11 +112,23 @@ namespace IngameScript
                 return itemToCount;
             }
 
+            /// <summary>
+            /// Возвращает количество искомых предметов в указанном инвентаре
+            /// </summary>
+            /// <param name="item">Искомый предмет</param>
+            /// <param name="inventory">Инвентарь</param>
+            /// <returns></returns>
             public static long CalculateItemsInInventory(Item item, IMyInventory inventory)
             {
                 return FromRaw(inventory.GetItemAmount(item.Id).RawValue);
             }
 
+            /// <summary>
+            /// Возвращает количество заказанных предметов в сборщике
+            /// </summary>
+            /// <param name="item">Искомый предмет</param>
+            /// <param name="assembler">Сборщик</param>
+            /// <returns></returns>
             public static long CalculateQueuedItems(Item item, IMyAssembler assembler)
             {
                 var amount = 0L;
@@ -112,7 +136,7 @@ namespace IngameScript
                 assembler.GetQueue(queue);
                 foreach (var queuedItem in queue)
                 {
-                    if (queuedItem.BlueprintId.SubtypeName == item.Id.SubtypeName)
+                    if (queuedItem.BlueprintId.SubtypeName == GetBlueprintSubdefinitionName(item.Id.SubtypeName))
                     {
                         amount += FromRaw(queuedItem.Amount.RawValue);
                     }
@@ -121,11 +145,49 @@ namespace IngameScript
                 return amount;
             }
 
-            public static IMyAssembler GetLeastLoadedAssembler(List<IMyAssembler> assemblers)
+            /// <summary>
+            /// Возвращает название чертежа, соответствующего названию предмета
+            /// </summary>
+            /// <param name="itemSubdefinition"></param>
+            /// <returns></returns>
+            public static string GetBlueprintSubdefinitionName(string itemSubdefinition)
             {
-                return assemblers.MinBy(assembler => (float)GetAssemblerEta(assembler));
+                var suffix = "Component";
+                var subdefs = new[] { "Motor", "Computer", "Construction", "Detector", "Explosives", "Girder",
+                    "GravityGenerator", "Medical", "Thrust", "RadioCommunication", "Reactor" };
+
+                if (subdefs.Contains(itemSubdefinition))
+                    return itemSubdefinition + suffix;
+
+                return itemSubdefinition;
             }
 
+            /// <summary>
+            /// Возвращает сборщик из предоставленного списка с наименьшим ETA
+            /// </summary>
+            /// <param name="assemblers">Список сборщиков</param>
+            /// <returns></returns>
+            public static IMyAssembler GetLeastLoadedAssembler(List<IMyAssembler> assemblers)
+            {
+                IMyAssembler min;
+                try
+                {
+                    min = assemblers.MinBy(assembler => {
+                        return (float)GetAssemblerEta(assembler);
+                    });
+                }
+                catch(Exception e)
+                {
+                    return assemblers.First();
+                }
+                return min;
+            }
+
+            /// <summary>
+            /// Рассчитывает суммарное время завершения всех заказов в сборщике
+            /// </summary>
+            /// <param name="assembler"></param>
+            /// <returns></returns>
             public static double GetAssemblerEta(IMyAssembler assembler)
             {
                 double eta = 0;
@@ -138,9 +200,15 @@ namespace IngameScript
                 return eta;
             }
 
+            /// <summary>
+            /// Возвращает ссылку на предмет, являющийся результатом сборки чертежа
+            /// </summary>
+            /// <param name="prodItem"></param>
+            /// <returns></returns>
             public static CraftableItem GetBlueprintResult(MyProductionItem prodItem)
             {
-                var items = Items.CRAFTABLES.Where(item => item.Id.SubtypeName == prodItem.BlueprintId.SubtypeName);
+                var items = Items.CRAFTABLES.Where(item => item.Id.SubtypeName == prodItem.BlueprintId.SubtypeName
+                .Replace("Component",""));
                 if (items.Count() > 0)
                     return items.First();
 

@@ -66,19 +66,26 @@ namespace IngameScript
 
         public Program()
         {
-            Runtime.UpdateFrequency = UpdateFrequency.Update1;
+            // Инициализация
+            Runtime.UpdateFrequency = UpdateFrequency.Update100;
+            ScanGrid();
 
-            Scheduler.ExecuteEveryNTicks(ScanGrid, 200);
-            Scheduler.ExecuteEveryNTicks(CheckStorage, 50);
+            // Подготовка задач
+            Scheduler.ExecuteEveryNTicks(ScanGrid, 4).SetName("Scan Grid");
+            Scheduler.ExecuteEveryNTicks(CheckStorage, 1).SetName("Check Storage");
 
+            // Запуск
+            Echo($"Finished scan!\n" +
+                $"Total assemblers: {_allAssemblers.Count}\n" +
+                $"Total containers: {_allContainers.Count}\n" +
+                $"Total producers: {_allProducers.Count}\n" +
+                $"Working assemblers: {_assemblers.Count}");
             Scheduler.Start();
         }
 
-        private void StartProducing(Item component, int amount)
-        {
-
-        }
-
+        /// <summary>
+        /// Сканирует систему и собирает все ссылки на нужные объекты (контейнеры, ассемблеры)
+        /// </summary>
         private void ScanGrid()
         {
             _allAssemblers = new List<IMyAssembler>();
@@ -99,64 +106,80 @@ namespace IngameScript
                 GridTerminalSystem.GetBlockGroupWithName(_groupName).GetBlocksOfType(_assemblers);
             }
             _storages = _allContainers.Select(c => c.GetInventory())
-                .Concat(_allProducers.Select(p => p.OutputInventory)).ToList(); // Инвентари контейнеров
+                .Concat(_allProducers.Select(p => p.OutputInventory)).ToList(); // Инвентари контейнеров*/
         }
 
+        /// <summary>
+        /// проверяет количество предметов в системе (с учетом тех, что заказаны в сборщиках), и заказывает,
+        /// если их не достаточно
+        /// </summary>
         private void CheckStorage()
         {
-            var itemsAmount = CountItems();
+            var itemsAmount = CountItems(); // словарь, где каждому предмету соответствует его количество в системе
+            bool first = true;
             foreach (var item in _targetAmount.Keys)
             {
-                long diff = (_targetAmount[item] * (long)Math.Pow(10, _tier)) - itemsAmount[item];
+                // разница между требуемым и имеющимся количеством
+                long diff = (_targetAmount[item] * (long)Math.Pow(10, _tier - 1)) - itemsAmount[item]; 
                 if (diff > 0)
-                    EnqueueItem(item,diff);
+                {
+                    if (first)
+                    {
+                        Echo("Enqueue requured: ");
+                        first = false;
+                    }
+                    Echo($"{diff} {item.Id.SubtypeName}");
+                    EnqueueItem(item, diff);
+                }
             }
         }
 
+        /// <summary>
+        /// Ставит предмет в очередь крафта
+        /// </summary>
+        /// <param name="item">Требуемый предмет</param>
+        /// <param name="amount">Сколько накрафтить</param>
         private void EnqueueItem(CraftableItem item, long amount)
         {
             try
             {
                 var blueprint = item.BlueprintId;
                 var assembler = Utils.GetLeastLoadedAssembler(_assemblers.Where(a => a.CanUseBlueprint(blueprint)).ToList());
-                var amountFixed = new MyFixedPoint();
                 assembler.AddQueueItem(blueprint, Utils.ToFixedPoint(amount));
             }
-            catch { }
+            catch (Exception e){
+                Echo(e.Message);
+            }
         }
 
+        /// <summary>
+        /// Считает количество предметов в системе
+        /// </summary>
+        /// <returns></returns>
         private Dictionary<CraftableItem, long> CountItems()
         {
             var itemsAmount = _targetAmount.Keys.ToDictionary(key => key, key => 0L);
-
-            foreach (var item in itemsAmount.Keys)
+            // Ты не можешь просто итерироваться по словарю и менят ь ему значения. Всё сложно
+            var keys = itemsAmount.Keys.ToList(); 
+            try
             {
-                foreach (var storage in _storages)
+                foreach (var item in keys)
                 {
-                    itemsAmount[item] += Utils.CalculateItemsInInventory(item, storage);
-                }
-
-                foreach (var assembler in _allAssemblers)
-                {
-                    if (assembler.Enabled)
-                        continue;
-
-                    if (!assembler.IsQueueEmpty)
-                        continue;
-
-                    itemsAmount[item] += Utils.CalculateQueuedItems(item, assembler);
+                    // Подсчет предметов в контейнерах
+                    itemsAmount[item] += _storages.Sum(storage => Utils.CalculateItemsInInventory(item, storage));
+                    // Подсчет предметов, заказанных в сборщиках
+                    itemsAmount[item] += _allAssemblers.Sum(assembler => Utils.CalculateQueuedItems(item, assembler));
                 }
             }
-
+            catch (Exception e)
+            {
+                Echo(e.Message);
+            }
             return itemsAmount;
         }
 
-        private void CalculateAmount(Item item)
-        {
-        }
-
         public void Main(string argument, UpdateType updateSource)
-        {
+        { 
             Scheduler.Tick();
         }
     }

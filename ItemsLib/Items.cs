@@ -31,44 +31,6 @@ namespace IngameScript
         public static class Items
         {
             /// <summary>
-            /// Содержит перечисление руд
-            /// </summary>
-            public static class Ores
-            {
-                private static readonly String PREFIX = "MyObjectBuilder_Ore/";
-                public static readonly Ore STONE = new Ore(PREFIX + "Stone", "Камень", 130, 0.0504, Ingots.STONE);
-                public static readonly Ore IRON, Fe = IRON = new Ore(PREFIX + "Iron", "Железо", 26, 0.7, Ingots.IRON);
-                public static readonly Ore SILICON, Si = SILICON = new Ore(PREFIX + "Silicon", "Кремний", 2.167, 0.7, Ingots.SILICON);
-                public static readonly Ore NICKEL, Ni = NICKEL = new Ore(PREFIX + "Nickel", "Никель", 1.97, 0.4, Ingots.NICKEL);
-                public static readonly Ore COBALT, Co = COBALT = new Ore(PREFIX + "Cobalt", "Кобальт", 0.433, 0.3, Ingots.COBALT);
-                public static readonly Ore MAGNESIUM, Mg = MAGNESIUM = new Ore(PREFIX + "Magnesium", "Магний", 2.6, 0.007, Ingots.MAGNESIUM);
-                public static readonly Ore SILVER, Ag = SILVER = new Ore(PREFIX + "Silver", "Серебро", 1.3, 0.1, Ingots.SILVER);
-                public static readonly Ore GOLD, Au = GOLD = new Ore(PREFIX + "Gold", "Золото", 3.25, 0.01, Ingots.GOLD);
-                public static readonly Ore PLATINUM, Pt = PLATINUM = new Ore(PREFIX + "Platinum", "Платина", 0.433, 0.005, Ingots.PLATINUM);
-                public static readonly Ore URANIUM, U = URANIUM = new Ore(PREFIX + "Uranium", "Уран", 0.325, 0.01, Ingots.URANIUM);
-                public static readonly Item ICE = new Item(PREFIX + "Ice", "Лёд");
-
-            }
-
-            /// <summary>
-            /// Содержит перечисление ресурсов
-            /// </summary>
-            public static class Ingots
-            {
-                private static readonly String PREFIX = "MyObjectBuilder_Ingot/";
-                public static readonly Item STONE = new Item(PREFIX + "Stone", "Гравий");
-                public static readonly Item IRON, Fe = IRON = new Item(PREFIX + "Iron", "Железо");
-                public static readonly Item SILICON, Si = SILICON = new Item(PREFIX + "Silicon", "Кремний");
-                public static readonly Item NICKEL, Ni = NICKEL = new Item(PREFIX + "Nickel", "Никель");
-                public static readonly Item COBALT, Co = COBALT = new Item(PREFIX + "Cobalt", "Кобальт");
-                public static readonly Item MAGNESIUM, Mg = MAGNESIUM = new Item(PREFIX + "Magnesium", "Магний");
-                public static readonly Item SILVER, Ag = SILVER = new Item(PREFIX + "Silver", "Серебро");
-                public static readonly Item GOLD, Au = GOLD = new Item(PREFIX + "Gold", "Золото");
-                public static readonly Item PLATINUM, Pt = PLATINUM = new Item(PREFIX + "Platinum", "Платина");
-                public static readonly Item URANIUM, U = URANIUM = new Item(PREFIX + "Uranium", "Уран");
-            }
-
-            /// <summary>
             /// Содержит перечисление строительных компонентов
             /// </summary>
             public static class Components
@@ -124,7 +86,7 @@ namespace IngameScript
                     .WithIngredients(Ingots.IRON, 30, Ingots.COBALT, 10, Ingots.GOLD, 1, Ingots.PLATINUM, 0.4);
                 public static readonly CraftableItem DETECTOR = new CraftableItem(PREFIX + "Detector", "Детектор")
                     .WithTime(1)
-                    .WithIngredients(Ingots.IRON, 5, Ingots. NICKEL, 15);
+                    .WithIngredients(Ingots.IRON, 5, Ingots.NICKEL, 15);
                 public static readonly CraftableItem GRAVITY_GENERATOR = new CraftableItem(PREFIX + "GravityGenerator", "Грав. ген.")
                     .WithTime(1)
                     .WithIngredients(Ingots.IRON, 600, Ingots.COBALT, 220, Ingots.SILVER, 5, Ingots.GOLD, 10);
@@ -138,6 +100,45 @@ namespace IngameScript
                     .WithTime(8)
                     .WithIngredients(Ingots.IRON, 10, Ingots.GOLD, 2);
             }
+            /// <summary>
+            /// Содержит перечисление руд
+            /// </summary>
+            public static class Ores
+            {
+                private static readonly String PREFIX = "MyObjectBuilder_Ore/";
+                public static readonly Ore STONE = new Ore(PREFIX + "Stone", "Камень", 130, 0.0504, Ingots.STONE);
+                public static readonly Ore IRON, Fe = IRON = new Ore(PREFIX + "Iron", "Железо", 26, 0.7, Ingots.IRON);
+                public static readonly Ore SILICON, Si = SILICON = new Ore(PREFIX + "Silicon", "Кремний", 2.167, 0.7, Ingots.SILICON);
+                public static readonly Ore NICKEL, Ni = NICKEL = new Ore(PREFIX + "Nickel", "Никель", 1.97, 0.4, Ingots.NICKEL);
+                public static readonly Ore COBALT, Co = COBALT = new Ore(PREFIX + "Cobalt", "Кобальт", 0.433, 0.3, Ingots.COBALT);
+                public static readonly Ore MAGNESIUM, Mg = MAGNESIUM = new Ore(PREFIX + "Magnesium", "Магний", 2.6, 0.007, Ingots.MAGNESIUM);
+                public static readonly Ore SILVER, Ag = SILVER = new Ore(PREFIX + "Silver", "Серебро", 1.3, 0.1, Ingots.SILVER);
+                public static readonly Ore GOLD, Au = GOLD = new Ore(PREFIX + "Gold", "Золото", 3.25, 0.01, Ingots.GOLD);
+                public static readonly Ore PLATINUM, Pt = PLATINUM = new Ore(PREFIX + "Platinum", "Платина", 0.433, 0.005, Ingots.PLATINUM);
+                public static readonly Ore URANIUM, U = URANIUM = new Ore(PREFIX + "Uranium", "Уран", 0.325, 0.01, Ingots.URANIUM);
+                public static readonly Item ICE = new Item(PREFIX + "Ice", "Лёд");
+
+            }
+
+            /// <summary>
+            /// Содержит перечисление ресурсов
+            /// </summary>
+            public static class Ingots
+            {
+                private static readonly String PREFIX = "MyObjectBuilder_Ingot/";
+                public static readonly Item STONE = new Item(PREFIX + "Stone", "Гравий");
+                public static readonly Item IRON, Fe = IRON = new Item(PREFIX + "Iron", "Железо");
+                public static readonly Item SILICON, Si = SILICON = new Item(PREFIX + "Silicon", "Кремний");
+                public static readonly Item NICKEL, Ni = NICKEL = new Item(PREFIX + "Nickel", "Никель");
+                public static readonly Item COBALT, Co = COBALT = new Item(PREFIX + "Cobalt", "Кобальт");
+                public static readonly Item MAGNESIUM, Mg = MAGNESIUM = new Item(PREFIX + "Magnesium", "Магний");
+                public static readonly Item SILVER, Ag = SILVER = new Item(PREFIX + "Silver", "Серебро");
+                public static readonly Item GOLD, Au = GOLD = new Item(PREFIX + "Gold", "Золото");
+                public static readonly Item PLATINUM, Pt = PLATINUM = new Item(PREFIX + "Platinum", "Платина");
+                public static readonly Item URANIUM, U = URANIUM = new Item(PREFIX + "Uranium", "Уран");
+            }
+
+
 
 
             /// <summary>
@@ -215,7 +216,7 @@ namespace IngameScript
 
             public Item(string id, string name)
             {
-                Id = MyDefinitionId.Parse(id);
+                MyDefinitionId.TryParse(id, out Id);
                 Name = name;
             }
         }
@@ -253,16 +254,56 @@ namespace IngameScript
         {
             public double CraftingTime { get; private set; }
             public List<ItemStack> Ingredients { get; private set; }
-            public readonly MyDefinitionId BlueprintId;
+            public MyDefinitionId BlueprintId;
 
-            public CraftableItem(string id, string name, double craftingTime, List<ItemStack> ingredients) : base(id, name)
+            public CraftableItem(string id, string name, double craftingTime, IEnumerable<ItemStack> ingredients) : base(id, name)
             {
                 CraftingTime = craftingTime;
-                Ingredients = ingredients;
-                BlueprintId = MyDefinitionId.Parse("MyObjectBuilder_Component/"+Id.SubtypeName);
+                Ingredients = ingredients.ToList();
+                var blueprintSubtype = GetBlueprintSubdefinitionName(Id.SubtypeName);
+
+                MyDefinitionId.TryParse("MyObjectBuilder_BlueprintDefinition/" + blueprintSubtype, out BlueprintId);
             }
 
-            public CraftableItem(string id, string name) : base(id, name) { }
+            public CraftableItem(string id, string name, double craftingTime, object[] ingredients) : base(id, name)
+            {
+
+                CraftingTime = craftingTime;
+                Ingredients = ToItemStacks(ingredients);
+                var blueprintSubtype = GetBlueprintSubdefinitionName(Id.SubtypeName);
+
+                MyDefinitionId.TryParse("MyObjectBuilder_BlueprintDefinition/" + blueprintSubtype, out BlueprintId);
+            }
+
+            private static List<ItemStack> ToItemStacks(params object[] items)
+            {
+                var stacks = new List<ItemStack>();
+                for (int i = 0; i < items.Length; i += 2)
+                {
+                    stacks[i / 2] = new ItemStack((Item)items[i], (double)items[i + 1]);
+                }
+                return stacks;
+            }
+
+            private string GetBlueprintSubdefinitionName(string itemSubdefinition)
+            {
+                var suffix = "Component";
+                var subdefs = new[] { "Motor", "Computer", "Construction", "Detector", "Explosives", "Girder",
+                    "GravityGenerator", "Medical", "Thrust", "RadioCommunication", "Reactor" };
+
+                if (subdefs.Contains(itemSubdefinition))
+                    return itemSubdefinition + suffix;
+
+                return itemSubdefinition;
+            }
+
+            public CraftableItem(string id, string name) : base(id, name)
+            {
+                CraftingTime = 1;
+                Ingredients = new List<ItemStack> { new ItemStack(Items.Ingots.IRON, 20) };
+                var blueprintSubtype = GetBlueprintSubdefinitionName(Id.SubtypeName);
+                MyDefinitionId.TryParse("MyObjectBuilder_BlueprintDefinition/" + blueprintSubtype, out BlueprintId);
+            }
 
             public CraftableItem WithTime(double time)
             {
@@ -275,7 +316,10 @@ namespace IngameScript
                 var stacks = new List<ItemStack>();
                 for (int i = 0; i < items.Length; i += 2)
                 {
-                    stacks[i / 2] = new ItemStack((Item)items[i], (double)items[i + 1]);
+                    if (items[i] is Item && items[i + 1] is double)
+                    {
+                        stacks.Add(new ItemStack(items[i] as Item, (double)items[i + 1]));
+                    }
                 }
                 Ingredients = stacks;
                 return this;

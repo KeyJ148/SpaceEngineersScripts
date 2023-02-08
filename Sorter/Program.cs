@@ -92,7 +92,7 @@ namespace IngameScript
 
             // Подготовка виртуальных сортировщиков
             _sorters.Add(new Sorter(_ingotsStore, Items.INGOTS));
-            _sorters.Add(new Sorter(_componentsStore, Items.COMPONENTS));
+            _sorters.Add(new Sorter(_componentsStore, Items.COMPONENTS.ToList<Item>()));
             _sorters.Add(new Sorter(_oresStore, new List<Item>(Items.ORES)));
             _sorters.Add(new Sorter(_oresStore, Items.INSTRUMENTS.Concat(Items.OTHER).ToList()));
         }
