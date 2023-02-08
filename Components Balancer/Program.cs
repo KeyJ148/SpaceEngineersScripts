@@ -26,10 +26,13 @@ namespace IngameScript
     /// </summary>
     partial class Program : MyGridProgram
     {
+        // CONFIG
         private int _tier = 1; // степень 10, на которую будет умножено требуемое количество предметов
+        private bool _limitByGroup = false; // Если true, то будет использовать главные сборщики в группе _groupName
+        private string _groupName = "1. Assemblers"; // см. _limitByGroup. Группа не должна содержать сборщиков в совместном режиме
 
         // Список предметов для дозаказа
-        private readonly Dictionary<Item, long> _targetAmount = new Dictionary<Item, long>
+        private readonly Dictionary<CraftableItem, long> _targetAmount = new Dictionary<CraftableItem, long>
         {
             { Items.Components.STEEL_PLATE, 1000 },
             { Items.Components.INTEROR_PLATE, 1000},
@@ -50,8 +53,16 @@ namespace IngameScript
             { Items.Components.BULLETPROOF_GLASS, 100 },
             { Items.Components.DETECTOR, 50 },
             { Items.Components.DISPLAY, 150 },
-            { Items.Components.EXPLOSIVES, 100 }
+            { Items.Components.EXPLOSIVES, 100 },
+            { Items.Components.SUPERCONDUCTOR, 20}
         };
+
+
+        // SCRIPT
+        private List<IMyAssembler> _assemblers, _allAssemblers;
+        private List<IMyProductionBlock> _allProducers;
+        private List<IMyCargoContainer> _allContainers;
+        private List<IMyInventory> _storages;
 
         public Program()
         {
@@ -70,12 +81,78 @@ namespace IngameScript
 
         private void ScanGrid()
         {
+            _allAssemblers = new List<IMyAssembler>();
+            _allContainers = new List<IMyCargoContainer>();
+            _allProducers = new List<IMyProductionBlock>();
+            _assemblers = new List<IMyAssembler>();
 
+            GridTerminalSystem.GetBlocksOfType(_allAssemblers);
+            GridTerminalSystem.GetBlocksOfType(_allContainers);
+            GridTerminalSystem.GetBlocksOfType(_allProducers);
+
+            if (!_limitByGroup)
+            {
+                _assemblers = _allAssemblers.Where(a => !a.CooperativeMode && a.UseConveyorSystem).ToList(); // Все сборщики без совместного режима
+            }
+            else
+            {
+                GridTerminalSystem.GetBlockGroupWithName(_groupName).GetBlocksOfType(_assemblers);
+            }
+            _storages = _allContainers.Select(c => c.GetInventory())
+                .Concat(_allProducers.Select(p => p.OutputInventory)).ToList(); // Инвентари контейнеров
         }
 
         private void CheckStorage()
         {
+            var itemsAmount = CountItems();
+            foreach (var item in _targetAmount.Keys)
+            {
+                long diff = (_targetAmount[item] * (long)Math.Pow(10, _tier)) - itemsAmount[item];
+                if (diff > 0)
+                    EnqueueItem(item,diff);
+            }
+        }
 
+        private void EnqueueItem(CraftableItem item, long amount)
+        {
+            try
+            {
+                var blueprint = item.BlueprintId;
+                var assembler = Utils.GetLeastLoadedAssembler(_assemblers.Where(a => a.CanUseBlueprint(blueprint)).ToList());
+                var amountFixed = new MyFixedPoint();
+                assembler.AddQueueItem(blueprint, Utils.ToFixedPoint(amount));
+            }
+            catch { }
+        }
+
+        private Dictionary<CraftableItem, long> CountItems()
+        {
+            var itemsAmount = _targetAmount.Keys.ToDictionary(key => key, key => 0L);
+
+            foreach (var item in itemsAmount.Keys)
+            {
+                foreach (var storage in _storages)
+                {
+                    itemsAmount[item] += Utils.CalculateItemsInInventory(item, storage);
+                }
+
+                foreach (var assembler in _allAssemblers)
+                {
+                    if (assembler.Enabled)
+                        continue;
+
+                    if (!assembler.IsQueueEmpty)
+                        continue;
+
+                    itemsAmount[item] += Utils.CalculateQueuedItems(item, assembler);
+                }
+            }
+
+            return itemsAmount;
+        }
+
+        private void CalculateAmount(Item item)
+        {
         }
 
         public void Main(string argument, UpdateType updateSource)

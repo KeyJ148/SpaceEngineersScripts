@@ -183,7 +183,7 @@ namespace IngameScript
                 Ingots.PLATINUM, Ingots.URANIUM
             };
 
-            public static readonly List<Item> COMPONENTS = new List<Item> {
+            public static readonly List<CraftableItem> COMPONENTS = new List<CraftableItem> {
                 Components.STEEL_PLATE, Components.INTEROR_PLATE, Components.CONSTRUCTION, Components.COMPUTER, Components.MOTOR,
                 Components.GIRDER, Components.SMALL_TUBE, Components.LARGE_TUBE, Components.METAL_GRID, Components.DISPLAY,
                 Components.BULLETPROOF_GLASS, Components.POWER_CELL, Components.RADIO_COMMUNICATION, Components.MEDICAL,
@@ -201,6 +201,8 @@ namespace IngameScript
             public static readonly List<Item> OTHER = new List<Item> {
                 Ores.ICE, Instruments.HYDROGEN_BOTTLE, Instruments.OXYGEN_BOTTLE
             };
+
+            public static readonly List<CraftableItem> CRAFTABLES = COMPONENTS;
 
             public static readonly List<Item> ALL = ORES.Concat(INGOTS).Concat(COMPONENTS).Concat(INSTRUMENTS).Concat(OTHER).ToList();
         }
@@ -251,11 +253,13 @@ namespace IngameScript
         {
             public double CraftingTime { get; private set; }
             public List<ItemStack> Ingredients { get; private set; }
+            public readonly MyDefinitionId BlueprintId;
 
             public CraftableItem(string id, string name, double craftingTime, List<ItemStack> ingredients) : base(id, name)
             {
                 CraftingTime = craftingTime;
                 Ingredients = ingredients;
+                BlueprintId = MyDefinitionId.Parse("MyObjectBuilder_Component/"+Id.SubtypeName);
             }
 
             public CraftableItem(string id, string name) : base(id, name) { }
