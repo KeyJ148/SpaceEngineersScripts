@@ -3,27 +3,27 @@
   <PropertyGroup>
     <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <HasSharedItems>true</HasSharedItems>
-    <SharedGUID>66683e32-184d-487e-906c-ae8c52c842f0</SharedGUID>
+    <SharedGUID>8a3cdcc5-4b55-4d87-a415-698a0e1ff06f</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>SharedScripts</Import_RootNamespace>
+    <Import_RootNamespace>IngameScript</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\BasicMonitor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\Display.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\DisplayGroup.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\GroupsEntitiesMonitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\IDisplay.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ProgressbarSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\IMonitor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\Items.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ProgressbarMonitor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ProgressbarSettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\Utils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scripts\AssemblersMonitor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scripts\BatteryMonitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scripts\CargoItemsMonitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scripts\CargoVolumeMonitor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Scripts\BatteryMonitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scripts\GasMonitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scripts\RefinersMonitor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\Utils.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\Items.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\Display.cs" />
   </ItemGroup>
 </Project>
