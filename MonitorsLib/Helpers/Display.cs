@@ -41,7 +41,7 @@ namespace IngameScript
 
 			public void Print(object o) 
 			{
-				textPanel.WritePublicText(o.ToString(), true);
+				textPanel.WriteText(o.ToString(), true);
 			}
 
 			public void Println(object o) 
@@ -59,7 +59,7 @@ namespace IngameScript
 
 			public void Clear()
 			{
-				textPanel.WritePublicText("");
+				textPanel.WriteText("");
 			}
 
 			public int GetLength()
