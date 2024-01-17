@@ -77,7 +77,7 @@ namespace IngameScript
 			{
 				foreach (var textPanel in textPanels)
 				{
-					textPanel.WritePublicText("");
+					textPanel.WriteText("");
 				}
 				PrintPadding();
 			}
@@ -99,18 +99,18 @@ namespace IngameScript
 					int symbolsToEndCurrentPanel = symbolsInOneDisplay - (printedSymbolsInCurrentLine % symbolsInOneDisplay);
 					currentPanelText = s.Length > symbolsToEndCurrentPanel ? s.Substring(0, symbolsToEndCurrentPanel) : s;
 
-					currentPanel.WritePublicText(currentPanelText, true);
+					currentPanel.WriteText(currentPanelText, true);
 					printedSymbolsInCurrentLine += currentPanelText.Length;
 					s = s.Substring(currentPanelText.Length);
 				} while (s.Length > 0 && currentPanel != textPanels.Last());
-				textPanels.Last().WritePublicText(s, true);
+				textPanels.Last().WriteText(s, true);
 			}
 
 			private void NextLine()
             {
 				foreach (var textPanel in textPanels)
 				{
-					textPanel.WritePublicText("\n", true);
+					textPanel.WriteText("\n", true);
 				}
 				PrintPadding();
 				printedSymbolsInCurrentLine = 0;
@@ -118,7 +118,7 @@ namespace IngameScript
 
 			private void PrintPadding()
             {
-				textPanels[0].WritePublicText(new string(' ', padding), true);
+				textPanels[0].WriteText(new string(' ', padding), true);
 			}
 		}
 	}
