@@ -26,7 +26,6 @@ namespace IngameScript
 		/// Содержит перечисления игровых предметов
 		/// TODO: Женя, переезжай на отдельную либу плз (ItemsLib.Items)
 		/// </summary>
-		[Obsolete]
 		public static class Items
 		{
 			/// <summary>
