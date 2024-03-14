@@ -8,6 +8,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "UtilsLib", "UtilsLib\UtilsL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SorterScript", "SorterScript\SorterScript.csproj", "{8E2CDF2B-9FC6-4CAD-B1EC-770CDCAC830B}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SchedulerLib", "SchedulerLib\SchedulerLib.shproj", "{8A3CDCC5-4B55-4D87-A415-698A0E1FF06F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
