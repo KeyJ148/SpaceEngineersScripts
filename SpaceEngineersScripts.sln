@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SorterScript", "SorterScrip
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SchedulerLib", "SchedulerLib\SchedulerLib.shproj", "{8A3CDCC5-4B55-4D87-A415-698A0E1FF06F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RgbControllerScript", "RgbControllerScript\RgbControllerScript.csproj", "{395E4982-D6FF-499D-929E-8803F35460B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -24,5 +26,9 @@ Global
 		{8E2CDF2B-9FC6-4CAD-B1EC-770CDCAC830B}.Debug|x64.Build.0 = Debug|x64
 		{8E2CDF2B-9FC6-4CAD-B1EC-770CDCAC830B}.Release|x64.ActiveCfg = Release|x64
 		{8E2CDF2B-9FC6-4CAD-B1EC-770CDCAC830B}.Release|x64.Build.0 = Release|x64
+		{395E4982-D6FF-499D-929E-8803F35460B7}.Debug|x64.ActiveCfg = Debug|x64
+		{395E4982-D6FF-499D-929E-8803F35460B7}.Debug|x64.Build.0 = Debug|x64
+		{395E4982-D6FF-499D-929E-8803F35460B7}.Release|x64.ActiveCfg = Release|x64
+		{395E4982-D6FF-499D-929E-8803F35460B7}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 EndGlobal
