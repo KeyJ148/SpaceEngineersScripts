@@ -12,6 +12,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SchedulerLib", "SchedulerLi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RgbControllerScript", "RgbControllerScript\RgbControllerScript.csproj", "{395E4982-D6FF-499D-929E-8803F35460B7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactorsControllerScript", "ReactorsControllerScript\ReactorsControllerScript.csproj", "{1498A213-F95C-4C5F-9C91-D40F479A27F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -30,5 +32,9 @@ Global
 		{395E4982-D6FF-499D-929E-8803F35460B7}.Debug|x64.Build.0 = Debug|x64
 		{395E4982-D6FF-499D-929E-8803F35460B7}.Release|x64.ActiveCfg = Release|x64
 		{395E4982-D6FF-499D-929E-8803F35460B7}.Release|x64.Build.0 = Release|x64
+		{1498A213-F95C-4C5F-9C91-D40F479A27F3}.Debug|x64.ActiveCfg = Debug|x64
+		{1498A213-F95C-4C5F-9C91-D40F479A27F3}.Debug|x64.Build.0 = Debug|x64
+		{1498A213-F95C-4C5F-9C91-D40F479A27F3}.Release|x64.ActiveCfg = Release|x64
+		{1498A213-F95C-4C5F-9C91-D40F479A27F3}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 EndGlobal
