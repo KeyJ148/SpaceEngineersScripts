@@ -23,4 +23,7 @@
         <AdditionalFiles Include="Instructions.readme"/>
         <AdditionalFiles Include="thumb.png"/>
     </ItemGroup>
+    <Import Project="..\ItemsLib\ItemsLib.projitems" Label="Shared" />
+    <Import Project="..\SchedulerLib\SchedulerLib.projitems" Label="Shared" />
+    <Import Project="..\UtilsLib\UtilsLib.projitems" Label="Shared" />
 </Project>

@@ -22,4 +22,9 @@
         <None Remove="Instructions.readme"/>
         <AdditionalFiles Include="thumb.png"/>
     </ItemGroup>
+    <Import Project="..\UtilsLib\UtilsLib.projitems" Label="Shared" />
+    <Import Project="..\SchedulerLib\SchedulerLib.projitems" Label="Shared" />
+    <Import Project="..\GridUtilsLib\GridUtilsLib.projitems" Label="Shared" />
+    <Import Project="..\ItemsLib\ItemsLib.projitems" Label="Shared" />
+    <Import Project="..\ColorLib\ColorLib.projitems" Label="Shared" />
 </Project>
