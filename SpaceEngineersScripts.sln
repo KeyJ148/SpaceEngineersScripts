@@ -14,6 +14,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RgbControllerScript", "RgbC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactorsControllerScript", "ReactorsControllerScript\ReactorsControllerScript.csproj", "{1498A213-F95C-4C5F-9C91-D40F479A27F3}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "GridUtilsLib", "GridUtilsLib\GridUtilsLib.shproj", "{8A3CDCC5-4B55-4D87-A415-698A0E1FF06F}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ItemsLib", "ItemsLib\ItemsLib.shproj", "{8A3CDCC5-4B55-4D87-A415-698A0E1FF06F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HydrogenGeneratorsControllerScript", "HydrogenGeneratorsControllerScript\HydrogenGeneratorsControllerScript.csproj", "{805CD669-50F2-4980-987D-57B99B011073}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DummyLibsCollectorScript", "DummyLibsCollectorScript\DummyLibsCollectorScript.csproj", "{9D35246D-22D8-4BD4-9145-C21949EAC9FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComponentsBalancerScript", "ComponentsBalancerScript\ComponentsBalancerScript.csproj", "{1CB1CE1C-8BDB-4656-B528-CB8BB94DBA7C}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ColorLib", "ColorLib\ColorLib.shproj", "{8A3CDCC5-4B55-4D87-A415-698A0E1FF06F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -36,5 +48,17 @@ Global
 		{1498A213-F95C-4C5F-9C91-D40F479A27F3}.Debug|x64.Build.0 = Debug|x64
 		{1498A213-F95C-4C5F-9C91-D40F479A27F3}.Release|x64.ActiveCfg = Release|x64
 		{1498A213-F95C-4C5F-9C91-D40F479A27F3}.Release|x64.Build.0 = Release|x64
+		{805CD669-50F2-4980-987D-57B99B011073}.Debug|x64.ActiveCfg = Debug|x64
+		{805CD669-50F2-4980-987D-57B99B011073}.Debug|x64.Build.0 = Debug|x64
+		{805CD669-50F2-4980-987D-57B99B011073}.Release|x64.ActiveCfg = Release|x64
+		{805CD669-50F2-4980-987D-57B99B011073}.Release|x64.Build.0 = Release|x64
+		{9D35246D-22D8-4BD4-9145-C21949EAC9FC}.Debug|x64.ActiveCfg = Debug|x64
+		{9D35246D-22D8-4BD4-9145-C21949EAC9FC}.Debug|x64.Build.0 = Debug|x64
+		{9D35246D-22D8-4BD4-9145-C21949EAC9FC}.Release|x64.ActiveCfg = Release|x64
+		{9D35246D-22D8-4BD4-9145-C21949EAC9FC}.Release|x64.Build.0 = Release|x64
+		{1CB1CE1C-8BDB-4656-B528-CB8BB94DBA7C}.Debug|x64.ActiveCfg = Debug|x64
+		{1CB1CE1C-8BDB-4656-B528-CB8BB94DBA7C}.Debug|x64.Build.0 = Debug|x64
+		{1CB1CE1C-8BDB-4656-B528-CB8BB94DBA7C}.Release|x64.ActiveCfg = Release|x64
+		{1CB1CE1C-8BDB-4656-B528-CB8BB94DBA7C}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 EndGlobal
