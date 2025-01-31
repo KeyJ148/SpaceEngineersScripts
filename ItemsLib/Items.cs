@@ -189,7 +189,7 @@ namespace IngameScript
                 Components.GIRDER, Components.SMALL_TUBE, Components.LARGE_TUBE, Components.METAL_GRID, Components.DISPLAY,
                 Components.BULLETPROOF_GLASS, Components.POWER_CELL, Components.RADIO_COMMUNICATION, Components.MEDICAL,
                 Components.REACTOR, Components.THRUST, Components.DETECTOR, Components.GRAVITY_GENERATOR, Components.EXPLOSIVES,
-                Components.SOLAR_CELL
+                Components.SOLAR_CELL, Components.SUPERCONDUCTOR
             };
 
             public static readonly List<Item> INSTRUMENTS = new List<Item> {
