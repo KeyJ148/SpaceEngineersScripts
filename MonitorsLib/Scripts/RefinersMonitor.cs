@@ -53,7 +53,7 @@ namespace IngameScript
                 Ore ore = entity.Key;
                 long count = displayedOresToCount[ore];
                 long speedInHour = entity.Value;
-                long hours = count / speedInHour;
+                long hours = speedInHour == 0 ? -1 : count / speedInHour;
 
                 return $" ({Utils.GetShortNumber(speedInHour, true)}/Час): {hours} {Utils.GetHourTranslate(hours)}";
             }

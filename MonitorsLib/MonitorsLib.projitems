@@ -15,7 +15,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\GroupsEntitiesMonitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\IDisplay.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\IMonitor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\Items.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ProgressbarMonitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ProgressbarSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\Utils.cs" />
