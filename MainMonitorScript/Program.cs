@@ -22,16 +22,20 @@ namespace IngameScript
 {
     partial class Program : MyGridProgram
     {
+        private readonly IMonitorSetup CURRENT_SETUP = new Vein11_Setup(); //Change for new ship
         private const int RECREATE_EVERY_TICKS = 60 * 10; //10 seconds
-        private readonly MonitorCreator monitorCreator;
         
+        private readonly MonitorCreator monitorCreator;
         private List<IMonitor> monitors = new List<IMonitor>();
         private int tickCounter = 0;
 
         public Program()
         {
             Runtime.UpdateFrequency = UpdateFrequency.Update100;
-            monitorCreator = new MonitorCreator(GridTerminalSystem);
+
+            IMonitorSetup configGenerator = CURRENT_SETUP; 
+            MonitorCreatorConfig config = configGenerator.setup(GridTerminalSystem);
+            monitorCreator = new MonitorCreator(GridTerminalSystem, config);
         }
 
         public void Main(string argument, UpdateType updateSource)
