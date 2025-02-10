@@ -25,9 +25,9 @@ namespace IngameScript
 		public class Display : IDisplay
 		{
 			private readonly int length;
-			private readonly IMyTextPanel textPanel;
+			private readonly IMyTextSurface textPanel;
 
-			public Display(IMyTextPanel textPanel, int length, float fontSize, Color fontColor, Color backgroundColor)
+			public Display(IMyTextSurface textPanel, int length, float fontSize, Color fontColor, Color backgroundColor)
 			{
 				this.length = length;
 				this.textPanel = textPanel;
