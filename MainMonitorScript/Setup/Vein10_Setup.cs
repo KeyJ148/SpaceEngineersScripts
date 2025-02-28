@@ -22,22 +22,22 @@ namespace IngameScript
                 
                 config.oresMonitorEnable = true;
                 config.oresDisplay = GetDefaultDisplay(grid, config, "руды", displaySize);
-                config.oresMaxCount = 100000L;
+                config.oresMaxCount = 15000000L;
                 
                 config.ingotsMonitorEnable = true;
                 config.ingotsDisplay = GetDefaultDisplay(grid, config, "слитки", displaySize); 
-                config.ingotMaxCount = config.oresMaxCount * 3;
+                config.ingotMaxCount = config.oresMaxCount;
                 
                 config.refinesMonitorEnable = true;
                 config.refinesDisplay = GetDefaultDisplay(grid, config, "заводы", displaySize);
                 config.refinesUniversalCount = 0;
                 config.refinesCountByOres = new Dictionary<Ore, int>
                 {
-                    { Items.Ores.STONE, 8 },
-                    { Items.Ores.IRON, 8 },
+                    { Items.Ores.STONE, 10 },
+                    { Items.Ores.IRON, 10 },
                     //{ Items.Ores.SILICON, 4 },
                     //{ Items.Ores.NICKEL, 4 },
-                    { Items.Ores.COBALT, 2 },
+                    { Items.Ores.COBALT, 105 },
                     //{ Items.Ores.MAGNESIUM, 16 },
                     //{ Items.Ores.SILVER, 0 },
                     //{ Items.Ores.GOLD, 0 },
