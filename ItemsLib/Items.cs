@@ -106,7 +106,7 @@ namespace IngameScript
             public static class Ores
             {
                 private static readonly String PREFIX = "MyObjectBuilder_Ore/";
-                public static readonly Ore STONE = new Ore(PREFIX + "Stone", "Камень", 130, 0.0504, Ingots.STONE);
+                public static readonly Ore STONE = new Ore(PREFIX + "Stone", "Камень", 130, 0.0604, Ingots.STONE);
                 public static readonly Ore IRON, Fe = IRON = new Ore(PREFIX + "Iron", "Железо", 26, 0.7, Ingots.IRON);
                 public static readonly Ore SILICON, Si = SILICON = new Ore(PREFIX + "Silicon", "Кремний", 2.167, 0.7, Ingots.SILICON);
                 public static readonly Ore NICKEL, Ni = NICKEL = new Ore(PREFIX + "Nickel", "Никель", 1.97, 0.4, Ingots.NICKEL);
