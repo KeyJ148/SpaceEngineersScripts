@@ -54,8 +54,9 @@ namespace IngameScript
                 long count = displayedOresToCount[ore];
                 long speedInHour = entity.Value;
                 long hours = speedInHour == 0 ? -1 : count / speedInHour;
+                long countAfterRefine = (long) (count * ore.RefineEfficiency);
 
-                return $" ({Utils.GetShortNumber(speedInHour, true)}/Час): {hours} {Utils.GetHourTranslate(hours)}";
+                return $" ({Utils.GetShortNumber(speedInHour, true)}/Час): {hours} {Utils.GetHourTranslate(hours)} (+{Utils.GetShortNumber(countAfterRefine, false)} слитков)";
             }
 
             private static long GetRefineSpeedInHour(Ore ore, Dictionary<Ore, int> countRefinersByOreType, int countUniversalRefiners)
