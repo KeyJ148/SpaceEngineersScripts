@@ -61,9 +61,9 @@ namespace IngameScript
                 config.refinesUniversalCount = 0;
                 config.refinesCountByOres = new Dictionary<Ore, int>
                 {
-                    { Items.Ores.STONE, 4 },
-                    { Items.Ores.IRON, 4 },
-                    { Items.Ores.SILICON, 4 },
+                    { Items.Ores.STONE, 20 },
+                    { Items.Ores.IRON, 20 },
+                    { Items.Ores.SILICON, 20 },
                     { Items.Ores.NICKEL, 4 },
                     //{ Items.Ores.COBALT, 0 },
                     { Items.Ores.MAGNESIUM, 16 },
