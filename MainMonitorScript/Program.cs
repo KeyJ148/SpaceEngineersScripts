@@ -22,7 +22,7 @@ namespace IngameScript
 {
     partial class Program : MyGridProgram
     {
-        private readonly IMonitorSetup CURRENT_SETUP = new Vein10_Setup(); //Change for new ship
+        private readonly IMonitorSetup CURRENT_SETUP = new Vein11_Setup(); //Change for new ship
         private const int RECREATE_EVERY_TICKS = 60 * 10; //10 seconds
         
         private readonly MonitorCreator monitorCreator;
