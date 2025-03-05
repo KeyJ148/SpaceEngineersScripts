@@ -27,7 +27,8 @@ namespace IngameScript
             private IMyGridTerminalSystem grid;
             private MonitorCreatorConfig config;
             
-            private List<IMyEntity> allContainers = new List<IMyEntity>();
+            private List<IMyEntity> allBlocks = new List<IMyEntity>();
+            private List<IMyCubeBlock> allContainersBlocks = new List<IMyCubeBlock>();
             
             public MonitorCreator(IMyGridTerminalSystem grid, MonitorCreatorConfig config)
             {
@@ -37,7 +38,8 @@ namespace IngameScript
 
             public List<IMonitor> CreateAllMonitors()
             {
-                grid.GetBlocksOfType(allContainers);
+                grid.GetBlocksOfType(allBlocks);
+                grid.GetBlocksOfType(allContainersBlocks);
                 
                 var monitors = new List<IMonitor>();
                 if (config.oresMonitorEnable) monitors.Add(CreateOresMonitor());
@@ -45,7 +47,8 @@ namespace IngameScript
                 if (config.componentsMonitorEnable) monitors.AddRange(CreateComponentsMonitors());
                 if (config.refinesMonitorEnable) monitors.Add(CreateRefinesMonitor());
                 if (config.assemblersMonitorEnable) monitors.Add(CreateAssemblersMonitor());
-                if (config.containersMonitorEnable) monitors.Add(CreateContainersMonitor());
+                if (config.gridContainersMonitorEnable) monitors.Add(CreateGridContainersMonitor());
+                if (config.groupContainersMonitorEnable) monitors.Add(CreateGroupContainersMonitor());
                 if (config.hydrogenMonitorEnable) monitors.Add(CreateHydrogenMonitor());
                 if (config.oxygenMonitorEnable) monitors.Add(CreateOxygenMonitor());
                 if (config.batteriesMonitorEnable) monitors.Add(CreateBatteriesMonitor());
@@ -61,7 +64,7 @@ namespace IngameScript
             {
                 return new CargoItemsMonitor(
                     display: config.oresDisplay,
-                    containers: allContainers,
+                    containers: allBlocks,
                     itemToMaxCount: Items.ORES.ToDictionary(
                         item => (Item) item,
                         item => config.oresMaxCount),
@@ -74,7 +77,7 @@ namespace IngameScript
             {
                 return new CargoItemsMonitor(
                     display: config.ingotsDisplay,
-                    containers: allContainers,
+                    containers: allBlocks,
                     itemToMaxCount: Items.ORES.ToDictionary(
                         ore => ore.Ingot, 
                         ore => (long)(ore.RefineEfficiency * config.ingotMaxCount)),
@@ -87,7 +90,7 @@ namespace IngameScript
             {
                 IMonitor componentMonitor1 = new CargoItemsMonitor(
                     display: config.componentsDisplay1,
-                    containers: allContainers,
+                    containers: allBlocks,
                     itemToMaxCount: Items.COMPONENTS
                         .GetRange(0, Items.COMPONENTS.Count / 2)
                         .ToDictionary(
@@ -99,7 +102,7 @@ namespace IngameScript
                 
                 IMonitor componentMonitor2 = new CargoItemsMonitor(
                     display: config.componentsDisplay2,
-                    containers: allContainers,
+                    containers: allBlocks,
                     itemToMaxCount: Items.COMPONENTS
                         .GetRange(Items.COMPONENTS.Count / 2, Items.COMPONENTS.Count - Items.COMPONENTS.Count / 2)
                         .ToDictionary(
@@ -119,7 +122,7 @@ namespace IngameScript
                     displayedOres: config.refinesCountByOres.Keys.ToList(),
                     countRefinersByOreType: config.refinesCountByOres,
                     countUniversalRefiners: config.refinesUniversalCount,
-                    containers: allContainers,
+                    containers: allBlocks,
                     headerText: "ОЧИСТИТЕЛЬНЫЕ ЗАВОДЫ"
                 );
             }
@@ -136,15 +139,30 @@ namespace IngameScript
                 );
             }
 
-            private IMonitor CreateContainersMonitor()
+            private IMonitor CreateGridContainersMonitor()
             {
-                List<IMyCubeBlock> allContainersBlocks = new List<IMyCubeBlock>();
-                grid.GetBlocksOfType(allContainersBlocks);
                 var groupContainersByName = Utils.GetBlocksByGridName(allContainersBlocks).
                         ToDictionary(kv => kv.Key, kv => kv.Value.Select(v => (IMyEntity) v).ToList());
                 
                 return new CargoVolumeMonitor(
-                    display: config.containersDisplay,
+                    display: config.gridContainersDisplay,
+                    groupEntityByName: groupContainersByName,
+                    headerText: "ХРАНИЛИЩА",
+                    progressbarSettings: config.progressbarSettings
+                );
+            }
+            
+            private IMonitor CreateGroupContainersMonitor()
+            {
+                var groupContainersByName = config.groupContainersNameByDisplayedName.
+                    ToDictionary(kv => kv.Key, kv => { 
+                        List<IMyTerminalBlock> groupOfContainers = new List<IMyTerminalBlock>();
+                        grid.GetBlockGroupWithName(config.gridPrefix + kv.Value).GetBlocks(groupOfContainers);
+                        return groupOfContainers.Select(v => (IMyEntity) v).ToList(); 
+                    });
+                
+                return new CargoVolumeMonitor(
+                    display: config.groupContainersDisplay,
                     groupEntityByName: groupContainersByName,
                     headerText: "ХРАНИЛИЩА",
                     progressbarSettings: config.progressbarSettings

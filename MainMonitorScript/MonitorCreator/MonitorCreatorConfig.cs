@@ -35,8 +35,12 @@ namespace IngameScript
             public bool assemblersMonitorEnable;
             public IDisplay assemblersDisplay;
 
-            public bool containersMonitorEnable;
-            public IDisplay containersDisplay;
+            public bool gridContainersMonitorEnable;
+            public IDisplay gridContainersDisplay;
+            
+            public bool groupContainersMonitorEnable;
+            public IDisplay groupContainersDisplay;
+            public Dictionary<string, string> groupContainersNameByDisplayedName;
 
             public bool hydrogenMonitorEnable;
             public IDisplay hydrogenDisplay;
