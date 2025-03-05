@@ -20,8 +20,8 @@ namespace IngameScript
                 config.backgroundColor = new Color(2, 2, 2);
                 config.progressbarSettings = new ProgressbarSettings(' ', '■', '■', 0);
                 
-                config.containersMonitorEnable = true;
-                config.containersDisplay = GetInnerDisplay(grid, config, "Кокпит", 0, displaySize);
+                config.gridContainersMonitorEnable = true;
+                config.gridContainersDisplay = GetInnerDisplay(grid, config, "Кокпит", 0, displaySize);
                 
                 config.hydrogenMonitorEnable = true;
                 config.hydrogenDisplay = GetInnerDisplay(grid, config, "Кокпит", 1, displaySize);

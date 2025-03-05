@@ -76,8 +76,8 @@ namespace IngameScript
                 config.assemblersMonitorEnable = true;
                 config.assemblersDisplay = GetDefaultDisplay(grid, config, "сборщики", displaySize);
                 
-                config.containersMonitorEnable = true;
-                config.containersDisplay = GetDefaultDisplay(grid, config, "хранилища", displaySize);
+                config.gridContainersMonitorEnable = true;
+                config.gridContainersDisplay = GetDefaultDisplay(grid, config, "хранилища", displaySize);
                 
                 config.hydrogenMonitorEnable = true;
                 config.hydrogenDisplay = GetDefaultDisplay(grid, config, "водород", displaySize);
